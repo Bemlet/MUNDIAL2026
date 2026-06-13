@@ -1,0 +1,1126 @@
+{
+ "venues": {
+  "Estadio Azteca": {
+   "city": "Ciudad de México",
+   "country": "México",
+   "cap": 87523
+  },
+  "Estadio Akron": {
+   "city": "Guadalajara",
+   "country": "México",
+   "cap": 49813
+  },
+  "Estadio BBVA": {
+   "city": "Monterrey",
+   "country": "México",
+   "cap": 53500
+  },
+  "BMO Field": {
+   "city": "Toronto",
+   "country": "Canadá",
+   "cap": 45736
+  },
+  "BC Place": {
+   "city": "Vancouver",
+   "country": "Canadá",
+   "cap": 54500
+  },
+  "MetLife Stadium": {
+   "city": "Nueva York / Nueva Jersey",
+   "country": "EE. UU.",
+   "cap": 82500
+  },
+  "Gillette Stadium": {
+   "city": "Boston (Foxborough)",
+   "country": "EE. UU.",
+   "cap": 64628
+  },
+  "Lincoln Financial Field": {
+   "city": "Filadelfia",
+   "country": "EE. UU.",
+   "cap": 69796
+  },
+  "Hard Rock Stadium": {
+   "city": "Miami",
+   "country": "EE. UU.",
+   "cap": 64767
+  },
+  "Mercedes-Benz Stadium": {
+   "city": "Atlanta",
+   "country": "EE. UU.",
+   "cap": 71000
+  },
+  "NRG Stadium": {
+   "city": "Houston",
+   "country": "EE. UU.",
+   "cap": 72220
+  },
+  "AT&T Stadium": {
+   "city": "Dallas (Arlington)",
+   "country": "EE. UU.",
+   "cap": 80000
+  },
+  "Arrowhead Stadium": {
+   "city": "Kansas City",
+   "country": "EE. UU.",
+   "cap": 76416
+  },
+  "SoFi Stadium": {
+   "city": "Los Ángeles (Inglewood)",
+   "country": "EE. UU.",
+   "cap": 70240
+  },
+  "Levi’s Stadium": {
+   "city": "San Francisco (Santa Clara)",
+   "country": "EE. UU.",
+   "cap": 68500
+  },
+  "Lumen Field": {
+   "city": "Seattle",
+   "country": "EE. UU.",
+   "cap": 69000
+  }
+ },
+ "matches": [
+  {
+   "no": 1,
+   "stage": "group",
+   "group": "A",
+   "home": "MEX",
+   "away": "RSA",
+   "date": "2026-06-11T19:00Z",
+   "venue": "Estadio Azteca",
+   "espnId": "760415"
+  },
+  {
+   "no": 2,
+   "stage": "group",
+   "group": "A",
+   "home": "KOR",
+   "away": "CZE",
+   "date": "2026-06-12T02:00Z",
+   "venue": "Estadio Akron",
+   "espnId": "760414"
+  },
+  {
+   "no": 3,
+   "stage": "group",
+   "group": "B",
+   "home": "CAN",
+   "away": "BIH",
+   "date": "2026-06-12T19:00Z",
+   "venue": "BMO Field",
+   "espnId": "760416"
+  },
+  {
+   "no": 4,
+   "stage": "group",
+   "group": "D",
+   "home": "USA",
+   "away": "PAR",
+   "date": "2026-06-13T01:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760417"
+  },
+  {
+   "no": 8,
+   "stage": "group",
+   "group": "B",
+   "home": "QAT",
+   "away": "SUI",
+   "date": "2026-06-13T19:00Z",
+   "venue": "Levi’s Stadium",
+   "espnId": "760420"
+  },
+  {
+   "no": 7,
+   "stage": "group",
+   "group": "C",
+   "home": "BRA",
+   "away": "MAR",
+   "date": "2026-06-13T22:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760419"
+  },
+  {
+   "no": 5,
+   "stage": "group",
+   "group": "C",
+   "home": "HAI",
+   "away": "SCO",
+   "date": "2026-06-14T01:00Z",
+   "venue": "Gillette Stadium",
+   "espnId": "760418"
+  },
+  {
+   "no": 6,
+   "stage": "group",
+   "group": "D",
+   "home": "AUS",
+   "away": "TUR",
+   "date": "2026-06-14T04:00Z",
+   "venue": "BC Place",
+   "espnId": "760421"
+  },
+  {
+   "no": 10,
+   "stage": "group",
+   "group": "E",
+   "home": "GER",
+   "away": "CUW",
+   "date": "2026-06-14T17:00Z",
+   "venue": "NRG Stadium",
+   "espnId": "760422"
+  },
+  {
+   "no": 11,
+   "stage": "group",
+   "group": "F",
+   "home": "NED",
+   "away": "JPN",
+   "date": "2026-06-14T20:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760425"
+  },
+  {
+   "no": 9,
+   "stage": "group",
+   "group": "E",
+   "home": "CIV",
+   "away": "ECU",
+   "date": "2026-06-14T23:00Z",
+   "venue": "Lincoln Financial Field",
+   "espnId": "760423"
+  },
+  {
+   "no": 12,
+   "stage": "group",
+   "group": "F",
+   "home": "SWE",
+   "away": "TUN",
+   "date": "2026-06-15T02:00Z",
+   "venue": "Estadio BBVA",
+   "espnId": "760424"
+  },
+  {
+   "no": 14,
+   "stage": "group",
+   "group": "H",
+   "home": "ESP",
+   "away": "CPV",
+   "date": "2026-06-15T16:00Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760428"
+  },
+  {
+   "no": 16,
+   "stage": "group",
+   "group": "G",
+   "home": "BEL",
+   "away": "EGY",
+   "date": "2026-06-15T19:00Z",
+   "venue": "Lumen Field",
+   "espnId": "760426"
+  },
+  {
+   "no": 13,
+   "stage": "group",
+   "group": "H",
+   "home": "KSA",
+   "away": "URU",
+   "date": "2026-06-15T22:00Z",
+   "venue": "Hard Rock Stadium",
+   "espnId": "760429"
+  },
+  {
+   "no": 15,
+   "stage": "group",
+   "group": "G",
+   "home": "IRN",
+   "away": "NZL",
+   "date": "2026-06-16T01:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760427"
+  },
+  {
+   "no": 17,
+   "stage": "group",
+   "group": "I",
+   "home": "FRA",
+   "away": "SEN",
+   "date": "2026-06-16T19:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760432"
+  },
+  {
+   "no": 18,
+   "stage": "group",
+   "group": "I",
+   "home": "IRQ",
+   "away": "NOR",
+   "date": "2026-06-16T22:00Z",
+   "venue": "Gillette Stadium",
+   "espnId": "760430"
+  },
+  {
+   "no": 19,
+   "stage": "group",
+   "group": "J",
+   "home": "ARG",
+   "away": "ALG",
+   "date": "2026-06-17T01:00Z",
+   "venue": "Arrowhead Stadium",
+   "espnId": "760433"
+  },
+  {
+   "no": 20,
+   "stage": "group",
+   "group": "J",
+   "home": "AUT",
+   "away": "JOR",
+   "date": "2026-06-17T04:00Z",
+   "venue": "Levi’s Stadium",
+   "espnId": "760431"
+  },
+  {
+   "no": 23,
+   "stage": "group",
+   "group": "K",
+   "home": "POR",
+   "away": "COD",
+   "date": "2026-06-17T17:00Z",
+   "venue": "NRG Stadium",
+   "espnId": "760435"
+  },
+  {
+   "no": 22,
+   "stage": "group",
+   "group": "L",
+   "home": "ENG",
+   "away": "CRO",
+   "date": "2026-06-17T20:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760437"
+  },
+  {
+   "no": 21,
+   "stage": "group",
+   "group": "L",
+   "home": "GHA",
+   "away": "PAN",
+   "date": "2026-06-17T23:00Z",
+   "venue": "BMO Field",
+   "espnId": "760434"
+  },
+  {
+   "no": 24,
+   "stage": "group",
+   "group": "K",
+   "home": "UZB",
+   "away": "COL",
+   "date": "2026-06-18T02:00Z",
+   "venue": "Estadio Azteca",
+   "espnId": "760436"
+  },
+  {
+   "no": 25,
+   "stage": "group",
+   "group": "A",
+   "home": "CZE",
+   "away": "RSA",
+   "date": "2026-06-18T16:00Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760438"
+  },
+  {
+   "no": 26,
+   "stage": "group",
+   "group": "B",
+   "home": "SUI",
+   "away": "BIH",
+   "date": "2026-06-18T19:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760439"
+  },
+  {
+   "no": 27,
+   "stage": "group",
+   "group": "B",
+   "home": "CAN",
+   "away": "QAT",
+   "date": "2026-06-18T22:00Z",
+   "venue": "BC Place",
+   "espnId": "760440"
+  },
+  {
+   "no": 28,
+   "stage": "group",
+   "group": "A",
+   "home": "MEX",
+   "away": "KOR",
+   "date": "2026-06-19T01:00Z",
+   "venue": "Estadio Akron",
+   "espnId": "760441"
+  },
+  {
+   "no": 32,
+   "stage": "group",
+   "group": "D",
+   "home": "USA",
+   "away": "AUS",
+   "date": "2026-06-19T19:00Z",
+   "venue": "Lumen Field",
+   "espnId": "760442"
+  },
+  {
+   "no": 30,
+   "stage": "group",
+   "group": "C",
+   "home": "SCO",
+   "away": "MAR",
+   "date": "2026-06-19T22:00Z",
+   "venue": "Gillette Stadium",
+   "espnId": "760445"
+  },
+  {
+   "no": 29,
+   "stage": "group",
+   "group": "C",
+   "home": "BRA",
+   "away": "HAI",
+   "date": "2026-06-20T00:30Z",
+   "venue": "Lincoln Financial Field",
+   "espnId": "760444"
+  },
+  {
+   "no": 31,
+   "stage": "group",
+   "group": "D",
+   "home": "TUR",
+   "away": "PAR",
+   "date": "2026-06-20T03:00Z",
+   "venue": "Levi’s Stadium",
+   "espnId": "760443"
+  },
+  {
+   "no": 35,
+   "stage": "group",
+   "group": "F",
+   "home": "NED",
+   "away": "SWE",
+   "date": "2026-06-20T17:00Z",
+   "venue": "NRG Stadium",
+   "espnId": "760447"
+  },
+  {
+   "no": 33,
+   "stage": "group",
+   "group": "E",
+   "home": "GER",
+   "away": "CIV",
+   "date": "2026-06-20T20:00Z",
+   "venue": "BMO Field",
+   "espnId": "760448"
+  },
+  {
+   "no": 34,
+   "stage": "group",
+   "group": "E",
+   "home": "ECU",
+   "away": "CUW",
+   "date": "2026-06-21T00:00Z",
+   "venue": "Arrowhead Stadium",
+   "espnId": "760446"
+  },
+  {
+   "no": 36,
+   "stage": "group",
+   "group": "F",
+   "home": "TUN",
+   "away": "JPN",
+   "date": "2026-06-21T04:00Z",
+   "venue": "Estadio BBVA",
+   "espnId": "760449"
+  },
+  {
+   "no": 38,
+   "stage": "group",
+   "group": "H",
+   "home": "ESP",
+   "away": "KSA",
+   "date": "2026-06-21T16:00Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760453"
+  },
+  {
+   "no": 39,
+   "stage": "group",
+   "group": "G",
+   "home": "BEL",
+   "away": "IRN",
+   "date": "2026-06-21T19:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760451"
+  },
+  {
+   "no": 37,
+   "stage": "group",
+   "group": "H",
+   "home": "URU",
+   "away": "CPV",
+   "date": "2026-06-21T22:00Z",
+   "venue": "Hard Rock Stadium",
+   "espnId": "760450"
+  },
+  {
+   "no": 40,
+   "stage": "group",
+   "group": "G",
+   "home": "NZL",
+   "away": "EGY",
+   "date": "2026-06-22T01:00Z",
+   "venue": "BC Place",
+   "espnId": "760452"
+  },
+  {
+   "no": 43,
+   "stage": "group",
+   "group": "J",
+   "home": "ARG",
+   "away": "AUT",
+   "date": "2026-06-22T17:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760456"
+  },
+  {
+   "no": 42,
+   "stage": "group",
+   "group": "I",
+   "home": "FRA",
+   "away": "IRQ",
+   "date": "2026-06-22T21:00Z",
+   "venue": "Lincoln Financial Field",
+   "espnId": "760457"
+  },
+  {
+   "no": 41,
+   "stage": "group",
+   "group": "I",
+   "home": "NOR",
+   "away": "SEN",
+   "date": "2026-06-23T00:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760454"
+  },
+  {
+   "no": 44,
+   "stage": "group",
+   "group": "J",
+   "home": "JOR",
+   "away": "ALG",
+   "date": "2026-06-23T03:00Z",
+   "venue": "Levi’s Stadium",
+   "espnId": "760455"
+  },
+  {
+   "no": 47,
+   "stage": "group",
+   "group": "K",
+   "home": "POR",
+   "away": "UZB",
+   "date": "2026-06-23T17:00Z",
+   "venue": "NRG Stadium",
+   "espnId": "760461"
+  },
+  {
+   "no": 45,
+   "stage": "group",
+   "group": "L",
+   "home": "ENG",
+   "away": "GHA",
+   "date": "2026-06-23T20:00Z",
+   "venue": "Gillette Stadium",
+   "espnId": "760458"
+  },
+  {
+   "no": 46,
+   "stage": "group",
+   "group": "L",
+   "home": "PAN",
+   "away": "CRO",
+   "date": "2026-06-23T23:00Z",
+   "venue": "BMO Field",
+   "espnId": "760460"
+  },
+  {
+   "no": 48,
+   "stage": "group",
+   "group": "K",
+   "home": "COL",
+   "away": "COD",
+   "date": "2026-06-24T02:00Z",
+   "venue": "Estadio Akron",
+   "espnId": "760459"
+  },
+  {
+   "no": 51,
+   "stage": "group",
+   "group": "B",
+   "home": "SUI",
+   "away": "CAN",
+   "date": "2026-06-24T19:00Z",
+   "venue": "BC Place",
+   "espnId": "760463"
+  },
+  {
+   "no": 52,
+   "stage": "group",
+   "group": "B",
+   "home": "BIH",
+   "away": "QAT",
+   "date": "2026-06-24T19:00Z",
+   "venue": "Lumen Field",
+   "espnId": "760462"
+  },
+  {
+   "no": 49,
+   "stage": "group",
+   "group": "C",
+   "home": "SCO",
+   "away": "BRA",
+   "date": "2026-06-24T22:00Z",
+   "venue": "Hard Rock Stadium",
+   "espnId": "760465"
+  },
+  {
+   "no": 50,
+   "stage": "group",
+   "group": "C",
+   "home": "MAR",
+   "away": "HAI",
+   "date": "2026-06-24T22:00Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760464"
+  },
+  {
+   "no": 53,
+   "stage": "group",
+   "group": "A",
+   "home": "CZE",
+   "away": "MEX",
+   "date": "2026-06-25T01:00Z",
+   "venue": "Estadio Azteca",
+   "espnId": "760467"
+  },
+  {
+   "no": 54,
+   "stage": "group",
+   "group": "A",
+   "home": "RSA",
+   "away": "KOR",
+   "date": "2026-06-25T01:00Z",
+   "venue": "Estadio BBVA",
+   "espnId": "760466"
+  },
+  {
+   "no": 55,
+   "stage": "group",
+   "group": "E",
+   "home": "CUW",
+   "away": "CIV",
+   "date": "2026-06-25T20:00Z",
+   "venue": "Lincoln Financial Field",
+   "espnId": "760473"
+  },
+  {
+   "no": 56,
+   "stage": "group",
+   "group": "E",
+   "home": "ECU",
+   "away": "GER",
+   "date": "2026-06-25T20:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760468"
+  },
+  {
+   "no": 57,
+   "stage": "group",
+   "group": "F",
+   "home": "JPN",
+   "away": "SWE",
+   "date": "2026-06-25T23:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760471"
+  },
+  {
+   "no": 58,
+   "stage": "group",
+   "group": "F",
+   "home": "TUN",
+   "away": "NED",
+   "date": "2026-06-25T23:00Z",
+   "venue": "Arrowhead Stadium",
+   "espnId": "760472"
+  },
+  {
+   "no": 59,
+   "stage": "group",
+   "group": "D",
+   "home": "TUR",
+   "away": "USA",
+   "date": "2026-06-26T02:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760470"
+  },
+  {
+   "no": 60,
+   "stage": "group",
+   "group": "D",
+   "home": "PAR",
+   "away": "AUS",
+   "date": "2026-06-26T02:00Z",
+   "venue": "Levi’s Stadium",
+   "espnId": "760469"
+  },
+  {
+   "no": 61,
+   "stage": "group",
+   "group": "I",
+   "home": "NOR",
+   "away": "FRA",
+   "date": "2026-06-26T19:00Z",
+   "venue": "Gillette Stadium",
+   "espnId": "760475"
+  },
+  {
+   "no": 62,
+   "stage": "group",
+   "group": "I",
+   "home": "SEN",
+   "away": "IRQ",
+   "date": "2026-06-26T19:00Z",
+   "venue": "BMO Field",
+   "espnId": "760474"
+  },
+  {
+   "no": 65,
+   "stage": "group",
+   "group": "H",
+   "home": "CPV",
+   "away": "KSA",
+   "date": "2026-06-27T00:00Z",
+   "venue": "NRG Stadium",
+   "espnId": "760478"
+  },
+  {
+   "no": 66,
+   "stage": "group",
+   "group": "H",
+   "home": "URU",
+   "away": "ESP",
+   "date": "2026-06-27T00:00Z",
+   "venue": "Estadio Akron",
+   "espnId": "760479"
+  },
+  {
+   "no": 63,
+   "stage": "group",
+   "group": "G",
+   "home": "EGY",
+   "away": "IRN",
+   "date": "2026-06-27T03:00Z",
+   "venue": "Lumen Field",
+   "espnId": "760476"
+  },
+  {
+   "no": 64,
+   "stage": "group",
+   "group": "G",
+   "home": "NZL",
+   "away": "BEL",
+   "date": "2026-06-27T03:00Z",
+   "venue": "BC Place",
+   "espnId": "760477"
+  },
+  {
+   "no": 67,
+   "stage": "group",
+   "group": "L",
+   "home": "PAN",
+   "away": "ENG",
+   "date": "2026-06-27T21:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760485"
+  },
+  {
+   "no": 68,
+   "stage": "group",
+   "group": "L",
+   "home": "CRO",
+   "away": "GHA",
+   "date": "2026-06-27T21:00Z",
+   "venue": "Lincoln Financial Field",
+   "espnId": "760480"
+  },
+  {
+   "no": 71,
+   "stage": "group",
+   "group": "K",
+   "home": "COL",
+   "away": "POR",
+   "date": "2026-06-27T23:30Z",
+   "venue": "Hard Rock Stadium",
+   "espnId": "760481"
+  },
+  {
+   "no": 72,
+   "stage": "group",
+   "group": "K",
+   "home": "COD",
+   "away": "UZB",
+   "date": "2026-06-27T23:30Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760482"
+  },
+  {
+   "no": 69,
+   "stage": "group",
+   "group": "J",
+   "home": "ALG",
+   "away": "AUT",
+   "date": "2026-06-28T02:00Z",
+   "venue": "Arrowhead Stadium",
+   "espnId": "760484"
+  },
+  {
+   "no": 70,
+   "stage": "group",
+   "group": "J",
+   "home": "JOR",
+   "away": "ARG",
+   "date": "2026-06-28T02:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760483"
+  },
+  {
+   "no": 73,
+   "stage": "r32",
+   "group": null,
+   "home": "RA",
+   "away": "RB",
+   "date": "2026-06-28T19:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760486"
+  },
+  {
+   "no": 76,
+   "stage": "r32",
+   "group": null,
+   "home": "WC",
+   "away": "RF",
+   "date": "2026-06-29T17:00Z",
+   "venue": "NRG Stadium",
+   "espnId": "760487"
+  },
+  {
+   "no": 74,
+   "stage": "r32",
+   "group": null,
+   "home": "WE",
+   "away": "TABCDF",
+   "date": "2026-06-29T20:30Z",
+   "venue": "Gillette Stadium",
+   "espnId": "760489"
+  },
+  {
+   "no": 75,
+   "stage": "r32",
+   "group": null,
+   "home": "WF",
+   "away": "RC",
+   "date": "2026-06-30T01:00Z",
+   "venue": "Estadio BBVA",
+   "espnId": "760488"
+  },
+  {
+   "no": 78,
+   "stage": "r32",
+   "group": null,
+   "home": "RE",
+   "away": "RI",
+   "date": "2026-06-30T17:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760490"
+  },
+  {
+   "no": 77,
+   "stage": "r32",
+   "group": null,
+   "home": "WI",
+   "away": "TCDFGH",
+   "date": "2026-06-30T21:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760492"
+  },
+  {
+   "no": 79,
+   "stage": "r32",
+   "group": null,
+   "home": "WA",
+   "away": "TCEFHI",
+   "date": "2026-07-01T01:00Z",
+   "venue": "Estadio Azteca",
+   "espnId": "760491"
+  },
+  {
+   "no": 80,
+   "stage": "r32",
+   "group": null,
+   "home": "WL",
+   "away": "TEHIJK",
+   "date": "2026-07-01T16:00Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760495"
+  },
+  {
+   "no": 82,
+   "stage": "r32",
+   "group": null,
+   "home": "WG",
+   "away": "TAEHIJ",
+   "date": "2026-07-01T20:00Z",
+   "venue": "Lumen Field",
+   "espnId": "760493"
+  },
+  {
+   "no": 81,
+   "stage": "r32",
+   "group": null,
+   "home": "WD",
+   "away": "TBEFIJ",
+   "date": "2026-07-02T00:00Z",
+   "venue": "Levi’s Stadium",
+   "espnId": "760494"
+  },
+  {
+   "no": 84,
+   "stage": "r32",
+   "group": null,
+   "home": "WH",
+   "away": "RJ",
+   "date": "2026-07-02T19:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760497"
+  },
+  {
+   "no": 83,
+   "stage": "r32",
+   "group": null,
+   "home": "RK",
+   "away": "RL",
+   "date": "2026-07-02T23:00Z",
+   "venue": "BMO Field",
+   "espnId": "760496"
+  },
+  {
+   "no": 85,
+   "stage": "r32",
+   "group": null,
+   "home": "WB",
+   "away": "TEFGIJ",
+   "date": "2026-07-03T03:00Z",
+   "venue": "BC Place",
+   "espnId": "760498"
+  },
+  {
+   "no": 88,
+   "stage": "r32",
+   "group": null,
+   "home": "RD",
+   "away": "RG",
+   "date": "2026-07-03T18:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760499"
+  },
+  {
+   "no": 86,
+   "stage": "r32",
+   "group": null,
+   "home": "WJ",
+   "away": "RH",
+   "date": "2026-07-03T22:00Z",
+   "venue": "Hard Rock Stadium",
+   "espnId": "760500"
+  },
+  {
+   "no": 87,
+   "stage": "r32",
+   "group": null,
+   "home": "WK",
+   "away": "TDEIJL",
+   "date": "2026-07-04T01:30Z",
+   "venue": "Arrowhead Stadium",
+   "espnId": "760501"
+  },
+  {
+   "no": 90,
+   "stage": "r16",
+   "group": null,
+   "home": "M73",
+   "away": "M75",
+   "date": "2026-07-04T17:00Z",
+   "venue": "NRG Stadium",
+   "espnId": "760502"
+  },
+  {
+   "no": 89,
+   "stage": "r16",
+   "group": null,
+   "home": "M74",
+   "away": "M77",
+   "date": "2026-07-04T21:00Z",
+   "venue": "Lincoln Financial Field",
+   "espnId": "760503"
+  },
+  {
+   "no": 91,
+   "stage": "r16",
+   "group": null,
+   "home": "M76",
+   "away": "M78",
+   "date": "2026-07-05T20:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760504"
+  },
+  {
+   "no": 92,
+   "stage": "r16",
+   "group": null,
+   "home": "M79",
+   "away": "M80",
+   "date": "2026-07-06T00:00Z",
+   "venue": "Estadio Azteca",
+   "espnId": "760505"
+  },
+  {
+   "no": 93,
+   "stage": "r16",
+   "group": null,
+   "home": "M83",
+   "away": "M84",
+   "date": "2026-07-06T19:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760506"
+  },
+  {
+   "no": 94,
+   "stage": "r16",
+   "group": null,
+   "home": "M81",
+   "away": "M82",
+   "date": "2026-07-07T00:00Z",
+   "venue": "Lumen Field",
+   "espnId": "760507"
+  },
+  {
+   "no": 95,
+   "stage": "r16",
+   "group": null,
+   "home": "M86",
+   "away": "M88",
+   "date": "2026-07-07T16:00Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760509"
+  },
+  {
+   "no": 96,
+   "stage": "r16",
+   "group": null,
+   "home": "M85",
+   "away": "M87",
+   "date": "2026-07-07T20:00Z",
+   "venue": "BC Place",
+   "espnId": "760508"
+  },
+  {
+   "no": 97,
+   "stage": "qf",
+   "group": null,
+   "home": "M89",
+   "away": "M90",
+   "date": "2026-07-09T20:00Z",
+   "venue": "Gillette Stadium",
+   "espnId": "760510"
+  },
+  {
+   "no": 98,
+   "stage": "qf",
+   "group": null,
+   "home": "M93",
+   "away": "M94",
+   "date": "2026-07-10T19:00Z",
+   "venue": "SoFi Stadium",
+   "espnId": "760511"
+  },
+  {
+   "no": 99,
+   "stage": "qf",
+   "group": null,
+   "home": "M91",
+   "away": "M92",
+   "date": "2026-07-11T21:00Z",
+   "venue": "Hard Rock Stadium",
+   "espnId": "760512"
+  },
+  {
+   "no": 100,
+   "stage": "qf",
+   "group": null,
+   "home": "M95",
+   "away": "M96",
+   "date": "2026-07-12T01:00Z",
+   "venue": "Arrowhead Stadium",
+   "espnId": "760513"
+  },
+  {
+   "no": 101,
+   "stage": "sf",
+   "group": null,
+   "home": "M97",
+   "away": "M98",
+   "date": "2026-07-14T19:00Z",
+   "venue": "AT&T Stadium",
+   "espnId": "760514"
+  },
+  {
+   "no": 102,
+   "stage": "sf",
+   "group": null,
+   "home": "M99",
+   "away": "M100",
+   "date": "2026-07-15T19:00Z",
+   "venue": "Mercedes-Benz Stadium",
+   "espnId": "760515"
+  },
+  {
+   "no": 103,
+   "stage": "third",
+   "group": null,
+   "home": "L101",
+   "away": "L102",
+   "date": "2026-07-18T21:00Z",
+   "venue": "Hard Rock Stadium",
+   "espnId": "760516"
+  },
+  {
+   "no": 104,
+   "stage": "final",
+   "group": null,
+   "home": "M101",
+   "away": "M102",
+   "date": "2026-07-19T19:00Z",
+   "venue": "MetLife Stadium",
+   "espnId": "760517"
+  }
+ ]
+}

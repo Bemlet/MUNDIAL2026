@@ -1,0 +1,916 @@
+{
+ "teams": [
+  {
+   "id": "MEX",
+   "name": "México",
+   "espn": "Mexico",
+   "flag": "mx",
+   "group": "A",
+   "conf": "CONCACAF",
+   "confRegion": "Norte y Centroamérica",
+   "rank": 14,
+   "apps": 18,
+   "titles": 0,
+   "best": "Cuartos de final (1970, 1986)",
+   "stars": [
+    "Raúl Jiménez",
+    "Edson Álvarez",
+    "Gilberto Mora"
+   ],
+   "note": "Anfitrión por tercera vez en su historia: ningún país ha organizado más Mundiales. Abrió el torneo en el Azteca con triunfo."
+  },
+  {
+   "id": "RSA",
+   "name": "Sudáfrica",
+   "espn": "South Africa",
+   "flag": "za",
+   "group": "A",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 61,
+   "apps": 4,
+   "titles": 0,
+   "best": "Fase de grupos",
+   "stars": [
+    "Ronwen Williams",
+    "Percy Tau",
+    "Teboho Mokoena"
+   ],
+   "note": "Los Bafana Bafana vuelven a un Mundial que no organizan por primera vez desde 2002."
+  },
+  {
+   "id": "KOR",
+   "name": "Corea del Sur",
+   "espn": "South Korea",
+   "flag": "kr",
+   "group": "A",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 22,
+   "apps": 12,
+   "titles": 0,
+   "best": "Cuarto puesto (2002)",
+   "stars": [
+    "Son Heung-min",
+    "Lee Kang-in",
+    "Kim Min-jae"
+   ],
+   "note": "Undécima participación consecutiva, racha que solo superan las grandes potencias."
+  },
+  {
+   "id": "CZE",
+   "name": "Chequia",
+   "espn": "Czechia",
+   "flag": "cz",
+   "group": "A",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 43,
+   "apps": 3,
+   "titles": 0,
+   "best": "Subcampeón como Checoslovaquia (1934, 1962)",
+   "stars": [
+    "Patrik Schick",
+    "Tomáš Souček",
+    "Adam Hložek"
+   ],
+   "note": "Primera clasificación como República Checa desde 2006; heredera de la histórica Checoslovaquia."
+  },
+  {
+   "id": "CAN",
+   "name": "Canadá",
+   "espn": "Canada",
+   "flag": "ca",
+   "group": "B",
+   "conf": "CONCACAF",
+   "confRegion": "Norte y Centroamérica",
+   "rank": 27,
+   "apps": 3,
+   "titles": 0,
+   "best": "Fase de grupos",
+   "stars": [
+    "Alphonso Davies",
+    "Jonathan David",
+    "Stephen Eustáquio"
+   ],
+   "note": "Coanfitrión y con su mejor generación histórica; busca su primera victoria mundialista en casa."
+  },
+  {
+   "id": "BIH",
+   "name": "Bosnia y Herzegovina",
+   "espn": "Bosnia-Herzegovina",
+   "flag": "ba",
+   "group": "B",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 75,
+   "apps": 2,
+   "titles": 0,
+   "best": "Fase de grupos (2014)",
+   "stars": [
+    "Edin Džeko",
+    "Ermedin Demirović",
+    "Sead Kolašinac"
+   ],
+   "note": "Regresa al Mundial 12 años después de su debut en Brasil 2014."
+  },
+  {
+   "id": "QAT",
+   "name": "Catar",
+   "espn": "Qatar",
+   "flag": "qa",
+   "group": "B",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 53,
+   "apps": 2,
+   "titles": 0,
+   "best": "Fase de grupos (2022)",
+   "stars": [
+    "Akram Afif",
+    "Almoez Ali",
+    "Hassan Al-Haydos"
+   ],
+   "note": "Primera vez que se clasifica por la vía deportiva, tras organizar el Mundial 2022."
+  },
+  {
+   "id": "SUI",
+   "name": "Suiza",
+   "espn": "Switzerland",
+   "flag": "ch",
+   "group": "B",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 17,
+   "apps": 13,
+   "titles": 0,
+   "best": "Cuartos de final (1934, 1938, 1954)",
+   "stars": [
+    "Granit Xhaka",
+    "Manuel Akanji",
+    "Breel Embolo"
+   ],
+   "note": "Sexto Mundial consecutivo; habitual de octavos en las últimas ediciones."
+  },
+  {
+   "id": "BRA",
+   "name": "Brasil",
+   "espn": "Brazil",
+   "flag": "br",
+   "group": "C",
+   "conf": "CONMEBOL",
+   "confRegion": "Sudamérica",
+   "rank": 5,
+   "apps": 23,
+   "titles": 5,
+   "best": "Campeón (1958, 1962, 1970, 1994, 2002)",
+   "stars": [
+    "Vinícius Júnior",
+    "Rodrygo",
+    "Estêvão"
+   ],
+   "note": "El único país presente en los 23 Mundiales y máximo campeón con cinco estrellas. Ahora dirigido por Carlo Ancelotti."
+  },
+  {
+   "id": "MAR",
+   "name": "Marruecos",
+   "espn": "Morocco",
+   "flag": "ma",
+   "group": "C",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 11,
+   "apps": 7,
+   "titles": 0,
+   "best": "Cuarto puesto (2022)",
+   "stars": [
+    "Achraf Hakimi",
+    "Brahim Díaz",
+    "Azzedine Ounahi"
+   ],
+   "note": "Hizo historia en 2022 como la primera semifinalista africana; llega como líder del continente."
+  },
+  {
+   "id": "SCO",
+   "name": "Escocia",
+   "espn": "Scotland",
+   "flag": "gb-sct",
+   "group": "C",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 38,
+   "apps": 9,
+   "titles": 0,
+   "best": "Fase de grupos",
+   "stars": [
+    "Scott McTominay",
+    "Andy Robertson",
+    "John McGinn"
+   ],
+   "note": "Vuelve a un Mundial tras 28 años de ausencia: su última cita fue Francia 1998."
+  },
+  {
+   "id": "HAI",
+   "name": "Haití",
+   "espn": "Haiti",
+   "flag": "ht",
+   "group": "C",
+   "conf": "CONCACAF",
+   "confRegion": "Norte y Centroamérica",
+   "rank": 84,
+   "apps": 2,
+   "titles": 0,
+   "best": "Fase de grupos (1974)",
+   "stars": [
+    "Duckens Nazon",
+    "Frantzdy Pierrot",
+    "Danley Jean Jacques"
+   ],
+   "note": "Su segunda participación, 52 años después de su debut en Alemania 1974."
+  },
+  {
+   "id": "USA",
+   "name": "Estados Unidos",
+   "espn": "United States",
+   "flag": "us",
+   "group": "D",
+   "conf": "CONCACAF",
+   "confRegion": "Norte y Centroamérica",
+   "rank": 16,
+   "apps": 12,
+   "titles": 0,
+   "best": "Semifinales (1930)",
+   "stars": [
+    "Christian Pulisic",
+    "Weston McKennie",
+    "Antonee Robinson"
+   ],
+   "note": "Anfitrión principal: organiza 78 de los 104 partidos, incluida la final."
+  },
+  {
+   "id": "PAR",
+   "name": "Paraguay",
+   "espn": "Paraguay",
+   "flag": "py",
+   "group": "D",
+   "conf": "CONMEBOL",
+   "confRegion": "Sudamérica",
+   "rank": 39,
+   "apps": 9,
+   "titles": 0,
+   "best": "Cuartos de final (2010)",
+   "stars": [
+    "Miguel Almirón",
+    "Julio Enciso",
+    "Gustavo Gómez"
+   ],
+   "note": "La Albirroja regresa tras 16 años; no jugaba un Mundial desde Sudáfrica 2010."
+  },
+  {
+   "id": "AUS",
+   "name": "Australia",
+   "espn": "Australia",
+   "flag": "au",
+   "group": "D",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 26,
+   "apps": 7,
+   "titles": 0,
+   "best": "Octavos de final (2006, 2022)",
+   "stars": [
+    "Mathew Ryan",
+    "Jackson Irvine",
+    "Craig Goodwin"
+   ],
+   "note": "Sexto Mundial consecutivo de los Socceroos."
+  },
+  {
+   "id": "TUR",
+   "name": "Turquía",
+   "espn": "Türkiye",
+   "flag": "tr",
+   "group": "D",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 25,
+   "apps": 3,
+   "titles": 0,
+   "best": "Tercer puesto (2002)",
+   "stars": [
+    "Arda Güler",
+    "Hakan Çalhanoğlu",
+    "Kenan Yıldız"
+   ],
+   "note": "Regresa tras 24 años con una generación dorada liderada por Arda Güler."
+  },
+  {
+   "id": "GER",
+   "name": "Alemania",
+   "espn": "Germany",
+   "flag": "de",
+   "group": "E",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 9,
+   "apps": 21,
+   "titles": 4,
+   "best": "Campeón (1954, 1974, 1990, 2014)",
+   "stars": [
+    "Jamal Musiala",
+    "Florian Wirtz",
+    "Joshua Kimmich"
+   ],
+   "note": "Cuatro veces campeona; busca redimirse tras dos eliminaciones seguidas en fase de grupos."
+  },
+  {
+   "id": "CUW",
+   "name": "Curazao",
+   "espn": "Curaçao",
+   "flag": "cw",
+   "group": "E",
+   "conf": "CONCACAF",
+   "confRegion": "Norte y Centroamérica",
+   "rank": 82,
+   "apps": 1,
+   "titles": 0,
+   "best": "Debut",
+   "stars": [
+    "Leandro Bacuna",
+    "Juninho Bacuna",
+    "Eloy Room"
+   ],
+   "note": "El país más pequeño en la historia de los Mundiales: ~156.000 habitantes. Debutante absoluto."
+  },
+  {
+   "id": "CIV",
+   "name": "Costa de Marfil",
+   "espn": "Ivory Coast",
+   "flag": "ci",
+   "group": "E",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 46,
+   "apps": 4,
+   "titles": 0,
+   "best": "Fase de grupos",
+   "stars": [
+    "Franck Kessié",
+    "Amad Diallo",
+    "Seko Fofana"
+   ],
+   "note": "Campeón de África 2024; cuarta participación mundialista de los Elefantes."
+  },
+  {
+   "id": "ECU",
+   "name": "Ecuador",
+   "espn": "Ecuador",
+   "flag": "ec",
+   "group": "E",
+   "conf": "CONMEBOL",
+   "confRegion": "Sudamérica",
+   "rank": 23,
+   "apps": 5,
+   "titles": 0,
+   "best": "Octavos de final (2006)",
+   "stars": [
+    "Moisés Caicedo",
+    "Piero Hincapié",
+    "Kendry Páez"
+   ],
+   "note": "Hizo una eliminatoria sobresaliente: segunda de Sudamérica solo detrás de Argentina."
+  },
+  {
+   "id": "NED",
+   "name": "Países Bajos",
+   "espn": "Netherlands",
+   "flag": "nl",
+   "group": "F",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 7,
+   "apps": 12,
+   "titles": 0,
+   "best": "Subcampeón (1974, 1978, 2010)",
+   "stars": [
+    "Virgil van Dijk",
+    "Cody Gakpo",
+    "Xavi Simons"
+   ],
+   "note": "La eterna candidata: tres finales jugadas, ninguna ganada. La Naranja Mecánica busca su primera estrella."
+  },
+  {
+   "id": "JPN",
+   "name": "Japón",
+   "espn": "Japan",
+   "flag": "jp",
+   "group": "F",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 19,
+   "apps": 8,
+   "titles": 0,
+   "best": "Octavos de final (2002, 2010, 2018, 2022)",
+   "stars": [
+    "Takefusa Kubo",
+    "Kaoru Mitoma",
+    "Wataru Endo"
+   ],
+   "note": "Fue la primera selección clasificada para 2026. Sueña con romper por fin la barrera de octavos."
+  },
+  {
+   "id": "SWE",
+   "name": "Suecia",
+   "espn": "Sweden",
+   "flag": "se",
+   "group": "F",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 40,
+   "apps": 13,
+   "titles": 0,
+   "best": "Subcampeón (1958)",
+   "stars": [
+    "Alexander Isak",
+    "Viktor Gyökeres",
+    "Dejan Kulusevski"
+   ],
+   "note": "Regresa tras ganar el repechaje; su dupla Isak-Gyökeres es de las más temidas de Europa."
+  },
+  {
+   "id": "TUN",
+   "name": "Túnez",
+   "espn": "Tunisia",
+   "flag": "tn",
+   "group": "F",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 41,
+   "apps": 7,
+   "titles": 0,
+   "best": "Fase de grupos",
+   "stars": [
+    "Hannibal Mejbri",
+    "Youssef Msakni",
+    "Aïssa Laïdouni"
+   ],
+   "note": "Tercer Mundial consecutivo de las Águilas de Cartago."
+  },
+  {
+   "id": "BEL",
+   "name": "Bélgica",
+   "espn": "Belgium",
+   "flag": "be",
+   "group": "G",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 8,
+   "apps": 15,
+   "titles": 0,
+   "best": "Tercer puesto (2018)",
+   "stars": [
+    "Kevin De Bruyne",
+    "Jérémy Doku",
+    "Romelu Lukaku"
+   ],
+   "note": "La generación dorada dio paso a una nueva camada liderada por Doku."
+  },
+  {
+   "id": "EGY",
+   "name": "Egipto",
+   "espn": "Egypt",
+   "flag": "eg",
+   "group": "G",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 34,
+   "apps": 4,
+   "titles": 0,
+   "best": "Fase de grupos",
+   "stars": [
+    "Mohamed Salah",
+    "Omar Marmoush",
+    "Mohamed Elneny"
+   ],
+   "note": "Salah, leyenda del Liverpool, disputa probablemente su último Mundial."
+  },
+  {
+   "id": "IRN",
+   "name": "Irán",
+   "espn": "Iran",
+   "flag": "ir",
+   "group": "G",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 21,
+   "apps": 7,
+   "titles": 0,
+   "best": "Fase de grupos",
+   "stars": [
+    "Mehdi Taremi",
+    "Sardar Azmoun",
+    "Alireza Jahanbakhsh"
+   ],
+   "note": "Cuarto Mundial consecutivo; nunca ha superado la primera fase."
+  },
+  {
+   "id": "NZL",
+   "name": "Nueva Zelanda",
+   "espn": "New Zealand",
+   "flag": "nz",
+   "group": "G",
+   "conf": "OFC",
+   "confRegion": "Oceanía",
+   "rank": 85,
+   "apps": 3,
+   "titles": 0,
+   "best": "Fase de grupos (invicto en 2010)",
+   "stars": [
+    "Chris Wood",
+    "Liberato Cacace",
+    "Marko Stamenic"
+   ],
+   "note": "El único representante de Oceanía; en 2010 se fue invicto sin ganar un partido."
+  },
+  {
+   "id": "ESP",
+   "name": "España",
+   "espn": "Spain",
+   "flag": "es",
+   "group": "H",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 1,
+   "apps": 17,
+   "titles": 1,
+   "best": "Campeón (2010)",
+   "stars": [
+    "Lamine Yamal",
+    "Pedri",
+    "Nico Williams"
+   ],
+   "note": "Número 1 del ranking FIFA y campeona de Europa 2024. La gran favorita junto a Argentina y Francia."
+  },
+  {
+   "id": "CPV",
+   "name": "Cabo Verde",
+   "espn": "Cape Verde",
+   "flag": "cv",
+   "group": "H",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 70,
+   "apps": 1,
+   "titles": 0,
+   "best": "Debut",
+   "stars": [
+    "Ryan Mendes",
+    "Jamiro Monteiro",
+    "Bebé"
+   ],
+   "note": "Debutante histórico: el archipiélago de ~525.000 habitantes logró una clasificación épica."
+  },
+  {
+   "id": "KSA",
+   "name": "Arabia Saudita",
+   "espn": "Saudi Arabia",
+   "flag": "sa",
+   "group": "H",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 60,
+   "apps": 7,
+   "titles": 0,
+   "best": "Octavos de final (1994)",
+   "stars": [
+    "Salem Al-Dawsari",
+    "Firas Al-Buraikan",
+    "Saud Abdulhamid"
+   ],
+   "note": "En 2022 protagonizó la sorpresa del torneo al vencer a la Argentina campeona."
+  },
+  {
+   "id": "URU",
+   "name": "Uruguay",
+   "espn": "Uruguay",
+   "flag": "uy",
+   "group": "H",
+   "conf": "CONMEBOL",
+   "confRegion": "Sudamérica",
+   "rank": 15,
+   "apps": 15,
+   "titles": 2,
+   "best": "Campeón (1930, 1950)",
+   "stars": [
+    "Federico Valverde",
+    "Darwin Núñez",
+    "Rodrigo Bentancur"
+   ],
+   "note": "Dos veces campeona del mundo; la Celeste de Bielsa fue tercera en la eliminatoria sudamericana."
+  },
+  {
+   "id": "FRA",
+   "name": "Francia",
+   "espn": "France",
+   "flag": "fr",
+   "group": "I",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 3,
+   "apps": 17,
+   "titles": 2,
+   "best": "Campeón (1998, 2018)",
+   "stars": [
+    "Kylian Mbappé",
+    "Ousmane Dembélé",
+    "Aurélien Tchouaméni"
+   ],
+   "note": "Finalista en 2022 y campeona en dos de los últimos tres Mundiales. Dembélé llega como Balón de Oro 2025."
+  },
+  {
+   "id": "SEN",
+   "name": "Senegal",
+   "espn": "Senegal",
+   "flag": "sn",
+   "group": "I",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 18,
+   "apps": 4,
+   "titles": 0,
+   "best": "Cuartos de final (2002)",
+   "stars": [
+    "Sadio Mané",
+    "Nicolas Jackson",
+    "Iliman Ndiaye"
+   ],
+   "note": "La mejor selección africana del ranking junto a Marruecos."
+  },
+  {
+   "id": "IRQ",
+   "name": "Irak",
+   "espn": "Iraq",
+   "flag": "iq",
+   "group": "I",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 58,
+   "apps": 2,
+   "titles": 0,
+   "best": "Fase de grupos (1986)",
+   "stars": [
+    "Aymen Hussein",
+    "Ali Al-Hamadi",
+    "Ibrahim Bayesh"
+   ],
+   "note": "Vuelve a un Mundial 40 años después de México 1986; ganó el repechaje asiático."
+  },
+  {
+   "id": "NOR",
+   "name": "Noruega",
+   "espn": "Norway",
+   "flag": "no",
+   "group": "I",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 29,
+   "apps": 4,
+   "titles": 0,
+   "best": "Octavos de final (1998)",
+   "stars": [
+    "Erling Haaland",
+    "Martin Ødegaard",
+    "Alexander Sørloth"
+   ],
+   "note": "Clasificó con puntaje perfecto y Haaland en modo récord: 16 goles en la eliminatoria."
+  },
+  {
+   "id": "ARG",
+   "name": "Argentina",
+   "espn": "Argentina",
+   "flag": "ar",
+   "group": "J",
+   "conf": "CONMEBOL",
+   "confRegion": "Sudamérica",
+   "rank": 2,
+   "apps": 19,
+   "titles": 3,
+   "best": "Campeón (1978, 1986, 2022)",
+   "stars": [
+    "Lionel Messi",
+    "Julián Álvarez",
+    "Lautaro Martínez"
+   ],
+   "note": "Defensora del título. Messi, a sus 38 años, disputa su sexto Mundial: nadie ha jugado más."
+  },
+  {
+   "id": "ALG",
+   "name": "Argelia",
+   "espn": "Algeria",
+   "flag": "dz",
+   "group": "J",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 36,
+   "apps": 5,
+   "titles": 0,
+   "best": "Octavos de final (2014)",
+   "stars": [
+    "Riyad Mahrez",
+    "Amine Gouiri",
+    "Houssem Aouar"
+   ],
+   "note": "Los Zorros del Desierto vuelven tras perderse Catar 2022."
+  },
+  {
+   "id": "AUT",
+   "name": "Austria",
+   "espn": "Austria",
+   "flag": "at",
+   "group": "J",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 24,
+   "apps": 8,
+   "titles": 0,
+   "best": "Tercer puesto (1954)",
+   "stars": [
+    "David Alaba",
+    "Marcel Sabitzer",
+    "Christoph Baumgartner"
+   ],
+   "note": "Primera clasificación desde 1998; el equipo de Rangnick presiona como ninguno."
+  },
+  {
+   "id": "JOR",
+   "name": "Jordania",
+   "espn": "Jordan",
+   "flag": "jo",
+   "group": "J",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 64,
+   "apps": 1,
+   "titles": 0,
+   "best": "Debut",
+   "stars": [
+    "Mousa Al-Taamari",
+    "Yazan Al-Naimat",
+    "Ali Olwan"
+   ],
+   "note": "Debutante absoluto; fue subcampeona de la Copa Asiática 2023."
+  },
+  {
+   "id": "POR",
+   "name": "Portugal",
+   "espn": "Portugal",
+   "flag": "pt",
+   "group": "K",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 6,
+   "apps": 9,
+   "titles": 0,
+   "best": "Tercer puesto (1966)",
+   "stars": [
+    "Cristiano Ronaldo",
+    "Bruno Fernandes",
+    "Vitinha"
+   ],
+   "note": "Cristiano Ronaldo, a los 41 años, iguala el récord de Messi: sexto Mundial. Campeón de la Nations League 2025."
+  },
+  {
+   "id": "COD",
+   "name": "RD del Congo",
+   "espn": "Congo DR",
+   "flag": "cd",
+   "group": "K",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 56,
+   "apps": 2,
+   "titles": 0,
+   "best": "Fase de grupos (1974, como Zaire)",
+   "stars": [
+    "Cédric Bakambu",
+    "Yoane Wissa",
+    "Chancel Mbemba"
+   ],
+   "note": "Regresa 52 años después de su participación como Zaire; ganó el repechaje intercontinental."
+  },
+  {
+   "id": "UZB",
+   "name": "Uzbekistán",
+   "espn": "Uzbekistan",
+   "flag": "uz",
+   "group": "K",
+   "conf": "AFC",
+   "confRegion": "Asia",
+   "rank": 50,
+   "apps": 1,
+   "titles": 0,
+   "best": "Debut",
+   "stars": [
+    "Abdukodir Khusanov",
+    "Eldor Shomurodov",
+    "Otabek Shukurov"
+   ],
+   "note": "Debutante absoluto tras décadas rozando la clasificación."
+  },
+  {
+   "id": "COL",
+   "name": "Colombia",
+   "espn": "Colombia",
+   "flag": "co",
+   "group": "K",
+   "conf": "CONMEBOL",
+   "confRegion": "Sudamérica",
+   "rank": 13,
+   "apps": 7,
+   "titles": 0,
+   "best": "Cuartos de final (2014)",
+   "stars": [
+    "James Rodríguez",
+    "Luis Díaz",
+    "Daniel Muñoz"
+   ],
+   "note": "La Tricolor vuelve tras perderse 2022. James, botín de oro en 2014, lidera; Lucho Díaz es la estrella."
+  },
+  {
+   "id": "ENG",
+   "name": "Inglaterra",
+   "espn": "England",
+   "flag": "gb-eng",
+   "group": "L",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 4,
+   "apps": 17,
+   "titles": 1,
+   "best": "Campeón (1966)",
+   "stars": [
+    "Harry Kane",
+    "Jude Bellingham",
+    "Bukayo Saka"
+   ],
+   "note": "Clasificó con puntaje perfecto y sin recibir goles. Con Tuchel busca su segunda estrella, 60 años después."
+  },
+  {
+   "id": "CRO",
+   "name": "Croacia",
+   "espn": "Croatia",
+   "flag": "hr",
+   "group": "L",
+   "conf": "UEFA",
+   "confRegion": "Europa",
+   "rank": 10,
+   "apps": 7,
+   "titles": 0,
+   "best": "Subcampeón (2018)",
+   "stars": [
+    "Luka Modrić",
+    "Joško Gvardiol",
+    "Mateo Kovačić"
+   ],
+   "note": "Subcampeona 2018 y tercera en 2022. Modrić, a los 40 años, juega su quinto Mundial."
+  },
+  {
+   "id": "GHA",
+   "name": "Ghana",
+   "espn": "Ghana",
+   "flag": "gh",
+   "group": "L",
+   "conf": "CAF",
+   "confRegion": "África",
+   "rank": 73,
+   "apps": 5,
+   "titles": 0,
+   "best": "Cuartos de final (2010)",
+   "stars": [
+    "Mohammed Kudus",
+    "Antoine Semenyo",
+    "Jordan Ayew"
+   ],
+   "note": "Las Estrellas Negras rozaron las semifinales en 2010; vuelven tras la ausencia de 2022... presentes de nuevo."
+  },
+  {
+   "id": "PAN",
+   "name": "Panamá",
+   "espn": "Panama",
+   "flag": "pa",
+   "group": "L",
+   "conf": "CONCACAF",
+   "confRegion": "Norte y Centroamérica",
+   "rank": 30,
+   "apps": 2,
+   "titles": 0,
+   "best": "Fase de grupos (2018)",
+   "stars": [
+    "Adalberto Carrasquilla",
+    "Michael Amir Murillo",
+    "José Fajardo"
+   ],
+   "note": "Segunda participación; ganó su grupo eliminatorio por encima de rivales históricos."
+  }
+ ]
+}
