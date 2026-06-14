@@ -15,7 +15,7 @@ class AppStrings {
   bool get isEn => language == AppLanguage.en;
   String get locale => language.code;
 
-  String get appTitle => isEn ? 'World Cup 2026' : 'Mundial 2026';
+  String get appTitle => 'Golazo';
   String get matchesTab => isEn ? 'Matches' : 'Partidos';
   String get groupsTab => isEn ? 'Groups' : 'Grupos';
   String get bracketTab => isEn ? 'Bracket' : 'Bracket';
@@ -175,6 +175,28 @@ class AppStrings {
   String get exactAlarmEnable => isEn ? 'Enable' : 'Activar';
   String get exactAlarmNotNow => isEn ? 'Not now' : 'Ahora no';
 
+  // ----------------------------------------------------------- tour guiado
+  String get tourSkip => isEn ? 'Skip' : 'Saltar';
+  String get tourNext => isEn ? 'Next' : 'Siguiente';
+  String get tourDoneLabel => isEn ? 'Got it' : '¡Listo!';
+  String tourStep(int i, int n) => isEn ? 'Step $i of $n' : 'Paso $i de $n';
+  String get tourMatchesDesc => isEn
+      ? 'Full schedule and live scores.'
+      : 'El calendario completo y los resultados en vivo.';
+  String get tourGroupsDesc =>
+      isEn ? 'Standings for the 12 groups.' : 'Las tablas de los 12 grupos.';
+  String get tourBracketDesc =>
+      isEn ? 'The knockout bracket.' : 'El cuadro de eliminatorias.';
+  String get tourStatsDesc => isEn
+      ? 'Top scorers, assists and standout players, live.'
+      : 'Goleadores, asistencias y figuras, en vivo.';
+  String get tourSimulatorDesc => isEn
+      ? 'Simulate the tournament and make predictions.'
+      : 'Simulá el torneo y armá tus pronósticos.';
+  String get tourTeamsDesc => isEn
+      ? 'The 48 teams and their stars.'
+      : 'Las 48 selecciones y sus figuras.';
+
   String startsIn(String text) => isEn ? 'starts $text.' : 'arranca $text.';
   String get inMoments => isEn ? 'in moments' : 'en instantes';
   String inMinutes(int minutes) => isEn ? 'in $minutes min' : 'en $minutes min';
@@ -185,7 +207,7 @@ class AppStrings {
   String get onbStart => isEn ? 'Get started' : 'Comenzar';
   String get onbChooseLanguage =>
       isEn ? 'Choose your language' : 'Elegí tu idioma';
-  String get onbWelcomeTitle => isEn ? 'World Cup 2026' : 'Mundial 2026';
+  String get onbWelcomeTitle => 'Golazo';
   String get onbWelcomeBody => isEn
       ? 'Your companion for the whole tournament: 48 teams, 104 matches, all in one place.'
       : 'Tu compañero para todo el torneo: 48 selecciones, 104 partidos, todo en un solo lugar.';

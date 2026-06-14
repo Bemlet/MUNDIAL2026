@@ -181,7 +181,7 @@ void main() {
     await initializeDateFormatting('es');
     Intl.defaultLocale = 'es';
 
-    SharedPreferences.setMockInitialValues({'onboardingDone': true});
+    SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true});
     state = AppState();
     await state.load(initialSync: false);
     seedLive();
@@ -242,6 +242,11 @@ void main() {
 
     // 4c. Onboarding de primera apertura (slide de bienvenida)
     await snap(tester, const OnboardingScreen(), 'onboarding');
+
+    // 4d. Tour guiado (primer paso, spotlight sobre la pestaña)
+    state.tourDone = false;
+    await snap(tester, const Shell(), 'tour');
+    state.tourDone = true;
 
     // 5. Detalle de selección (Argentina)
     await snap(tester, const TeamDetailScreen(teamId: 'ARG'), 'equipo_arg');

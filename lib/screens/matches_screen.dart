@@ -84,12 +84,9 @@ class _MatchesScreenState extends State<MatchesScreen> {
             floating: true,
             title: Row(
               children: [
+                Text('GOLAZO', style: outfit(22, FontWeight.w900)),
                 Text(
-                  l.isEn ? 'WORLD CUP ' : 'MUNDIAL ',
-                  style: outfit(22, FontWeight.w900),
-                ),
-                Text(
-                  '2026',
+                  " '26",
                   style: outfit(22, FontWeight.w900, color: Wc.gold),
                 ),
               ],

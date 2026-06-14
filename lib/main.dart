@@ -16,6 +16,7 @@ import 'screens/prediction_screen.dart';
 import 'screens/stats_screen.dart';
 import 'screens/teams_screen.dart';
 import 'theme.dart';
+import 'widgets/coach_tour.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -97,6 +98,39 @@ class Shell extends StatefulWidget {
 class _ShellState extends State<Shell> {
   int index = 0;
   bool _exactAlarmPromptChecked = false;
+  int? _tourStep; // null = tour inactivo
+  bool _tourStarted = false;
+
+  void _maybeStartTour(AppState state) {
+    if (_tourStarted || !state.shouldRunTour) return;
+    _tourStarted = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _tourStep = 0);
+    });
+  }
+
+  List<TourStep> _tourSteps(AppStrings l) => [
+    TourStep(icon: Icons.sports_soccer, title: l.matchesTab, description: l.tourMatchesDesc),
+    TourStep(icon: Icons.table_chart, title: l.groupsTab, description: l.tourGroupsDesc),
+    TourStep(icon: Icons.account_tree, title: l.bracketTab, description: l.tourBracketDesc),
+    TourStep(icon: Icons.leaderboard, title: l.statsTab, description: l.tourStatsDesc),
+    TourStep(icon: Icons.auto_awesome, title: l.simulatorTab, description: l.tourSimulatorDesc),
+    TourStep(icon: Icons.flag, title: l.teamsTab, description: l.tourTeamsDesc),
+  ];
+
+  void _tourNext(int total) {
+    final current = _tourStep ?? 0;
+    if (current >= total - 1) {
+      _tourFinish();
+    } else {
+      setState(() => _tourStep = current + 1);
+    }
+  }
+
+  void _tourFinish() {
+    AppScope.of(context).completeTour();
+    setState(() => _tourStep = null);
+  }
 
   void _maybePromptExactAlarm(BuildContext context, AppState state) {
     if (_exactAlarmPromptChecked || !state.shouldPromptExactAlarm) return;
@@ -154,6 +188,7 @@ class _ShellState extends State<Shell> {
     if (!state.onboardingDone) {
       return const OnboardingScreen();
     }
+    _maybeStartTour(state);
     _maybePromptExactAlarm(context, state);
     const pages = [
       MatchesScreen(),
@@ -164,18 +199,20 @@ class _ShellState extends State<Shell> {
       TeamsScreen(),
     ];
     final l = state.l10n;
-    return Scaffold(
+    // Durante el tour, la pestaña mostrada sigue al paso para "llevar" al usuario.
+    final shown = _tourStep ?? index;
+    final scaffold = Scaffold(
       // SafeArea: la UI no se superpone con la barra de estado ni con la
       // barra de navegación del sistema.
       body: SafeArea(
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),
           switchInCurve: Curves.easeOutCubic,
-          child: KeyedSubtree(key: ValueKey(index), child: pages[index]),
+          child: KeyedSubtree(key: ValueKey(shown), child: pages[shown]),
         ),
       ),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: index,
+        selectedIndex: shown,
         onDestinationSelected: (i) => setState(() => index = i),
         destinations: [
           NavigationDestination(
@@ -210,6 +247,25 @@ class _ShellState extends State<Shell> {
           ),
         ],
       ),
+    );
+
+    if (_tourStep == null) return scaffold;
+    final steps = _tourSteps(l);
+    final current = _tourStep!.clamp(0, steps.length - 1);
+    return Stack(
+      children: [
+        scaffold,
+        CoachTour(
+          steps: steps,
+          index: current,
+          tabCount: steps.length,
+          nextLabel: current >= steps.length - 1 ? l.tourDoneLabel : l.tourNext,
+          skipLabel: l.tourSkip,
+          stepLabel: l.tourStep(current + 1, steps.length),
+          onNext: () => _tourNext(steps.length),
+          onSkip: _tourFinish,
+        ),
+      ],
     );
   }
 }

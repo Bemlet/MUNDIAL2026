@@ -44,7 +44,7 @@ void main() {
     });
 
     test('respeta un flag previo en true', () async {
-      SharedPreferences.setMockInitialValues({'onboardingDone': true});
+      SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true});
       final s = AppState();
       await s.load(initialSync: false);
       expect(s.onboardingDone, isTrue);
@@ -126,7 +126,7 @@ void main() {
     });
 
     testWidgets('muestra la app cuando el flag es true', (tester) async {
-      final state = await loadState(tester, {'onboardingDone': true});
+      final state = await loadState(tester, {'onboardingDone': true, 'tourDone': true});
 
       await tester.pumpWidget(shellApp(state));
       await tester.pump(const Duration(milliseconds: 300));

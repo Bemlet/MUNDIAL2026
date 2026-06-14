@@ -54,6 +54,7 @@ class AppState extends ChangeNotifier {
   bool loaded = false;
   bool darkMode = true;
   bool onboardingDone = false;
+  bool tourDone = false; // ya corrió el tour guiado
   bool exactAlarmGranted = true; // true por defecto: no molestar fuera de Android
   bool exactAlarmAsked = false; // ya mostramos el prompt una vez
   AppLanguage language = AppLanguage.es;
@@ -151,6 +152,7 @@ class AppState extends ChangeNotifier {
     darkMode = p.getBool('darkMode') ?? true;
     Wc.dark = darkMode;
     onboardingDone = p.getBool('onboardingDone') ?? false;
+    tourDone = p.getBool('tourDone') ?? false;
     exactAlarmAsked = p.getBool('exactAlarmAsked') ?? false;
   }
 
@@ -162,9 +164,24 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// ¿Mostrar el prompt para activar alarmas exactas? (una sola vez).
+  /// ¿Correr el tour guiado? (una sola vez, después del onboarding).
+  bool get shouldRunTour => loaded && onboardingDone && !tourDone;
+
+  /// Marca el tour como visto.
+  void completeTour() {
+    if (tourDone) return;
+    tourDone = true;
+    _prefs?.setBool('tourDone', true);
+    notifyListeners();
+  }
+
+  /// ¿Mostrar el prompt para activar alarmas exactas? (una sola vez, tras el tour).
   bool get shouldPromptExactAlarm =>
-      loaded && onboardingDone && !exactAlarmGranted && !exactAlarmAsked;
+      loaded &&
+      onboardingDone &&
+      tourDone &&
+      !exactAlarmGranted &&
+      !exactAlarmAsked;
 
   /// Refresca si el sistema permite alarmas exactas (Android 12+).
   Future<void> refreshExactAlarm() async {
