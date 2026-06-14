@@ -456,7 +456,11 @@ class _NextMatchCard extends StatelessWidget {
                             style: outfit(32, FontWeight.w900),
                           ),
                           const SizedBox(height: 4),
-                          LiveBadge(text: strings.live),
+                          LiveBadge(
+                            text: live.detail.isEmpty
+                                ? strings.live
+                                : live.detail,
+                          ),
                         ],
                       )
                     : _Countdown(target: match.dateUtc),
