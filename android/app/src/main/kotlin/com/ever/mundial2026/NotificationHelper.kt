@@ -13,6 +13,7 @@ import android.os.Build
 
 object NotificationHelper {
     private const val CHANNEL_ID = "mundial_live"
+    private const val TRACKING_CHANNEL_ID = "mundial_tracking"
     private const val PREFS_NAME = "MundialNotificationState"
     private const val SENT_KEYS = "sentKeys"
     private const val LANGUAGE = "language"
@@ -55,6 +56,47 @@ object NotificationHelper {
         }
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
+    }
+
+    /** Canal de baja importancia para la notificación persistente del servicio. */
+    fun createTrackingChannel(context: Context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+        val es = language(context) != "en"
+        val channel = NotificationChannel(
+            TRACKING_CHANNEL_ID,
+            if (es) "Seguimiento en vivo" else "Live tracking",
+            NotificationManager.IMPORTANCE_LOW,
+        ).apply {
+            description = if (es) "Activo mientras hay partidos en vivo" else "Active while matches are live"
+            setShowBadge(false)
+        }
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+    }
+
+    /** Notificación persistente (ongoing) del foreground service. */
+    fun trackingNotification(context: Context): Notification {
+        createTrackingChannel(context)
+        val es = language(context) != "en"
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val flags = PendingIntent.FLAG_UPDATE_CURRENT or
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+        val pendingIntent = PendingIntent.getActivity(context, 990, intent, flags)
+        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification.Builder(context, TRACKING_CHANNEL_ID)
+        } else {
+            Notification.Builder(context)
+        }
+        return builder
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle(if (es) "Siguiendo partidos en vivo" else "Following live matches")
+            .setContentText(if (es) "Te avisamos los goles al instante" else "We'll alert goals instantly")
+            .setContentIntent(pendingIntent)
+            .setOngoing(true)
+            .setPriority(Notification.PRIORITY_LOW)
+            .build()
     }
 
     private fun showNotification(context: Context, id: Int, title: String, body: String) {
