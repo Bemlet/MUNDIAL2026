@@ -68,6 +68,34 @@ void main() {
     expect(s.predChampion!.id, s.predWinner(finalMatch)!.id);
   });
 
+  test('simulateRemaining usa resultados reales de partidos jugados', () async {
+    SharedPreferences.setMockInitialValues({});
+    final s = AppState();
+    await s.load(initialSync: false);
+
+    final m = s.groupMatches['A']!.first;
+    // Resultado real finalizado 3-1.
+    s.live[m.espnId] = LiveInfo(
+      espnId: m.espnId,
+      status: 'STATUS_FULL_TIME',
+      detail: 'FT',
+      homeScore: 3,
+      awayScore: 1,
+      homeEspn: s.teams[m.homeSlot]!.espn,
+      awayEspn: s.teams[m.awaySlot]!.espn,
+    );
+    // El usuario había puesto otra cosa: debe pisarse con el real.
+    s.preds[m.no] = Pred(0, 0);
+
+    s.simulateRemaining();
+
+    expect(s.preds[m.no]!.home, 3);
+    expect(s.preds[m.no]!.away, 1);
+    // Un partido aún no jugado igual queda simulado.
+    final unplayed = s.groupMatches['A']!.firstWhere((x) => x.no != m.no);
+    expect(s.preds.containsKey(unplayed.no), isTrue);
+  });
+
   test('cambiar la fase de grupos invalida penales huérfanos', () async {
     SharedPreferences.setMockInitialValues({});
     final s = AppState();

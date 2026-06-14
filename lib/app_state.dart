@@ -482,24 +482,63 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  /// Llena al azar el grupo indicado (solo partidos sin pronóstico).
+  /// Pronóstico tomado del resultado REAL si el partido ya terminó; null si aún
+  /// no se jugó (o si fue por penales y todavía no se puede resolver el ganador).
+  Pred? realPredFor(WcMatch m) {
+    final l = liveFor(m);
+    if (l == null || !l.isFinished || l.homeScore == null || l.awayScore == null) {
+      return null;
+    }
+    final p = Pred(l.homeScore!, l.awayScore!);
+    if (m.isKnockout && l.homeScore == l.awayScore) {
+      final w = _realKnockoutWinner(m);
+      if (w == null) return null; // empate por penales aún no resoluble
+      p.penWinner = w;
+    }
+    return p;
+  }
+
+  /// Ganador real de una llave definida por penales: lo deduce del equipo que
+  /// ESPN ya colocó en la ronda siguiente.
+  String? _realKnockoutWinner(WcMatch m) {
+    final slot = 'M${m.no}';
+    for (final nxt in matches.where(
+      (x) => x.homeSlot == slot || x.awaySlot == slot,
+    )) {
+      final (h, a) = realTeams(nxt);
+      if (nxt.homeSlot == slot && h != null) return h.id;
+      if (nxt.awaySlot == slot && a != null) return a.id;
+    }
+    return null;
+  }
+
+  /// Llena el grupo: usa el resultado real si ya se jugó; si no, al azar (solo
+  /// partidos sin pronóstico).
   void simulateGroup(String g, [Random? rng]) {
     final r = rng ?? Random();
     for (final m in groupMatches[g]!) {
-      if (preds.containsKey(m.no)) continue;
-      preds[m.no] = _randomScore(m.homeSlot, m.awaySlot, r);
+      final real = realPredFor(m);
+      if (real != null) {
+        preds[m.no] = real;
+      } else if (!preds.containsKey(m.no)) {
+        preds[m.no] = _randomScore(m.homeSlot, m.awaySlot, r);
+      }
     }
     _prunePenWinners();
     _savePreds();
     notifyListeners();
   }
 
-  /// Llena al azar todo lo que falte: grupos y luego eliminatorias en orden.
+  /// Completa todo: toma los resultados REALES de los partidos ya jugados y
+  /// simula al azar solo los que faltan (grupos y luego eliminatorias en orden).
   void simulateRemaining() {
     final r = Random();
     for (final g in groupMatches.keys) {
       for (final m in groupMatches[g]!) {
-        if (!preds.containsKey(m.no)) {
+        final real = realPredFor(m);
+        if (real != null) {
+          preds[m.no] = real;
+        } else if (!preds.containsKey(m.no)) {
           preds[m.no] = _randomScore(m.homeSlot, m.awaySlot, r);
         }
       }
@@ -507,6 +546,11 @@ class AppState extends ChangeNotifier {
     final ko = matches.where((m) => m.isKnockout).toList()
       ..sort((a, b) => a.no - b.no);
     for (final m in ko) {
+      final real = realPredFor(m);
+      if (real != null) {
+        preds[m.no] = real;
+        continue;
+      }
       if (preds.containsKey(m.no)) continue;
       final (h, a) = predTeams(m);
       if (h == null || a == null) continue;

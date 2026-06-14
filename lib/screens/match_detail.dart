@@ -440,34 +440,37 @@ class _MatchEventsCard extends StatelessWidget {
 
     final marker = e.isGoal ? const _BallBadge() : _CardBadge(red: e.red);
 
-    // Jerarquía: nombre destacado (blanco, bold) + minuto secundario (dorado).
-    final nameStyle = outfit(14.5, FontWeight.w800, color: Wc.text);
-    final minStyle = outfit(12.5, FontWeight.w800, color: Wc.goldHi);
-    final spans = <InlineSpan>[];
-    if (minute.isEmpty) {
-      spans.add(TextSpan(text: name, style: nameStyle));
-    } else if (isHome) {
-      spans.add(TextSpan(text: '$name  ', style: nameStyle));
-      spans.add(TextSpan(text: minute, style: minStyle));
-    } else {
-      spans.add(TextSpan(text: '$minute  ', style: minStyle));
-      spans.add(TextSpan(text: name, style: nameStyle));
-    }
-
-    final text = Flexible(
-      child: Text.rich(
-        TextSpan(children: spans),
+    // El nombre (Flexible) se recorta si es largo; el minuto es fijo y SIEMPRE
+    // queda visible (antes iba en el mismo texto y se cortaba).
+    final nameWidget = Flexible(
+      child: Text(
+        name,
         textAlign: isHome ? TextAlign.start : TextAlign.end,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
+        style: outfit(14.5, FontWeight.w800, color: Wc.text),
       ),
+    );
+    final minuteWidget = Text(
+      minute,
+      style: outfit(12.5, FontWeight.w800, color: Wc.goldHi),
     );
 
     final content = Row(
       mainAxisAlignment: isHome ? MainAxisAlignment.start : MainAxisAlignment.end,
       children: isHome
-          ? [marker, const SizedBox(width: 9), text]
-          : [text, const SizedBox(width: 9), marker],
+          ? [
+              marker,
+              const SizedBox(width: 9),
+              nameWidget,
+              if (minute.isNotEmpty) ...[const SizedBox(width: 8), minuteWidget],
+            ]
+          : [
+              if (minute.isNotEmpty) ...[minuteWidget, const SizedBox(width: 8)],
+              nameWidget,
+              const SizedBox(width: 9),
+              marker,
+            ],
     );
 
     return Padding(
