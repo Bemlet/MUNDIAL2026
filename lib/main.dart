@@ -96,6 +96,52 @@ class Shell extends StatefulWidget {
 
 class _ShellState extends State<Shell> {
   int index = 0;
+  bool _exactAlarmPromptChecked = false;
+
+  void _maybePromptExactAlarm(BuildContext context, AppState state) {
+    if (_exactAlarmPromptChecked || !state.shouldPromptExactAlarm) return;
+    _exactAlarmPromptChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showExactAlarmDialog(context, state);
+    });
+  }
+
+  Future<void> _showExactAlarmDialog(BuildContext context, AppState state) {
+    final l = state.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.exactAlarmTitle, style: outfit(18, FontWeight.w800)),
+        content: Text(
+          l.exactAlarmBody,
+          style: outfit(14, FontWeight.w500, color: Wc.textSoft, height: 1.4),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markExactAlarmAsked();
+            },
+            child: Text(
+              l.exactAlarmNotNow,
+              style: outfit(13, FontWeight.w700, color: Wc.textDim),
+            ),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Wc.gold,
+              foregroundColor: Wc.onGold,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.requestExactAlarm();
+            },
+            child: Text(l.exactAlarmEnable, style: outfit(13, FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +154,7 @@ class _ShellState extends State<Shell> {
     if (!state.onboardingDone) {
       return const OnboardingScreen();
     }
+    _maybePromptExactAlarm(context, state);
     const pages = [
       MatchesScreen(),
       GroupsScreen(),

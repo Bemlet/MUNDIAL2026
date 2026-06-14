@@ -167,6 +167,14 @@ class AppStrings {
       isEn ? 'Match starting soon' : 'Partido por comenzar';
   String get notificationFinalTitle =>
       isEn ? 'Full time' : 'Partido finalizado';
+  String get exactAlarmTitle =>
+      isEn ? 'Enable live goal alerts' : 'Activá los avisos de gol en vivo';
+  String get exactAlarmBody => isEn
+      ? 'To notify goals the instant they happen with the app closed, Android needs permission for exact alarms. Without it, you still get goals, just less immediately.'
+      : 'Para avisarte los goles al instante con la app cerrada, Android necesita permiso de alarmas exactas. Sin él igual recibís los goles, pero con menos inmediatez.';
+  String get exactAlarmEnable => isEn ? 'Enable' : 'Activar';
+  String get exactAlarmNotNow => isEn ? 'Not now' : 'Ahora no';
+
   String startsIn(String text) => isEn ? 'starts $text.' : 'arranca $text.';
   String get inMoments => isEn ? 'in moments' : 'en instantes';
   String inMinutes(int minutes) => isEn ? 'in $minutes min' : 'en $minutes min';

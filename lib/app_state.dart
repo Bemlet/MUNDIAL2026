@@ -54,6 +54,8 @@ class AppState extends ChangeNotifier {
   bool loaded = false;
   bool darkMode = true;
   bool onboardingDone = false;
+  bool exactAlarmGranted = true; // true por defecto: no molestar fuera de Android
+  bool exactAlarmAsked = false; // ya mostramos el prompt una vez
   AppLanguage language = AppLanguage.es;
 
   AppStrings get l10n => AppStrings(language);
@@ -110,7 +112,10 @@ class AppState extends ChangeNotifier {
     await NotificationService.setLanguage(language.code);
     loaded = true;
     notifyListeners();
-    if (initialSync) sync();
+    if (initialSync) {
+      sync();
+      unawaited(refreshExactAlarm());
+    }
   }
 
   void _loadPrefs() {
@@ -146,6 +151,7 @@ class AppState extends ChangeNotifier {
     darkMode = p.getBool('darkMode') ?? true;
     Wc.dark = darkMode;
     onboardingDone = p.getBool('onboardingDone') ?? false;
+    exactAlarmAsked = p.getBool('exactAlarmAsked') ?? false;
   }
 
   /// Marca el onboarding como visto: no se vuelve a mostrar.
@@ -154,6 +160,33 @@ class AppState extends ChangeNotifier {
     onboardingDone = true;
     _prefs?.setBool('onboardingDone', true);
     notifyListeners();
+  }
+
+  /// ¿Mostrar el prompt para activar alarmas exactas? (una sola vez).
+  bool get shouldPromptExactAlarm =>
+      loaded && onboardingDone && !exactAlarmGranted && !exactAlarmAsked;
+
+  /// Refresca si el sistema permite alarmas exactas (Android 12+).
+  Future<void> refreshExactAlarm() async {
+    final granted = await NotificationService.canScheduleExactAlarms();
+    if (granted != exactAlarmGranted) {
+      exactAlarmGranted = granted;
+      notifyListeners();
+    }
+  }
+
+  /// Marca el prompt como mostrado para no repetirlo.
+  void markExactAlarmAsked() {
+    if (exactAlarmAsked) return;
+    exactAlarmAsked = true;
+    _prefs?.setBool('exactAlarmAsked', true);
+    notifyListeners();
+  }
+
+  /// Abre los ajustes del sistema para conceder la alarma exacta.
+  Future<void> requestExactAlarm() async {
+    markExactAlarmAsked();
+    await NotificationService.requestExactAlarm();
   }
 
   // ------------------------------------------------------------- sincronía

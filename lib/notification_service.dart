@@ -24,6 +24,27 @@ class NotificationService {
     } catch (_) {}
   }
 
+  /// ¿La app puede programar alarmas exactas? (true en plataformas sin el canal).
+  static Future<bool> canScheduleExactAlarms() async {
+    await initialize();
+    try {
+      return await _channel.invokeMethod<bool>('canScheduleExactAlarms') ?? true;
+    } on MissingPluginException {
+      // Tests and non-Android targets do not provide the native channel.
+    } catch (_) {}
+    return true;
+  }
+
+  /// Abre los ajustes del sistema para conceder la alarma exacta (Android 12+).
+  static Future<void> requestExactAlarm() async {
+    await initialize();
+    try {
+      await _channel.invokeMethod<void>('requestExactAlarm');
+    } on MissingPluginException {
+      // Tests and non-Android targets do not provide the native channel.
+    } catch (_) {}
+  }
+
   static Future<bool> show({
     required String key,
     required int id,
