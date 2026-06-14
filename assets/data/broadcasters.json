@@ -1,0 +1,24 @@
+{
+  "_note": "Derechos Mundial 2026 por país (curado, sujeto a confirmación oficial). EE.UU. se completa en vivo desde ESPN.",
+  "countries": {
+    "US": { "es": "Estados Unidos", "en": "United States", "channels": ["FOX", "FS1", "Telemundo", "Universo", "Peacock"] },
+    "MX": { "es": "México", "en": "Mexico", "channels": ["Televisa", "TV Azteca", "ViX"] },
+    "AR": { "es": "Argentina", "en": "Argentina", "channels": ["Telefe", "TyC Sports", "DSports"] },
+    "CO": { "es": "Colombia", "en": "Colombia", "channels": ["Caracol", "RCN", "DSports"] },
+    "CL": { "es": "Chile", "en": "Chile", "channels": ["Chilevisión", "Mega", "DSports", "ESPN"] },
+    "PE": { "es": "Perú", "en": "Peru", "channels": ["Latina", "América TV", "DSports", "ESPN"] },
+    "EC": { "es": "Ecuador", "en": "Ecuador", "channels": ["Teleamazonas", "El Canal del Fútbol", "DSports", "ESPN"] },
+    "UY": { "es": "Uruguay", "en": "Uruguay", "channels": ["Canal 10", "VTV", "DSports"] },
+    "PY": { "es": "Paraguay", "en": "Paraguay", "channels": ["Tigo Sports", "Trece", "DSports"] },
+    "BO": { "es": "Bolivia", "en": "Bolivia", "channels": ["Tigo Sports", "Unitel", "DSports"] },
+    "VE": { "es": "Venezuela", "en": "Venezuela", "channels": ["Televen", "DSports", "ESPN"] },
+    "CR": { "es": "Costa Rica", "en": "Costa Rica", "channels": ["Teletica", "Repretel", "ESPN"] },
+    "PA": { "es": "Panamá", "en": "Panama", "channels": ["TVMax", "RPC", "ESPN"] },
+    "GT": { "es": "Guatemala", "en": "Guatemala", "channels": ["Tigo Sports", "ESPN"] },
+    "HN": { "es": "Honduras", "en": "Honduras", "channels": ["Tigo Sports", "Televicentro", "ESPN"] },
+    "SV": { "es": "El Salvador", "en": "El Salvador", "channels": ["Tigo Sports", "Canal 4", "ESPN"] },
+    "DO": { "es": "República Dominicana", "en": "Dominican Republic", "channels": ["CDN", "ESPN"] },
+    "CA": { "es": "Canadá", "en": "Canada", "channels": ["TSN", "CTV", "RDS"] },
+    "ES": { "es": "España", "en": "Spain", "channels": ["La 1 (RTVE)", "Telecinco", "Movistar+"] }
+  }
+}

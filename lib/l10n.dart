@@ -153,6 +153,10 @@ class AppStrings {
   String get howThisTieIsDecided =>
       isEn ? 'How this matchup is decided' : 'Cómo se define esta llave';
   String get goalsAndCards => isEn ? 'Goals & cards' : 'Goles y tarjetas';
+  String get whereToWatch => isEn ? 'Where to watch' : 'Dónde verlo';
+  String get broadcastCountry => isEn ? 'TV country' : 'País de TV';
+  String get selectCountry =>
+      isEn ? 'Choose your country' : 'Elegí tu país';
   String get stadiumCapacity =>
       isEn ? 'Stadium capacity' : 'Capacidad del estadio';
   String spectators(String value) =>

@@ -127,6 +127,28 @@ class _MatchesScreenState extends State<MatchesScreen> {
                     ),
                 ],
               ),
+              PopupMenuButton<String>(
+                tooltip: l.broadcastCountry,
+                icon: Icon(Icons.live_tv, color: Wc.textDim),
+                color: Wc.surface,
+                onSelected: state.setCountry,
+                itemBuilder: (_) => [
+                  for (final c in state.countriesSorted)
+                    PopupMenuItem(
+                      value: c.code,
+                      child: Text(
+                        state.countryName(c.code),
+                        style: outfit(
+                          13,
+                          state.country == c.code
+                              ? FontWeight.w900
+                              : FontWeight.w600,
+                          color: state.country == c.code ? Wc.goldHi : Wc.text,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               if (state.syncing)
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
@@ -617,6 +639,25 @@ class RealMatchCard extends StatelessWidget {
               ),
             ],
           ),
+          if (state.channelsFor(match) case final ch when ch.isNotEmpty) ...[
+            SizedBox(height: dense ? 6 : 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.live_tv, size: 12, color: Wc.textDim),
+                const SizedBox(width: 5),
+                Flexible(
+                  child: Text(
+                    ch.join(' · '),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: outfit(10.5, FontWeight.w600, color: Wc.textDim),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );

@@ -119,6 +119,28 @@ class MatchDetailScreen extends StatelessWidget {
               _MatchEventsCard(stats: ms, home: home, away: away),
             ],
 
+            // -------------------------------------------------- dónde verlo
+            if (state.channelsFor(m) case final channels
+                when channels.isNotEmpty) ...[
+              SectionTitle(
+                l10n.whereToWatch,
+                trailing: Pill(
+                  state.countryName(state.country),
+                  color: Wc.mint,
+                  icon: Icons.public,
+                ),
+              ),
+              GradientCard(
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final c in channels) _ChannelChip(name: c),
+                  ],
+                ),
+              ),
+            ],
+
             // --------------------------------------------------------- ficha
             GradientCard(
               child: Column(
@@ -505,6 +527,32 @@ class _CardBadge extends StatelessWidget {
             blurRadius: 2,
             offset: const Offset(0, 1),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Chip de un canal de transmisión.
+class _ChannelChip extends StatelessWidget {
+  final String name;
+  const _ChannelChip({required this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: Wc.surfaceHi,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Wc.line),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.live_tv, size: 15, color: Wc.goldHi),
+          const SizedBox(width: 6),
+          Text(name, style: outfit(13, FontWeight.w700)),
         ],
       ),
     );

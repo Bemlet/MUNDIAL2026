@@ -5,6 +5,7 @@ library;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -27,6 +28,9 @@ class AppState extends ChangeNotifier {
   late final Map<String, Team> teams; // id -> equipo
   late final Map<String, Team> teamsByEspn; // displayName ESPN -> equipo
   late final Map<String, Venue> venues;
+  late final Map<String, CountryBroadcast> broadcasters; // ISO-2 -> canales
+  final Map<String, List<String>> liveBroadcasts = {}; // espnId -> canales (ESPN)
+  String country = 'US'; // país para canales de TV (autodetectado/elegido)
   late final List<WcMatch> matches; // ordenados por fecha
   late final Map<int, WcMatch> byNo;
   late final Map<String, WcMatch> byEspnId;
@@ -108,6 +112,14 @@ class AppState extends ChangeNotifier {
         m.no: m.awaySlot.substring(1),
     };
 
+    final bJson = jsonDecode(
+      await rootBundle.loadString('assets/data/broadcasters.json'),
+    );
+    broadcasters = {
+      for (final e in (bJson['countries'] as Map<String, dynamic>).entries)
+        e.key: CountryBroadcast.fromJson(e.key, e.value),
+    };
+
     _prefs = await SharedPreferences.getInstance();
     _loadPrefs();
     await NotificationService.setLanguage(language.code);
@@ -154,6 +166,45 @@ class AppState extends ChangeNotifier {
     onboardingDone = p.getBool('onboardingDone') ?? false;
     tourDone = p.getBool('tourDone') ?? false;
     exactAlarmAsked = p.getBool('exactAlarmAsked') ?? false;
+    country = p.getString('country') ?? _detectCountry();
+  }
+
+  /// País por defecto según el locale del dispositivo (si lo conocemos).
+  String _detectCountry() {
+    final cc = ui.PlatformDispatcher.instance.locale.countryCode?.toUpperCase();
+    return (cc != null && broadcasters.containsKey(cc)) ? cc : 'US';
+  }
+
+  /// Cambia el país de transmisión elegido por el usuario.
+  void setCountry(String code) {
+    if (country == code) return;
+    country = code;
+    _prefs?.setString('country', code);
+    notifyListeners();
+  }
+
+  /// Nombre localizado del país.
+  String countryName(String code) {
+    final b = broadcasters[code];
+    if (b == null) return code;
+    return l10n.isEn ? b.nameEn : b.nameEs;
+  }
+
+  /// Países disponibles, ordenados por nombre localizado.
+  List<CountryBroadcast> get countriesSorted {
+    final list = broadcasters.values.toList()
+      ..sort((a, b) => countryName(a.code).compareTo(countryName(b.code)));
+    return list;
+  }
+
+  /// Canales para un partido según el país: EE.UU. usa el feed en vivo de ESPN
+  /// (por partido); el resto, la lista curada del país.
+  List<String> channelsFor(WcMatch m) {
+    if (country == 'US') {
+      final live = liveBroadcasts[m.espnId];
+      if (live != null && live.isNotEmpty) return live;
+    }
+    return broadcasters[country]?.channels ?? const [];
   }
 
   /// Marca el onboarding como visto: no se vuelve a mostrar.
@@ -236,6 +287,16 @@ class AppState extends ChangeNotifier {
         }
         final type = e['status']?['type'] ?? {};
         final id = '${e['id']}';
+        // Canales de TV (EE.UU.) del feed de ESPN.
+        final gb = (comp['geoBroadcasts'] as List?) ?? const [];
+        final chans = <String>[];
+        for (final g in gb) {
+          var name = '${(g['media'] ?? const {})['shortName'] ?? ''}'.trim();
+          if (name.isEmpty) continue;
+          if (name == 'Tele') name = 'Telemundo';
+          if (!chans.contains(name)) chans.add(name);
+        }
+        if (chans.isNotEmpty) liveBroadcasts[id] = chans;
         final previous = live[id];
         final info = LiveInfo(
           espnId: id,

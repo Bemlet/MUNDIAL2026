@@ -184,6 +184,7 @@ void main() {
     SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true});
     state = AppState();
     await state.load(initialSync: false);
+    state.setCountry('MX');
     seedLive();
     seedStats();
   });

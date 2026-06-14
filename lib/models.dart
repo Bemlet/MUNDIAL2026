@@ -32,6 +32,19 @@ class Team {
       note = j['note'];
 }
 
+/// Cadenas de transmisión de un país para el Mundial.
+class CountryBroadcast {
+  final String code; // ISO-2, p. ej. 'MX'
+  final String nameEs;
+  final String nameEn;
+  final List<String> channels;
+
+  CountryBroadcast.fromJson(this.code, Map<String, dynamic> j)
+    : nameEs = j['es'],
+      nameEn = j['en'],
+      channels = List<String>.from(j['channels']);
+}
+
 class Venue {
   final String name;
   final String city;
