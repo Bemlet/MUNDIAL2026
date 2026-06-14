@@ -414,42 +414,99 @@ class _MatchEventsCard extends StatelessWidget {
   Widget _eventRow(AppStrings l, _Ev e) {
     final isHome = home != null && e.teamEspn == home!.espn;
     final minute = e.minute != null ? "${e.minute}'" : '';
-    final label = e.penalty ? '${e.name} (${l.penaltyMark})' : e.name;
+    final name = e.penalty ? '${e.name} (${l.penaltyMark})' : e.name;
 
-    final marker = e.isGoal
-        ? Icon(Icons.sports_soccer, size: 18, color: Wc.goldHi)
-        : Container(
-            width: 13,
-            height: 17,
-            decoration: BoxDecoration(
-              color: e.red ? Wc.live : const Color(0xFFF4C430),
-              borderRadius: BorderRadius.circular(3),
-            ),
-          );
+    final marker = e.isGoal ? const _BallBadge() : _CardBadge(red: e.red);
+
+    // Jerarquía: nombre destacado (blanco, bold) + minuto secundario (dorado).
+    final nameStyle = outfit(14.5, FontWeight.w800, color: Wc.text);
+    final minStyle = outfit(12.5, FontWeight.w800, color: Wc.goldHi);
+    final spans = <InlineSpan>[];
+    if (minute.isEmpty) {
+      spans.add(TextSpan(text: name, style: nameStyle));
+    } else if (isHome) {
+      spans.add(TextSpan(text: '$name  ', style: nameStyle));
+      spans.add(TextSpan(text: minute, style: minStyle));
+    } else {
+      spans.add(TextSpan(text: '$minute  ', style: minStyle));
+      spans.add(TextSpan(text: name, style: nameStyle));
+    }
 
     final text = Flexible(
-      child: Text(
-        minute.isEmpty ? label : (isHome ? '$label  $minute' : '$minute  $label'),
+      child: Text.rich(
+        TextSpan(children: spans),
         textAlign: isHome ? TextAlign.start : TextAlign.end,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: outfit(13.5, FontWeight.w700),
       ),
     );
 
     final content = Row(
       mainAxisAlignment: isHome ? MainAxisAlignment.start : MainAxisAlignment.end,
       children: isHome
-          ? [marker, const SizedBox(width: 8), text]
-          : [text, const SizedBox(width: 8), marker],
+          ? [marker, const SizedBox(width: 9), text]
+          : [text, const SizedBox(width: 9), marker],
     );
 
-    return Row(
-      children: [
-        Expanded(child: isHome ? content : const SizedBox.shrink()),
-        const SizedBox(width: 12),
-        Expanded(child: !isHome ? content : const SizedBox.shrink()),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        children: [
+          Expanded(child: isHome ? content : const SizedBox.shrink()),
+          const SizedBox(width: 12),
+          Expanded(child: !isHome ? content : const SizedBox.shrink()),
+        ],
+      ),
+    );
+  }
+}
+
+/// Balón clásico blanco y negro para los goles.
+class _BallBadge extends StatelessWidget {
+  const _BallBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 22,
+      height: 22,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .28),
+            blurRadius: 3,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: const Icon(Icons.sports_soccer, size: 16, color: Colors.black),
+    );
+  }
+}
+
+/// Tarjeta amarilla/roja.
+class _CardBadge extends StatelessWidget {
+  final bool red;
+  const _CardBadge({required this.red});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 14,
+      height: 18,
+      decoration: BoxDecoration(
+        color: red ? Wc.live : const Color(0xFFF4C430),
+        borderRadius: BorderRadius.circular(3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .22),
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
     );
   }
 }
