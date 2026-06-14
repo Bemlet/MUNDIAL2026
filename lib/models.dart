@@ -32,17 +32,26 @@ class Team {
       note = j['note'];
 }
 
-/// Cadenas de transmisión de un país para el Mundial.
+/// Transmisión de un país: canales que pasan TODO el torneo (`all`) y canales
+/// abiertos que solo pasan partidos selectos (`select`): los de su selección,
+/// la inauguración y las eliminatorias. `live` = se resuelve por partido desde
+/// el feed de ESPN (EE.UU.).
 class CountryBroadcast {
   final String code; // ISO-2, p. ej. 'MX'
   final String nameEs;
   final String nameEn;
-  final List<String> channels;
+  final String? teamId; // selección local, p. ej. 'MEX'
+  final bool live;
+  final List<String> all;
+  final List<String> select;
 
   CountryBroadcast.fromJson(this.code, Map<String, dynamic> j)
     : nameEs = j['es'],
       nameEn = j['en'],
-      channels = List<String>.from(j['channels']);
+      teamId = j['teamId'],
+      live = j['live'] == true,
+      all = List<String>.from(j['all'] ?? const []),
+      select = List<String>.from(j['select'] ?? const []);
 }
 
 class Venue {

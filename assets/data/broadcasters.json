@@ -1,25 +1,9 @@
 {
-  "_note": "Derechos Mundial 2026 verificados (Wikipedia: Anexo derechos de transmisión 2026 + anuncios oficiales). EE.UU. además se completa en vivo desde ESPN. DSports cubre AR/CL/CO/EC/PE/UY (no BO/PY/BR). Paramount+ es streaming en Latinoamérica.",
+  "_note": "Grilla Mundial 2026 verificada (fuentes: Depor, Medio Tiempo, Ámbito, El Tiempo, junio 2026). 'all' = canales que pasan TODO el torneo; 'select' = canales abiertos que solo pasan partidos de su selección, la inauguración y eliminatorias. EE.UU. se resuelve por partido desde el feed de ESPN.",
   "countries": {
-    "US": { "es": "Estados Unidos", "en": "United States", "channels": ["FOX", "FS1", "Telemundo", "Universo", "Peacock"] },
-    "MX": { "es": "México", "en": "Mexico", "channels": ["Televisa", "TV Azteca", "ViX"] },
-    "AR": { "es": "Argentina", "en": "Argentina", "channels": ["Telefe", "TV Pública", "TyC Sports", "DSports", "Paramount+"] },
-    "CO": { "es": "Colombia", "en": "Colombia", "channels": ["Caracol", "RCN", "Win Sports", "DSports", "Paramount+"] },
-    "CL": { "es": "Chile", "en": "Chile", "channels": ["Chilevisión", "DSports", "Paramount+"] },
-    "PE": { "es": "Perú", "en": "Peru", "channels": ["América TV", "DSports", "Paramount+"] },
-    "EC": { "es": "Ecuador", "en": "Ecuador", "channels": ["Teleamazonas", "DSports", "Paramount+"] },
-    "UY": { "es": "Uruguay", "en": "Uruguay", "channels": ["Canal 5", "Antel TV", "DSports", "Paramount+"] },
-    "VE": { "es": "Venezuela", "en": "Venezuela", "channels": ["Televen", "Paramount+"] },
-    "PY": { "es": "Paraguay", "en": "Paraguay", "channels": ["Trece", "GEN", "Tigo Sports", "Paramount+"] },
-    "BO": { "es": "Bolivia", "en": "Bolivia", "channels": ["Unitel", "Red Uno", "Tigo Sports", "Paramount+"] },
-    "BR": { "es": "Brasil", "en": "Brazil", "channels": ["Globo", "SBT", "CazéTV"] },
-    "CR": { "es": "Costa Rica", "en": "Costa Rica", "channels": ["Teletica", "Tigo Sports", "FOX"] },
-    "PA": { "es": "Panamá", "en": "Panama", "channels": ["Medcom", "TVN", "Tigo Sports", "FOX"] },
-    "GT": { "es": "Guatemala", "en": "Guatemala", "channels": ["Albavisión", "FOX", "Tigo Sports"] },
-    "HN": { "es": "Honduras", "en": "Honduras", "channels": ["Televicentro", "Tigo Sports", "FOX"] },
-    "SV": { "es": "El Salvador", "en": "El Salvador", "channels": ["TCS", "Tigo Sports", "FOX"] },
-    "NI": { "es": "Nicaragua", "en": "Nicaragua", "channels": ["Ratensa", "Tigo Sports", "FOX"] },
-    "DO": { "es": "República Dominicana", "en": "Dominican Republic", "channels": ["CDN Deportes", "PIO Deportes"] },
-    "CA": { "es": "Canadá", "en": "Canada", "channels": ["TSN", "CTV", "RDS"] }
+    "US": { "es": "Estados Unidos", "en": "United States", "live": true, "all": ["FOX", "FS1", "Telemundo", "Universo", "Peacock"], "select": [] },
+    "MX": { "es": "México", "en": "Mexico", "teamId": "MEX", "all": ["ViX"], "select": ["Canal 5", "Azteca 7"] },
+    "AR": { "es": "Argentina", "en": "Argentina", "teamId": "ARG", "all": ["DSports", "Paramount+"], "select": ["Telefe", "TV Pública", "TyC Sports"] },
+    "CO": { "es": "Colombia", "en": "Colombia", "teamId": "COL", "all": ["DSports", "Paramount+"], "select": ["Gol Caracol", "RCN", "Win Sports"] }
   }
 }

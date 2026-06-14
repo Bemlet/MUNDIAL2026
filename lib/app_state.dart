@@ -172,7 +172,8 @@ class AppState extends ChangeNotifier {
   /// País por defecto según el locale del dispositivo (si lo conocemos).
   String _detectCountry() {
     final cc = ui.PlatformDispatcher.instance.locale.countryCode?.toUpperCase();
-    return (cc != null && broadcasters.containsKey(cc)) ? cc : 'US';
+    // Si no es un país soportado, no mostramos canales (en vez de datos erróneos).
+    return cc ?? 'US';
   }
 
   /// Cambia el país de transmisión elegido por el usuario.
@@ -197,14 +198,25 @@ class AppState extends ChangeNotifier {
     return list;
   }
 
-  /// Canales para un partido según el país: EE.UU. usa el feed en vivo de ESPN
-  /// (por partido); el resto, la lista curada del país.
+  /// Canales para un partido según el país:
+  /// - `live` (EE.UU.): usa el feed por partido de ESPN si existe.
+  /// - resto: canales de todo el torneo + abiertos solo si juega la selección
+  ///   local, es la inauguración o es eliminatoria.
   List<String> channelsFor(WcMatch m) {
-    if (country == 'US') {
+    final c = broadcasters[country];
+    if (c == null) return const [];
+    if (c.live) {
       final live = liveBroadcasts[m.espnId];
-      if (live != null && live.isNotEmpty) return live;
+      return (live != null && live.isNotEmpty) ? live : c.all;
     }
-    return broadcasters[country]?.channels ?? const [];
+    final out = <String>[...c.all];
+    final involvesTeam = c.teamId != null &&
+        m.stage == Stage.group &&
+        (m.homeSlot == c.teamId || m.awaySlot == c.teamId);
+    if (m.no == 1 || m.isKnockout || involvesTeam) {
+      out.addAll(c.select);
+    }
+    return out;
   }
 
   /// Marca el onboarding como visto: no se vuelve a mostrar.
