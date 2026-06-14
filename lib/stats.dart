@@ -33,8 +33,9 @@ class GoalEvent {
 class CardEvent {
   final PlayerRef player;
   final bool red;
+  final int? minute;
 
-  const CardEvent(this.player, {required this.red});
+  const CardEvent(this.player, {required this.red, this.minute});
 }
 
 /// Línea por jugador tomada del `summary` (rosters): asistencias, atajadas y
@@ -186,7 +187,7 @@ class MatchStats {
         goals.add(GoalEvent(ref, penalty: d['penaltyKick'] == true, minute: minute));
       }
       if (d['yellowCard'] == true || d['redCard'] == true) {
-        cards.add(CardEvent(ref, red: d['redCard'] == true));
+        cards.add(CardEvent(ref, red: d['redCard'] == true, minute: minute));
       }
     }
 

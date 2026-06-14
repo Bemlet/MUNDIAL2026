@@ -79,10 +79,12 @@ Map<String, dynamic> cardDetail(
   String name,
   String teamId, {
   required bool red,
+  String clock = "0'",
 }) => {
   'scoringPlay': false,
   'redCard': red,
   'yellowCard': !red,
+  'clock': {'displayValue': clock},
   'team': {'id': teamId},
   'athletesInvolved': [
     {
@@ -163,6 +165,21 @@ void main() {
       expect(mex.goalsAgainst, 1);
       expect(mex.possessionPct, 62);
       expect(mex.shots, 15);
+    });
+
+    test('parsea el minuto de goles y tarjetas', () {
+      final m = MatchStats.fromScoreboardEvent(
+        scoreboardEvent(
+          id: '1', homeId: '1', homeName: 'A', homeScore: 1,
+          awayId: '2', awayName: 'B', awayScore: 0,
+          details: [
+            goalDetail('p1', 'Goleador', '1', clock: "23'"),
+            cardDetail('p2', 'Amonestado', '2', red: false, clock: "67'"),
+          ],
+        ),
+      );
+      expect(m.goals.first.minute, 23);
+      expect(m.cards.first.minute, 67);
     });
 
     test('partido no empezado no cuenta como started', () {

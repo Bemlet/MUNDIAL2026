@@ -152,6 +152,7 @@ class AppStrings {
   String get titles => isEn ? 'Titles' : 'Títulos';
   String get howThisTieIsDecided =>
       isEn ? 'How this matchup is decided' : 'Cómo se define esta llave';
+  String get goalsAndCards => isEn ? 'Goals & cards' : 'Goles y tarjetas';
   String get stadiumCapacity =>
       isEn ? 'Stadium capacity' : 'Capacidad del estadio';
   String spectators(String value) =>

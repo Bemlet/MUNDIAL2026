@@ -51,14 +51,34 @@ void seedLive() {
 
 /// Siembra estadísticas de torneo realistas para la captura de la pantalla.
 void seedStats() {
-  Map<String, dynamic> goal(String id, String name, String teamId) => {
+  Map<String, dynamic> goal(
+    String id,
+    String name,
+    String teamId, {
+    String clock = "0'",
+  }) => {
     'scoringPlay': true,
     'penaltyKick': false,
     'ownGoal': false,
     'shootout': false,
+    'clock': {'displayValue': clock},
     'athletesInvolved': [
       {
         'id': id,
+        'displayName': name,
+        'team': {'id': teamId},
+      },
+    ],
+  };
+
+  Map<String, dynamic> card(String name, String teamId, String clock) => {
+    'scoringPlay': false,
+    'yellowCard': true,
+    'redCard': false,
+    'clock': {'displayValue': clock},
+    'athletesInvolved': [
+      {
+        'id': name,
         'displayName': name,
         'team': {'id': teamId},
       },
@@ -107,8 +127,9 @@ void seedStats() {
   final m1 = state.byNo[1]!, m2 = state.byNo[2]!;
   state.matchStats[m1.espnId] = MatchStats.fromScoreboardEvent(
     event(1, 2, 0, [
-      goal('s1', 'Raúl Jiménez', 'h1'),
-      goal('s1', 'Raúl Jiménez', 'h1'),
+      goal('s1', 'Raúl Jiménez', 'h1', clock: "18'"),
+      card('Teboho Mokoena', 'a1', "54'"),
+      goal('s1', 'Raúl Jiménez', 'h1', clock: "63'"),
     ]),
   );
   state.matchStats[m2.espnId] = MatchStats.fromScoreboardEvent(

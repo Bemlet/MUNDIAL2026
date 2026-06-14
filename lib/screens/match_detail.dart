@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../l10n.dart';
 import '../main.dart';
 import '../models.dart';
+import '../stats.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'groups_screen.dart' show GroupTableCard;
@@ -110,6 +111,13 @@ class MatchDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
+
+            // ------------------------------------------- goles y tarjetas
+            if (state.matchStats[m.espnId] case final ms?
+                when ms.goals.isNotEmpty || ms.cards.isNotEmpty) ...[
+              SectionTitle(l10n.goalsAndCards),
+              _MatchEventsCard(stats: ms, home: home, away: away),
+            ],
 
             // --------------------------------------------------------- ficha
             GradientCard(
@@ -338,6 +346,110 @@ class MatchDetailScreen extends StatelessWidget {
         textAlign: TextAlign.center,
         style: outfit(14, FontWeight.w800, color: color),
       ),
+    );
+  }
+}
+
+/// Un evento del partido (gol o tarjeta) normalizado para el timeline.
+class _Ev {
+  final int? minute;
+  final bool isGoal;
+  final bool penalty;
+  final bool red;
+  final String name;
+  final String teamEspn;
+
+  const _Ev({
+    required this.minute,
+    required this.isGoal,
+    required this.name,
+    required this.teamEspn,
+    this.penalty = false,
+    this.red = false,
+  });
+}
+
+/// Tarjeta con el timeline de goles y tarjetas, alineado local/visitante.
+class _MatchEventsCard extends StatelessWidget {
+  final MatchStats stats;
+  final Team? home;
+  final Team? away;
+
+  const _MatchEventsCard({required this.stats, required this.home, required this.away});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    final events = <_Ev>[
+      for (final g in stats.goals)
+        _Ev(
+          minute: g.minute,
+          isGoal: true,
+          penalty: g.penalty,
+          name: g.scorer.name,
+          teamEspn: g.scorer.teamEspn,
+        ),
+      for (final c in stats.cards)
+        _Ev(
+          minute: c.minute,
+          isGoal: false,
+          red: c.red,
+          name: c.player.name,
+          teamEspn: c.player.teamEspn,
+        ),
+    ]..sort((a, b) => (a.minute ?? 999).compareTo(b.minute ?? 999));
+
+    return GradientCard(
+      child: Column(
+        children: [
+          for (final (i, e) in events.indexed) ...[
+            if (i > 0) const Divider(height: 14),
+            _eventRow(l, e),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _eventRow(AppStrings l, _Ev e) {
+    final isHome = home != null && e.teamEspn == home!.espn;
+    final minute = e.minute != null ? "${e.minute}'" : '';
+    final label = e.penalty ? '${e.name} (${l.penaltyMark})' : e.name;
+
+    final marker = e.isGoal
+        ? Icon(Icons.sports_soccer, size: 18, color: Wc.goldHi)
+        : Container(
+            width: 13,
+            height: 17,
+            decoration: BoxDecoration(
+              color: e.red ? Wc.live : const Color(0xFFF4C430),
+              borderRadius: BorderRadius.circular(3),
+            ),
+          );
+
+    final text = Flexible(
+      child: Text(
+        minute.isEmpty ? label : (isHome ? '$label  $minute' : '$minute  $label'),
+        textAlign: isHome ? TextAlign.start : TextAlign.end,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: outfit(13.5, FontWeight.w700),
+      ),
+    );
+
+    final content = Row(
+      mainAxisAlignment: isHome ? MainAxisAlignment.start : MainAxisAlignment.end,
+      children: isHome
+          ? [marker, const SizedBox(width: 8), text]
+          : [text, const SizedBox(width: 8), marker],
+    );
+
+    return Row(
+      children: [
+        Expanded(child: isHome ? content : const SizedBox.shrink()),
+        const SizedBox(width: 12),
+        Expanded(child: !isHome ? content : const SizedBox.shrink()),
+      ],
     );
   }
 }
