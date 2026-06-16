@@ -96,6 +96,42 @@ void main() {
     expect(s.preds.containsKey(unplayed.no), isTrue);
   });
 
+  test("pick'em: cutoff 16/jun y puntaje 6/3/0", () async {
+    SharedPreferences.setMockInitialValues({});
+    final s = AppState();
+    await s.load(initialSync: false);
+
+    LiveInfo ft(WcMatch m, int h, int a) => LiveInfo(
+      espnId: m.espnId,
+      status: 'STATUS_FULL_TIME',
+      detail: 'FT',
+      homeScore: h,
+      awayScore: a,
+      homeEspn: s.teams[m.homeSlot]!.espn,
+      awayEspn: s.teams[m.awaySlot]!.espn,
+    );
+
+    // Partido anterior al 16/jun: aunque acierte exacto, NO puntúa.
+    final pre = s.matches.firstWhere(
+      (m) => m.stage == Stage.group && m.dateUtc.isBefore(AppState.pickemStart),
+    );
+    s.live[pre.espnId] = ft(pre, 2, 1);
+    s.preds[pre.no] = Pred(2, 1);
+    expect(s.pickemPoints(pre), 0);
+
+    // Partido del 16/jun en adelante: exacto = 6, resultado = 3, erró = 0.
+    final post = s.matches.firstWhere(
+      (m) => m.stage == Stage.group && !m.dateUtc.isBefore(AppState.pickemStart),
+    );
+    s.live[post.espnId] = ft(post, 2, 1);
+    s.preds[post.no] = Pred(2, 1);
+    expect(s.pickemPoints(post), 6);
+    s.preds[post.no] = Pred(3, 0);
+    expect(s.pickemPoints(post), 3);
+    s.preds[post.no] = Pred(0, 2);
+    expect(s.pickemPoints(post), 0);
+  });
+
   test('cambiar la fase de grupos invalida penales huérfanos', () async {
     SharedPreferences.setMockInitialValues({});
     final s = AppState();

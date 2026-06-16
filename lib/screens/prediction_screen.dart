@@ -18,10 +18,8 @@ class PredictionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final l = state.l10n;
-    final koCount = state.matches
-        .where((m) => m.isKnockout && state.preds.containsKey(m.no))
-        .length;
-    final progress = (state.groupPredCount + koCount) / 104;
+    final total = state.pickemTotal;
+    final (exact, correct) = state.pickemBreakdown;
 
     return DefaultTabController(
       length: 3,
@@ -29,11 +27,6 @@ class PredictionScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(l.simulatorTab, style: outfit(22, FontWeight.w900)),
           actions: [
-            IconButton(
-              tooltip: l.simulateRemaining,
-              icon: Icon(Icons.casino_outlined, color: Wc.goldHi),
-              onPressed: () => _confirmSimulate(context, state),
-            ),
             IconButton(
               tooltip: l.clearAll,
               icon: Icon(Icons.delete_outline, color: Wc.textDim),
@@ -45,38 +38,45 @@ class PredictionScreen extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                  child: Column(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                  child: Row(
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            l.predictionProgress,
+                            l.pickemScore,
                             style: outfit(
-                              12,
+                              11.5,
                               FontWeight.w600,
                               color: Wc.textDim,
                             ),
                           ),
-                          const Spacer(),
                           Text(
-                            l.predictedMatches(state.groupPredCount + koCount),
+                            l.pickemSummary(exact, correct),
                             style: outfit(
-                              12,
-                              FontWeight.w800,
-                              color: Wc.goldHi,
+                              11.5,
+                              FontWeight.w600,
+                              color: Wc.textDim,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 6),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: progress,
-                          minHeight: 6,
-                          backgroundColor: Wc.surface,
-                          valueColor: AlwaysStoppedAnimation<Color>(Wc.gold),
+                      const Spacer(),
+                      Text(
+                        '$total',
+                        style: outfit(30, FontWeight.w900, color: Wc.goldHi),
+                      ),
+                      const SizedBox(width: 4),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 9),
+                        child: Text(
+                          l.pts,
+                          style: outfit(
+                            13,
+                            FontWeight.w700,
+                            color: Wc.textDim,
+                          ),
                         ),
                       ),
                     ],
@@ -101,47 +101,6 @@ class PredictionScreen extends StatelessWidget {
         body: const TabBarView(
           children: [_GroupsPredTab(), _ThirdsPredTab(), _BracketPredTab()],
         ),
-      ),
-    );
-  }
-
-  void _confirmSimulate(BuildContext context, AppState state) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: Wc.surface,
-        title: Text(
-          state.l10n.quickSimulation,
-          style: outfit(18, FontWeight.w800),
-        ),
-        content: Text(
-          state.l10n.quickSimulationBody,
-          style: outfit(13.5, FontWeight.w500, height: 1.4),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(
-              state.l10n.cancel,
-              style: outfit(13, FontWeight.w600, color: Wc.textDim),
-            ),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: Wc.gold),
-            onPressed: () {
-              state.simulateRemaining();
-              Navigator.pop(ctx);
-            },
-            child: Text(
-              state.l10n.simulateAction,
-              style: outfit(
-                13,
-                FontWeight.w800,
-                color: const Color(0xFF221A00),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -225,17 +184,6 @@ class _GroupPredBlock extends StatelessWidget {
                 const SizedBox(width: 8),
                 if (complete)
                   Icon(Icons.check_circle, size: 16, color: Wc.mint),
-                const Spacer(),
-                IconButton(
-                  visualDensity: VisualDensity.compact,
-                  tooltip: l.simulateThisGroup,
-                  icon: Icon(
-                    Icons.casino_outlined,
-                    size: 18,
-                    color: Wc.textDim,
-                  ),
-                  onPressed: () => state.simulateGroup(group),
-                ),
               ],
             ),
             const SizedBox(height: 4),
@@ -261,6 +209,10 @@ class _PredRow extends StatelessWidget {
     final home = state.teams[match.homeSlot]!;
     final away = state.teams[match.awaySlot]!;
     final pred = state.preds[match.no];
+
+    if (state.pickemLocked(match)) {
+      return _LockedPredRow(match: match, home: home, away: away);
+    }
 
     void update(int dh, int da) {
       final p = pred ?? Pred(0, 0);
@@ -332,6 +284,108 @@ class _PredRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Fila de un partido ya cerrado (kickoff pasado): muestra el resultado real,
+/// tu pronóstico y los puntos obtenidos (o "no puntúa" si es previo al cutoff).
+class _LockedPredRow extends StatelessWidget {
+  final WcMatch match;
+  final Team home;
+  final Team away;
+  const _LockedPredRow({
+    required this.match,
+    required this.home,
+    required this.away,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l = state.l10n;
+    final live = state.liveFor(match);
+    final pred = state.preds[match.no];
+    final counts = state.pickemCounts(match);
+    final finished = state.realPredFor(match) != null;
+    final pts = state.pickemPoints(match);
+    final realScore = live?.homeScore != null
+        ? '${live!.homeScore} – ${live.awayScore}'
+        : '– · –';
+
+    final (String chipText, Color chipColor) = !counts
+        ? (l.pickemNoScore, Wc.textDim)
+        : !finished
+        ? (l.live, Wc.live)
+        : ('+$pts', pts == 6 ? Wc.mint : (pts == 3 ? Wc.goldHi : Wc.textDim));
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        children: [
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(home.id, style: outfit(12.5, FontWeight.w800, spacing: .5)),
+                const SizedBox(width: 7),
+                FlagImg(home.flag, size: 24, radius: 5),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 126,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(realScore, style: outfit(16, FontWeight.w900)),
+                const SizedBox(height: 3),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      pred == null
+                          ? '${l.pickemYourPick} –'
+                          : '${l.pickemYourPick} ${pred.home}-${pred.away}',
+                      style: outfit(10, FontWeight.w600, color: Wc.textDim),
+                    ),
+                    const SizedBox(width: 6),
+                    _LockChip(chipText, chipColor),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                FlagImg(away.flag, size: 24, radius: 5),
+                const SizedBox(width: 7),
+                Text(away.id, style: outfit(12.5, FontWeight.w800, spacing: .5)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LockChip extends StatelessWidget {
+  final String text;
+  final Color color;
+  const _LockChip(this.text, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .14),
+        borderRadius: BorderRadius.circular(7),
+        border: Border.all(color: color.withValues(alpha: .45)),
+      ),
+      child: Text(text, style: outfit(10, FontWeight.w800, color: color)),
     );
   }
 }
@@ -529,6 +583,12 @@ class _BracketPredTab extends StatelessWidget {
   }
 
   void _editKo(BuildContext context, AppState state, WcMatch m) {
+    if (state.pickemLocked(m)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(state.l10n.pickemLockedToast)),
+      );
+      return;
+    }
     final (home, away) = state.predTeams(m);
     if (home == null || away == null) {
       ScaffoldMessenger.of(

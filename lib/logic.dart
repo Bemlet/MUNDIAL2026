@@ -4,6 +4,16 @@ library;
 
 import 'models.dart';
 
+/// Puntaje del pick'em comparando un pronóstico contra el resultado real:
+/// 6 si el marcador es exacto, 3 si acierta el resultado (gana/empata/pierde),
+/// 0 si no.
+int scorePick(Pred pred, Pred real) {
+  if (pred.home == real.home && pred.away == real.away) return 6;
+  int sign(int a, int b) => a == b ? 0 : (a > b ? 1 : -1);
+  if (sign(pred.home, pred.away) == sign(real.home, real.away)) return 3;
+  return 0;
+}
+
 /// Resultado simple usado por la lógica (real o pronosticado).
 class ScoreEntry {
   final String homeId;

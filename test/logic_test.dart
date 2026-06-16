@@ -1,8 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mundial2026/logic.dart';
+import 'package:mundial2026/models.dart';
 
 void main() {
+  test('scorePick: 6 exacto, 3 resultado, 0 erró', () {
+    expect(scorePick(Pred(2, 1), Pred(2, 1)), 6); // exacto
+    expect(scorePick(Pred(3, 0), Pred(2, 1)), 3); // ambos gana local
+    expect(scorePick(Pred(1, 1), Pred(0, 0)), 3); // ambos empate
+    expect(scorePick(Pred(0, 1), Pred(2, 1)), 0); // resultado opuesto
+  });
+
   test('tabla de grupo con criterios de desempate', () {
     final rows = computeTable(
       ['MEX', 'RSA', 'KOR', 'CZE'],

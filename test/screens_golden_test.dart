@@ -265,7 +265,7 @@ void main() {
       const Shell(),
       'polla_grupos',
       interact: (t) async {
-        await t.tap(find.text('Simulador').last);
+        await t.tap(find.text("Pick'em").last);
       },
     );
     await snap(
@@ -273,7 +273,7 @@ void main() {
       const Shell(),
       'polla_bracket',
       interact: (t) async {
-        await t.tap(find.text('Simulador').last);
+        await t.tap(find.text("Pick'em").last);
         for (var i = 0; i < 4; i++) {
           await t.pump(const Duration(milliseconds: 100));
         }
@@ -302,7 +302,7 @@ void main() {
       const Shell(),
       'claro_simulador',
       interact: (t) async {
-        await t.tap(find.text('Simulador').last);
+        await t.tap(find.text("Pick'em").last);
       },
     );
     await snap(tester, const MatchDetailScreen(matchNo: 1), 'claro_partido');

@@ -510,6 +510,51 @@ class AppState extends ChangeNotifier {
     return p;
   }
 
+  // ------------------------------------------------------------- pick'em
+
+  /// Inicio del pick'em: los partidos anteriores se rellenan con el real pero
+  /// NO suman puntos (el "campeonato de aciertos" arranca acá).
+  static final DateTime pickemStart = DateTime.utc(2026, 6, 16);
+
+  /// ¿El partido suma puntos? (kickoff desde el 16/jun).
+  bool pickemCounts(WcMatch m) => !m.dateUtc.isBefore(pickemStart);
+
+  /// ¿La predicción está bloqueada? Se cierra al kickoff (no se edita más).
+  bool pickemLocked(WcMatch m) => DateTime.now().toUtc().isAfter(m.dateUtc);
+
+  /// Puntos del pick'em para un partido (0 si no puntúa, no hay real o no hay
+  /// pronóstico).
+  int pickemPoints(WcMatch m) {
+    if (!pickemCounts(m)) return 0;
+    final pred = preds[m.no];
+    final real = realPredFor(m);
+    if (pred == null || real == null) return 0;
+    return scorePick(pred, real);
+  }
+
+  /// Puntaje total acumulado del pick'em.
+  int get pickemTotal {
+    var total = 0;
+    for (final m in matches) {
+      total += pickemPoints(m);
+    }
+    return total;
+  }
+
+  /// (exactos, resultados) que puntuaron.
+  (int, int) get pickemBreakdown {
+    var exact = 0, correct = 0;
+    for (final m in matches) {
+      switch (pickemPoints(m)) {
+        case 6:
+          exact++;
+        case 3:
+          correct++;
+      }
+    }
+    return (exact, correct);
+  }
+
   /// Ganador real de una llave definida por penales: lo deduce del equipo que
   /// ESPN ya colocó en la ronda siguiente.
   String? _realKnockoutWinner(WcMatch m) {

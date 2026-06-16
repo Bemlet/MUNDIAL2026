@@ -19,7 +19,19 @@ class AppStrings {
   String get matchesTab => isEn ? 'Matches' : 'Partidos';
   String get groupsTab => isEn ? 'Groups' : 'Grupos';
   String get bracketTab => isEn ? 'Bracket' : 'Bracket';
-  String get simulatorTab => isEn ? 'Simulator' : 'Simulador';
+  String get simulatorTab => "Pick'em";
+  String get pickemScore => isEn ? 'Your score' : 'Tu puntaje';
+  String get pickemBreakdown2 => isEn ? 'exact' : 'exactos';
+  String get pickemOutcomeWord => isEn ? 'outcomes' : 'resultados';
+  String pickemSummary(int exact, int correct) => isEn
+      ? '$exact exact · $correct outcomes'
+      : '$exact exactos · $correct resultados';
+  String get pickemNoScore => isEn ? "doesn't count" : 'no puntúa';
+  String get pickemYourPick => isEn ? 'You' : 'Tú';
+  String get pickemClosed => isEn ? 'Closed' : 'Cerrado';
+  String get pickemLockedToast => isEn
+      ? 'The match already started — pick is locked.'
+      : 'El partido ya empezó: el pronóstico está cerrado.';
   String get teamsTab => isEn ? 'Teams' : 'Equipos';
   String get languageTooltip => isEn ? 'Language' : 'Idioma';
   String get darkMode => isEn ? 'Dark mode' : 'Modo oscuro';
@@ -195,8 +207,8 @@ class AppStrings {
       ? 'Top scorers, assists and standout players, live.'
       : 'Goleadores, asistencias y figuras, en vivo.';
   String get tourSimulatorDesc => isEn
-      ? 'Simulate the tournament and make predictions.'
-      : 'Simulá el torneo y armá tus pronósticos.';
+      ? 'Predict each match and earn points.'
+      : 'Predecí cada partido y sumá puntos.';
   String get tourTeamsDesc => isEn
       ? 'The 48 teams and their stars.'
       : 'Las 48 selecciones y sus figuras.';
