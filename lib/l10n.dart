@@ -247,10 +247,10 @@ class AppStrings {
   String get onbStatsBody => isEn
       ? 'Top scorers, assists and standout players updated in real time as goals go in.'
       : 'Goleadores, asistencias y figuras del torneo actualizados en tiempo real con cada gol.';
-  String get onbPlayTitle => isEn ? 'Play along' : 'Jugá vos';
+  String get onbPlayTitle => isEn ? 'Make your Pick\'em' : 'Hacé tu Pick\'em';
   String get onbPlayBody => isEn
-      ? 'Simulate the tournament, build your bracket and predict every match.'
-      : 'Simulá el torneo, armá tu bracket y predecí cada partido.';
+      ? 'Predict every match: 6 points for the exact score, 3 for the result. Climb the global leaderboard against everyone!'
+      : 'Predecí cada partido: 6 puntos por el marcador exacto, 3 por el resultado. ¡Subí en el ranking global contra todos!';
 
   // ----------------------------------------------------------- estadísticas
   String get statsTab => isEn ? 'Stats' : 'Stats';
