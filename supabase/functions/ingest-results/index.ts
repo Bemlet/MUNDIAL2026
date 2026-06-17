@@ -6,7 +6,7 @@
 // Edge Functions desplegadas — NO hay que pegar la secret key en ningún lado.
 // El service_role bypassea RLS para poder escribir match_results.
 
-import { createClient } from "jsr:@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 const ESPN_URL =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260611-20260719&limit=200";
