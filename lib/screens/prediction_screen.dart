@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../app_state.dart';
 import '../main.dart';
 import '../models.dart';
+import '../supabase_service.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'bracket_screen.dart' show BracketView;
@@ -22,7 +23,7 @@ class PredictionScreen extends StatelessWidget {
     final (exact, correct) = state.pickemBreakdown;
 
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l.simulatorTab, style: outfit(22, FontWeight.w900)),
@@ -83,6 +84,8 @@ class PredictionScreen extends StatelessWidget {
                   ),
                 ),
                 TabBar(
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
                   indicatorColor: Wc.gold,
                   labelStyle: outfit(13.5, FontWeight.w800),
                   unselectedLabelStyle: outfit(13.5, FontWeight.w600),
@@ -92,6 +95,7 @@ class PredictionScreen extends StatelessWidget {
                     Tab(text: l.groupsTab),
                     Tab(text: l.bestThirds),
                     Tab(text: l.bracketTab),
+                    Tab(text: l.rankingTab),
                   ],
                 ),
               ],
@@ -99,7 +103,12 @@ class PredictionScreen extends StatelessWidget {
           ),
         ),
         body: const TabBarView(
-          children: [_GroupsPredTab(), _ThirdsPredTab(), _BracketPredTab()],
+          children: [
+            _GroupsPredTab(),
+            _ThirdsPredTab(),
+            _BracketPredTab(),
+            _LeaderboardTab(),
+          ],
         ),
       ),
     );
@@ -340,18 +349,21 @@ class _LockedPredRow extends StatelessWidget {
               children: [
                 Text(realScore, style: outfit(16, FontWeight.w900)),
                 const SizedBox(height: 3),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      pred == null
-                          ? '${l.pickemYourPick} –'
-                          : '${l.pickemYourPick} ${pred.home}-${pred.away}',
-                      style: outfit(10, FontWeight.w600, color: Wc.textDim),
-                    ),
-                    const SizedBox(width: 6),
-                    _LockChip(chipText, chipColor),
-                  ],
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        pred == null
+                            ? '${l.pickemYourPick} –'
+                            : '${l.pickemYourPick} ${pred.home}-${pred.away}',
+                        style: outfit(10, FontWeight.w600, color: Wc.textDim),
+                      ),
+                      const SizedBox(width: 6),
+                      _LockChip(chipText, chipColor),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -816,6 +828,226 @@ class _KoEditorSheetState extends State<_KoEditorSheet> {
                 ),
               ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// --------------------------------------------------------------- ranking
+
+class _LeaderboardTab extends StatefulWidget {
+  const _LeaderboardTab();
+
+  @override
+  State<_LeaderboardTab> createState() => _LeaderboardTabState();
+}
+
+class _LeaderboardTabState extends State<_LeaderboardTab> {
+  Future<List<LeaderEntry>>? _future;
+
+  void _reload() {
+    setState(() => _future = AppScope.of(context).fetchLeaderboard());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l = state.l10n;
+
+    if (state.nickname == null) {
+      return _NicknameForm(onSaved: _reload);
+    }
+
+    _future ??= state.fetchLeaderboard();
+    final me = SupabaseService.userId;
+
+    return RefreshIndicator(
+      color: Wc.gold,
+      backgroundColor: Wc.surface,
+      onRefresh: () async {
+        _reload();
+        await _future;
+      },
+      child: FutureBuilder<List<LeaderEntry>>(
+        future: _future,
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator(color: Wc.gold));
+          }
+          final entries = snap.data ?? const <LeaderEntry>[];
+          if (entries.isEmpty) {
+            return ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(28, 60, 28, 28),
+                  child: Text(
+                    SupabaseService.ready
+                        ? l.leaderboardEmpty
+                        : l.leaderboardOffline,
+                    textAlign: TextAlign.center,
+                    style: outfit(14, FontWeight.w600, color: Wc.textDim),
+                  ),
+                ),
+              ],
+            );
+          }
+          return ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            itemCount: entries.length,
+            itemBuilder: (_, i) => _LeaderRow(
+              rank: i + 1,
+              entry: entries[i],
+              isMe: entries[i].userId == me,
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _NicknameForm extends StatefulWidget {
+  final VoidCallback onSaved;
+  const _NicknameForm({required this.onSaved});
+
+  @override
+  State<_NicknameForm> createState() => _NicknameFormState();
+}
+
+class _NicknameFormState extends State<_NicknameForm> {
+  final _controller = TextEditingController();
+  String _text = '';
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l = state.l10n;
+    final valid = _text.trim().length >= 2;
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.leaderboard, size: 44, color: Wc.gold),
+            const SizedBox(height: 16),
+            Text(
+              l.nicknamePrompt,
+              textAlign: TextAlign.center,
+              style: outfit(15, FontWeight.w700),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _controller,
+              maxLength: 24,
+              textAlign: TextAlign.center,
+              onChanged: (v) => setState(() => _text = v),
+              style: outfit(16, FontWeight.w800),
+              decoration: InputDecoration(
+                hintText: l.nicknameHint,
+                counterText: '',
+                filled: true,
+                fillColor: Wc.surface,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: Wc.line),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: Wc.goldHi, width: 1.3),
+                ),
+              ),
+            ),
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: valid ? Wc.gold : Wc.line,
+                  foregroundColor: Wc.onGold,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                onPressed: valid
+                    ? () async {
+                        await state.setNickname(_text);
+                        widget.onSaved();
+                      }
+                    : null,
+                child: Text(l.nicknameSave, style: outfit(15, FontWeight.w800)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LeaderRow extends StatelessWidget {
+  final int rank;
+  final LeaderEntry entry;
+  final bool isMe;
+  const _LeaderRow({required this.rank, required this.entry, required this.isMe});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    final color = switch (rank) {
+      1 => Wc.gold,
+      2 => Wc.textSoft,
+      3 => const Color(0xFFCD7F32),
+      _ => Wc.textDim,
+    };
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: GradientCard(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        borderColor: isMe ? Wc.gold.withValues(alpha: .55) : null,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 28,
+              child: Text(
+                '$rank',
+                textAlign: TextAlign.center,
+                style: outfit(14, FontWeight.w800, color: color),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                entry.nickname,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: outfit(
+                  14.5,
+                  FontWeight.w800,
+                  color: isMe ? Wc.goldHi : Wc.text,
+                ),
+              ),
+            ),
+            Text(
+              l.exactShort(entry.exactCount),
+              style: outfit(11, FontWeight.w600, color: Wc.textDim),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              '${entry.points}',
+              style: outfit(20, FontWeight.w900, color: Wc.gold),
+            ),
+            const SizedBox(width: 3),
+            Text(l.pts, style: outfit(11, FontWeight.w700, color: Wc.textDim)),
           ],
         ),
       ),

@@ -32,6 +32,18 @@ class AppStrings {
   String get pickemLockedToast => isEn
       ? 'The match already started — pick is locked.'
       : 'El partido ya empezó: el pronóstico está cerrado.';
+  String get rankingTab => isEn ? 'Leaderboard' : 'Ranking';
+  String get nicknamePrompt => isEn
+      ? 'Choose a nickname to join the leaderboard'
+      : 'Elegí un apodo para entrar al ranking';
+  String get nicknameHint => isEn ? 'Your nickname' : 'Tu apodo';
+  String get nicknameSave => isEn ? 'Join' : 'Entrar';
+  String get leaderboardEmpty =>
+      isEn ? 'No scores yet — be the first!' : 'Todavía no hay puntajes. ¡Sé el primero!';
+  String get leaderboardOffline => isEn
+      ? "Couldn't load the leaderboard. Check your connection."
+      : 'No se pudo cargar el ranking. Revisá tu conexión.';
+  String exactShort(int n) => isEn ? '$n exact' : '$n exactos';
   String get teamsTab => isEn ? 'Teams' : 'Equipos';
   String get languageTooltip => isEn ? 'Language' : 'Idioma';
   String get darkMode => isEn ? 'Dark mode' : 'Modo oscuro';

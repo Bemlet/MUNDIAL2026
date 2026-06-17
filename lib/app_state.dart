@@ -17,6 +17,7 @@ import 'logic.dart';
 import 'models.dart';
 import 'notification_service.dart';
 import 'stats.dart';
+import 'supabase_service.dart';
 import 'theme.dart';
 
 const _espnUrl =
@@ -31,6 +32,7 @@ class AppState extends ChangeNotifier {
   late final Map<String, CountryBroadcast> broadcasters; // ISO-2 -> canales
   final Map<String, List<String>> liveBroadcasts = {}; // espnId -> canales (ESPN)
   String country = 'US'; // país para canales de TV (autodetectado/elegido)
+  String? nickname; // apodo en el leaderboard (Supabase)
   late final List<WcMatch> matches; // ordenados por fecha
   late final Map<int, WcMatch> byNo;
   late final Map<String, WcMatch> byEspnId;
@@ -128,8 +130,30 @@ class AppState extends ChangeNotifier {
     if (initialSync) {
       sync();
       unawaited(refreshExactAlarm());
+      unawaited(_initLeaderboard());
     }
   }
+
+  // ----------------------------------------------------- leaderboard (Supabase)
+
+  Future<void> _initLeaderboard() async {
+    await SupabaseService.signInAnonymously();
+    final n = await SupabaseService.fetchNickname();
+    if (n != null && n != nickname) {
+      nickname = n;
+      notifyListeners();
+    }
+  }
+
+  /// Define/actualiza el apodo del usuario en el leaderboard.
+  Future<void> setNickname(String name) async {
+    nickname = name.trim();
+    notifyListeners();
+    await SupabaseService.setNickname(nickname!, country: country);
+  }
+
+  Future<List<LeaderEntry>> fetchLeaderboard() =>
+      SupabaseService.fetchLeaderboard();
 
   void _loadPrefs() {
     final p = _prefs!;
@@ -474,6 +498,12 @@ class AppState extends ChangeNotifier {
     _prunePenWinners();
     _savePreds();
     notifyListeners();
+    // Sincroniza con el leaderboard (no bloquea; no-op si no hay sesión).
+    if (pred == null) {
+      unawaited(SupabaseService.deletePrediction(matchNo));
+    } else {
+      unawaited(SupabaseService.upsertPrediction(matchNo, pred.home, pred.away));
+    }
   }
 
   void _savePreds() {

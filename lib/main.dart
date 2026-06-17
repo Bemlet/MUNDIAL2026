@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'app_state.dart';
 import 'l10n.dart';
 import 'notification_service.dart';
+import 'supabase_service.dart';
 import 'screens/bracket_screen.dart';
 import 'screens/groups_screen.dart';
 import 'screens/matches_screen.dart';
@@ -23,6 +24,7 @@ void main() async {
   await initializeDateFormatting('es');
   await initializeDateFormatting('en');
   await NotificationService.initialize();
+  await SupabaseService.init();
   Intl.defaultLocale = 'es';
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

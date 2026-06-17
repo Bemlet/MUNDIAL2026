@@ -13,6 +13,7 @@ dependencies:
   http: ^1.2.0
   shared_preferences: ^2.3.0
   intl: ^0.20.0
+  supabase_flutter: ^2.8.0
 
 dev_dependencies:
   flutter_test:
