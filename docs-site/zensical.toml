@@ -1,0 +1,131 @@
+# ============================================================================
+# Mundial 2026 — Documentación · Zensical
+# ============================================================================
+
+[project]
+
+site_name = "Mundial 2026 — Docs"
+site_description = "Documentación técnica de Mundial 2026: app Flutter de fixture, resultados en vivo y predicciones (Pick'em) con backend en Supabase."
+site_author = "Ever Mosquera"
+site_url = "https://bemlet.github.io/MUNDIAL2026/"
+
+repo_url = "https://github.com/Bemlet/MUNDIAL2026"
+repo_name = "Bemlet/MUNDIAL2026"
+
+copyright = """
+Copyright &copy; 2026 Ever Mosquera · Hecho con Flutter 💙
+"""
+
+nav = [
+  { "Inicio" = "index.md" },
+  { "Características" = "caracteristicas.md" },
+  { "Arquitectura" = "arquitectura.md" },
+  { "Seguridad (RLS)" = "seguridad.md" },
+  { "Datos en vivo" = "datos.md" },
+  { "Desarrollo" = "desarrollo.md" },
+  { "Capturas" = "capturas.md" },
+]
+
+# ----------------------------------------------------------------------------
+# Theme
+# ----------------------------------------------------------------------------
+[project.theme]
+
+language = "es"
+
+features = [
+    "announce.dismiss",
+    "content.action.edit",
+    "content.action.view",
+    "content.code.annotate",
+    "content.code.copy",
+    "content.code.select",
+    "content.footnote.tooltips",
+    "content.tabs.link",
+    "content.tooltips",
+    "navigation.footer",
+    "navigation.indexes",
+    "navigation.instant",
+    "navigation.instant.prefetch",
+    "navigation.path",
+    "navigation.sections",
+    "navigation.top",
+    "navigation.tracking",
+    "search.highlight",
+    "toc.follow",
+]
+
+[project.theme.icon]
+logo = "lucide/trophy"
+
+[project.theme.font]
+text = "Outfit"
+code = "JetBrains Mono"
+
+# Esquema claro — acento teal (identidad de Ever)
+[[project.theme.palette]]
+scheme = "default"
+primary = "teal"
+accent = "teal"
+toggle.icon = "lucide/sun"
+toggle.name = "Cambiar a modo oscuro"
+
+# Esquema oscuro
+[[project.theme.palette]]
+scheme = "slate"
+primary = "teal"
+accent = "teal"
+toggle.icon = "lucide/moon"
+toggle.name = "Cambiar a modo claro"
+
+# ----------------------------------------------------------------------------
+# Social
+# ----------------------------------------------------------------------------
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/Bemlet"
+name = "GitHub"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/linkedin"
+link = "https://www.linkedin.com/in/ever-mosquera-dev"
+name = "LinkedIn"
+
+# ----------------------------------------------------------------------------
+# Markdown extensions
+# ----------------------------------------------------------------------------
+[project.markdown_extensions.abbr]
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.def_list]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.toc]
+permalink = true
+[project.markdown_extensions.pymdownx.arithmatex]
+generic = true
+[project.markdown_extensions.pymdownx.betterem]
+[project.markdown_extensions.pymdownx.caret]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.emoji]
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index = "zensical.extensions.emoji.twemoji"
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+line_spans = "__span"
+pygments_lang_class = true
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.keys]
+[project.markdown_extensions.pymdownx.magiclink]
+[project.markdown_extensions.pymdownx.mark]
+[project.markdown_extensions.pymdownx.smartsymbols]
+[project.markdown_extensions.pymdownx.superfences]
+custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true
+combine_header_slug = true
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
+[project.markdown_extensions.pymdownx.tilde]
