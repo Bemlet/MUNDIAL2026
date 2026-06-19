@@ -97,7 +97,22 @@ python3 tools/build_data.py
 
 ## 📱 Capturas
 
-> _(Próximamente)_
+<p align="center">
+  <img src="docs/screenshots/home-dark.png" width="220" alt="Inicio (modo oscuro)">
+  <img src="docs/screenshots/home-light.png" width="220" alt="Inicio (modo claro)">
+  <img src="docs/screenshots/pickem.png" width="220" alt="Pick'em">
+</p>
+<p align="center">
+  <img src="docs/screenshots/groups.png" width="220" alt="Fase de grupos">
+  <img src="docs/screenshots/team-detail.png" width="220" alt="Ficha de equipo">
+  <img src="docs/screenshots/teams.png" width="220" alt="Selecciones">
+</p>
+<p align="center">
+  <img src="docs/screenshots/stats-summary.png" width="220" alt="Estadísticas — resumen">
+  <img src="docs/screenshots/stats-scorers.png" width="220" alt="Estadísticas — goleadores">
+</p>
+
+<p align="center"><sub>Inicio (oscuro/claro) · Pick'em · Grupos · Ficha de equipo · Selecciones · Estadísticas</sub></p>
 
 ---
 
