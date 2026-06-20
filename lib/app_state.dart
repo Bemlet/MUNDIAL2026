@@ -16,6 +16,7 @@ import 'l10n.dart';
 import 'logic.dart';
 import 'models.dart';
 import 'notification_service.dart';
+import 'players.dart';
 import 'stats.dart';
 import 'supabase_service.dart';
 import 'theme.dart';
@@ -28,9 +29,11 @@ const _kickoffReminderWindow = Duration(minutes: 15);
 class AppState extends ChangeNotifier {
   late final Map<String, Team> teams; // id -> equipo
   late final Map<String, Team> teamsByEspn; // displayName ESPN -> equipo
+  PlayerDb players = PlayerDb.empty; // perfiles curados de figuras
   late final Map<String, Venue> venues;
   late final Map<String, CountryBroadcast> broadcasters; // ISO-2 -> canales
-  final Map<String, List<String>> liveBroadcasts = {}; // espnId -> canales (ESPN)
+  final Map<String, List<String>> liveBroadcasts =
+      {}; // espnId -> canales (ESPN)
   String country = 'US'; // país para canales de TV (autodetectado/elegido)
   String? nickname; // apodo en el leaderboard (Supabase)
   late final List<WcMatch> matches; // ordenados por fecha
@@ -53,6 +56,60 @@ class AppState extends ChangeNotifier {
   /// Rankings agregados del torneo, recalculados a demanda.
   TournamentStats get stats => TournamentStats.aggregate(matchStats.values);
 
+  /// Stats reales del torneo para un jugador (por nombre, tolerante a acentos),
+  /// más su id de atleta de ESPN para la foto. Devuelve `null` si no figura en
+  /// ningún ranking todavía.
+  PlayerTournament? playerTournament(String name) {
+    final n = PlayerDb.normalize(name);
+    final s = stats;
+    String? id;
+    int goals = 0, pen = 0, assists = 0, saves = 0, clean = 0, yellow = 0, red = 0;
+    var found = false;
+    for (final x in s.scorers) {
+      if (PlayerDb.normalize(x.player.name) == n) {
+        goals = x.goals;
+        pen = x.penalties;
+        assists = x.assists;
+        id ??= x.player.id;
+        found = true;
+      }
+    }
+    for (final x in s.assists) {
+      if (PlayerDb.normalize(x.player.name) == n) {
+        if (x.assists > assists) assists = x.assists;
+        id ??= x.player.id;
+        found = true;
+      }
+    }
+    for (final x in s.keepers) {
+      if (PlayerDb.normalize(x.player.name) == n) {
+        saves = x.saves;
+        clean = x.cleanSheets;
+        id ??= x.player.id;
+        found = true;
+      }
+    }
+    for (final x in s.discipline) {
+      if (PlayerDb.normalize(x.player.name) == n) {
+        yellow = x.yellow;
+        red = x.red;
+        id ??= x.player.id;
+        found = true;
+      }
+    }
+    if (!found) return null;
+    return PlayerTournament(
+      goals: goals,
+      penalties: pen,
+      assists: assists,
+      saves: saves,
+      cleanSheets: clean,
+      yellow: yellow,
+      red: red,
+      espnId: id,
+    );
+  }
+
   SharedPreferences? _prefs;
   DateTime? lastSync;
   bool syncing = false;
@@ -61,8 +118,10 @@ class AppState extends ChangeNotifier {
   bool darkMode = true;
   bool onboardingDone = false;
   bool tourDone = false; // ya corrió el tour guiado
-  bool exactAlarmGranted = true; // true por defecto: no molestar fuera de Android
+  bool exactAlarmGranted =
+      true; // true por defecto: no molestar fuera de Android
   bool exactAlarmAsked = false; // ya mostramos el prompt una vez
+  bool pickemNudgeShown = false; // ya avisamos del pick'em a este usuario
   AppLanguage language = AppLanguage.es;
 
   AppStrings get l10n => AppStrings(language);
@@ -121,6 +180,10 @@ class AppState extends ChangeNotifier {
       for (final e in (bJson['countries'] as Map<String, dynamic>).entries)
         e.key: CountryBroadcast.fromJson(e.key, e.value),
     };
+
+    players = PlayerDb.fromJson(
+      jsonDecode(await rootBundle.loadString('assets/data/players.json')),
+    );
 
     _prefs = await SharedPreferences.getInstance();
     _loadPrefs();
@@ -190,7 +253,9 @@ class AppState extends ChangeNotifier {
     onboardingDone = p.getBool('onboardingDone') ?? false;
     tourDone = p.getBool('tourDone') ?? false;
     exactAlarmAsked = p.getBool('exactAlarmAsked') ?? false;
+    pickemNudgeShown = p.getBool('pickemNudgeShown') ?? false;
     country = p.getString('country') ?? _detectCountry();
+    _pruneUnresolvedKnockoutPickemPreds(notify: false);
   }
 
   /// País por defecto según el locale del dispositivo (si lo conocemos).
@@ -234,7 +299,8 @@ class AppState extends ChangeNotifier {
       return (live != null && live.isNotEmpty) ? live : c.all;
     }
     final out = <String>[...c.all];
-    final involvesTeam = c.teamId != null &&
+    final involvesTeam =
+        c.teamId != null &&
         m.stage == Stage.group &&
         (m.homeSlot == c.teamId || m.awaySlot == c.teamId);
     if (m.no == 1 || m.isKnockout || involvesTeam) {
@@ -248,6 +314,25 @@ class AppState extends ChangeNotifier {
     if (onboardingDone) return;
     onboardingDone = true;
     _prefs?.setBool('onboardingDone', true);
+    // Los usuarios nuevos ya vieron el Pick'em en el onboarding: no repetir el aviso.
+    pickemNudgeShown = true;
+    _prefs?.setBool('pickemNudgeShown', true);
+    notifyListeners();
+  }
+
+  /// ¿Mostrar el aviso del Pick'em? (una vez, para usuarios que ya tenían la app
+  /// antes de la feature). Espera a que se resuelvan onboarding/tour/alarma.
+  bool get shouldShowPickemNudge =>
+      loaded &&
+      onboardingDone &&
+      tourDone &&
+      !pickemNudgeShown &&
+      (exactAlarmGranted || exactAlarmAsked);
+
+  void markPickemNudgeShown() {
+    if (pickemNudgeShown) return;
+    pickemNudgeShown = true;
+    _prefs?.setBool('pickemNudgeShown', true);
     notifyListeners();
   }
 
@@ -301,6 +386,7 @@ class AppState extends ChangeNotifier {
     syncFailed = false;
     notifyListeners();
     try {
+      _pruneUnresolvedKnockoutPickemPreds(notify: false);
       final res = await http
           .get(Uri.parse(_espnUrl))
           .timeout(const Duration(seconds: 15));
@@ -361,6 +447,7 @@ class AppState extends ChangeNotifier {
           await _processLiveNotifications(match, previous, info);
         }
       }
+      _pruneUnresolvedKnockoutPickemPreds(notify: false);
       await checkMatchReminders();
       lastSync = DateTime.now();
       final p = _prefs;
@@ -489,7 +576,9 @@ class AppState extends ChangeNotifier {
 
   // ------------------------------------------------------------ pronósticos
 
-  void setPred(int matchNo, Pred? pred) {
+  void setPred(int matchNo, Pred? pred, {DateTime? now}) {
+    final match = byNo[matchNo];
+    if (match == null || !canEditPickem(match, now)) return;
     if (pred == null) {
       preds.remove(matchNo);
     } else {
@@ -502,7 +591,9 @@ class AppState extends ChangeNotifier {
     if (pred == null) {
       unawaited(SupabaseService.deletePrediction(matchNo));
     } else {
-      unawaited(SupabaseService.upsertPrediction(matchNo, pred.home, pred.away));
+      unawaited(
+        SupabaseService.upsertPrediction(matchNo, pred.home, pred.away),
+      );
     }
   }
 
@@ -528,7 +619,10 @@ class AppState extends ChangeNotifier {
   /// no se jugó (o si fue por penales y todavía no se puede resolver el ganador).
   Pred? realPredFor(WcMatch m) {
     final l = liveFor(m);
-    if (l == null || !l.isFinished || l.homeScore == null || l.awayScore == null) {
+    if (l == null ||
+        !l.isFinished ||
+        l.homeScore == null ||
+        l.awayScore == null) {
       return null;
     }
     final p = Pred(l.homeScore!, l.awayScore!);
@@ -544,13 +638,22 @@ class AppState extends ChangeNotifier {
 
   /// Inicio del pick'em: los partidos anteriores se rellenan con el real pero
   /// NO suman puntos (el "campeonato de aciertos" arranca acá).
-  static final DateTime pickemStart = DateTime.utc(2026, 6, 16);
+  static final DateTime pickemStart = DateTime.utc(2026, 6, 17);
 
-  /// ¿El partido suma puntos? (kickoff desde el 16/jun).
+  /// ¿El partido suma puntos? (kickoff desde el 17/jun).
   bool pickemCounts(WcMatch m) => !m.dateUtc.isBefore(pickemStart);
 
   /// ¿La predicción está bloqueada? Se cierra al kickoff (no se edita más).
-  bool pickemLocked(WcMatch m) => DateTime.now().toUtc().isAfter(m.dateUtc);
+  bool pickemLocked(WcMatch m, [DateTime? now]) =>
+      !(now ?? DateTime.now()).toUtc().isBefore(m.dateUtc);
+
+  bool canEditPickem(WcMatch m, [DateTime? now]) {
+    final (home, away) = realTeams(m);
+    return home != null &&
+        away != null &&
+        pickemCounts(m) &&
+        !pickemLocked(m, now);
+  }
 
   /// Puntos del pick'em para un partido (0 si no puntúa, no hay real o no hay
   /// pronóstico).
@@ -667,10 +770,44 @@ class AppState extends ChangeNotifier {
     return Pred(goals(strength(homeId)), goals(strength(awayId)));
   }
 
-  void clearPreds() {
-    preds.clear();
-    _prefs?.remove('preds');
+  void clearPreds({DateTime? now}) {
+    final editable = [
+      for (final matchNo in preds.keys)
+        if (byNo[matchNo] case final match? when canEditPickem(match, now))
+          matchNo,
+    ];
+    if (editable.isEmpty) return;
+    for (final matchNo in editable) {
+      preds.remove(matchNo);
+      unawaited(SupabaseService.deletePrediction(matchNo));
+    }
+    if (preds.isEmpty) {
+      _prefs?.remove('preds');
+    } else {
+      _savePreds();
+    }
     notifyListeners();
+  }
+
+  bool _pruneUnresolvedKnockoutPickemPreds({bool notify = true}) {
+    final stale = <int>[];
+    for (final m in matches.where((m) => m.isKnockout)) {
+      if (!preds.containsKey(m.no)) continue;
+      final (home, away) = realTeams(m);
+      if (home == null || away == null) stale.add(m.no);
+    }
+    if (stale.isEmpty) return false;
+    for (final matchNo in stale) {
+      preds.remove(matchNo);
+      unawaited(SupabaseService.deletePrediction(matchNo));
+    }
+    if (preds.isEmpty) {
+      _prefs?.remove('preds');
+    } else {
+      _savePreds();
+    }
+    if (notify) notifyListeners();
+    return true;
   }
 
   int get groupPredCount => matches

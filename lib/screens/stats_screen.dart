@@ -11,6 +11,76 @@ import '../main.dart';
 import '../stats.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import 'player_detail.dart';
+
+/// Abre la carta de un jugador a partir de su referencia de ESPN.
+void _openPlayer(BuildContext context, AppState state, PlayerRef p) {
+  openPlayerProfile(
+    context,
+    state,
+    name: p.name,
+    teamId: state.teamsByEspn[p.teamEspn]?.id ?? '',
+    espnId: p.id,
+  );
+}
+
+/// Muestra quiénes hicieron los hat-tricks del torneo.
+void _showHatTricks(
+  BuildContext context,
+  AppState state,
+  List<HatTrick> hatTricks,
+) {
+  final l = state.l10n;
+  showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: Wc.surface,
+    showDragHandle: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+    ),
+    builder: (ctx) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.bolt, color: Wc.gold, size: 22),
+                const SizedBox(width: 8),
+                Text(l.statHatTricks, style: outfit(18, FontWeight.w900)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            if (hatTricks.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  l.noHatTricks,
+                  style: outfit(13, FontWeight.w600, color: Wc.textDim),
+                ),
+              )
+            else
+              for (final (i, h) in hatTricks.indexed)
+                _PlayerRow(
+                  rank: i + 1,
+                  state: state,
+                  player: h.player,
+                  value: '${h.goals}',
+                  valueLabel: l.goalsAbbr,
+                  subtitle: l.hatTrickGoals(h.goals),
+                  onTap: () {
+                    Navigator.of(ctx).pop();
+                    _openPlayer(context, state, h.player);
+                  },
+                ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
 
 class StatsScreen extends StatelessWidget {
   const StatsScreen({super.key});
@@ -162,6 +232,7 @@ class _ScorersTab extends StatelessWidget {
               value: '${s.goals}',
               valueLabel: l.goalsAbbr,
               subtitle: _scorerSubtitle(l, s),
+              onTap: () => _openPlayer(context, state, s.player),
             ),
         if (stats.assists.isNotEmpty) ...[
           SectionTitle(l.topAssists),
@@ -173,6 +244,7 @@ class _ScorersTab extends StatelessWidget {
               value: '${a.assists}',
               valueLabel: l.assistsAbbr,
               subtitle: a.goals > 0 ? l.goalsCount(a.goals) : null,
+              onTap: () => _openPlayer(context, state, a.player),
             ),
         ],
         if (stats.standouts.isNotEmpty) ...[
@@ -185,6 +257,7 @@ class _ScorersTab extends StatelessWidget {
               value: p.impact.toStringAsFixed(0),
               valueLabel: '★',
               subtitle: _standoutSubtitle(l, p),
+              onTap: () => _openPlayer(context, state, p.player),
             ),
           _Note(l.standoutNote),
         ],
@@ -235,6 +308,7 @@ class _DisciplineTab extends StatelessWidget {
               state: state,
               player: d.player,
               trailing: _Cards(yellow: d.yellow, red: d.red),
+              onTap: () => _openPlayer(context, state, d.player),
             ),
         if (fairTeams.any((t) => t.yellow + t.red > 0)) ...[
           SectionTitle(l.fairPlayTeams),
@@ -321,6 +395,7 @@ class _TeamsTab extends StatelessWidget {
               value: '${k.cleanSheets}',
               valueLabel: '⛨',
               subtitle: k.saves > 0 ? l.savesCount(k.saves) : null,
+              onTap: () => _openPlayer(context, state, k.player),
             ),
         ],
         const SizedBox(height: 16),
@@ -349,7 +424,14 @@ class _SummaryTab extends StatelessWidget {
         value: t.avgGoals.toStringAsFixed(2),
       ),
       _StatTile(icon: Icons.sports, label: l.statPenalties, value: '${t.penalties}'),
-      _StatTile(icon: Icons.bolt, label: l.statHatTricks, value: '${t.hatTricks}'),
+      _StatTile(
+        icon: Icons.bolt,
+        label: l.statHatTricks,
+        value: '${t.hatTricks}',
+        onTap: t.hatTricks > 0
+            ? () => _showHatTricks(context, state, t.hatTrickList)
+            : null,
+      ),
       _StatTile(
         icon: Icons.groups,
         label: l.statAttendance,
@@ -438,6 +520,7 @@ class _PlayerRow extends StatelessWidget {
   final String? subtitle;
   final Widget? trailing;
   final bool highlight;
+  final VoidCallback? onTap;
 
   const _PlayerRow({
     required this.rank,
@@ -448,6 +531,7 @@ class _PlayerRow extends StatelessWidget {
     this.subtitle,
     this.trailing,
     this.highlight = false,
+    this.onTap,
   });
 
   @override
@@ -457,6 +541,7 @@ class _PlayerRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: GradientCard(
+        onTap: onTap,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         borderColor: highlight ? Wc.gold.withValues(alpha: .5) : null,
         child: Row(
@@ -673,17 +758,32 @@ class _StatTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
-  const _StatTile({required this.icon, required this.label, required this.value});
+  final VoidCallback? onTap;
+  const _StatTile({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GradientCard(
+      onTap: onTap,
+      borderColor: onTap != null ? Wc.gold.withValues(alpha: .4) : null,
       padding: const EdgeInsets.all(14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icon, color: Wc.gold, size: 20),
+          Row(
+            children: [
+              Icon(icon, color: Wc.gold, size: 20),
+              const Spacer(),
+              if (onTap != null)
+                Icon(Icons.chevron_right, color: Wc.gold, size: 18),
+            ],
+          ),
           Text(value, style: outfit(24, FontWeight.w900)),
           Text(
             label,

@@ -326,16 +326,27 @@ class BiggestWin {
   int get margin => winnerGoals - loserGoals;
 }
 
+/// Un hat-trick concreto: quién lo hizo y cuántos goles convirtió en ese
+/// partido (3 o más).
+class HatTrick {
+  final PlayerRef player;
+  final int goals;
+  const HatTrick(this.player, this.goals);
+}
+
 /// Totales agregados del torneo.
 class TournamentTotals {
   int matchesPlayed = 0;
   int totalGoals = 0;
   int penalties = 0;
-  int hatTricks = 0;
+  final List<HatTrick> hatTrickList = [];
   int yellow = 0;
   int red = 0;
   int attendance = 0;
   BiggestWin? biggestWin;
+
+  /// Cantidad de hat-tricks del torneo (derivada de [hatTrickList]).
+  int get hatTricks => hatTrickList.length;
 
   double get avgGoals => matchesPlayed == 0 ? 0 : totalGoals / matchesPlayed;
 }
@@ -397,8 +408,10 @@ class TournamentStats {
         impactGoals.update(g.scorer.id, (v) => v + 1, ifAbsent: () => 1);
         impactRef[g.scorer.id] = g.scorer;
       }
-      for (final n in perPlayerGoalsThisMatch.values) {
-        if (n >= 3) totals.hatTricks += 1;
+      for (final e in perPlayerGoalsThisMatch.entries) {
+        if (e.value >= 3) {
+          totals.hatTrickList.add(HatTrick(scorers[e.key]!.player, e.value));
+        }
       }
 
       // Tarjetas -> disciplina + totales.

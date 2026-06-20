@@ -23,12 +23,20 @@ class AppStrings {
   String get pickemScore => isEn ? 'Your score' : 'Tu puntaje';
   String get pickemBreakdown2 => isEn ? 'exact' : 'exactos';
   String get pickemOutcomeWord => isEn ? 'outcomes' : 'resultados';
+  String get pickemPredictionsTab => isEn ? 'Predictions' : 'Pronósticos';
+  String get pickemFilterPending => isEn ? 'Pending' : 'Pendientes';
+  String get pickemFilterUpcoming => isEn ? 'Upcoming' : 'Próximos';
+  String get pickemFilterMyPicks => isEn ? 'My picks' : 'Mis picks';
+  String get pickemFilterClosed => isEn ? 'Closed' : 'Cerrados';
   String pickemSummary(int exact, int correct) => isEn
       ? '$exact exact · $correct outcomes'
       : '$exact exactos · $correct resultados';
   String get pickemNoScore => isEn ? "doesn't count" : 'no puntúa';
   String get pickemYourPick => isEn ? 'You' : 'Tú';
   String get pickemClosed => isEn ? 'Closed' : 'Cerrado';
+  String get pickemUnavailable => isEn
+      ? 'Unlocks when teams are confirmed'
+      : 'Se desbloquea cuando se confirmen los equipos';
   String get pickemLockedToast => isEn
       ? 'The match already started — pick is locked.'
       : 'El partido ya empezó: el pronóstico está cerrado.';
@@ -38,8 +46,9 @@ class AppStrings {
       : 'Elegí un apodo para entrar al ranking';
   String get nicknameHint => isEn ? 'Your nickname' : 'Tu apodo';
   String get nicknameSave => isEn ? 'Join' : 'Entrar';
-  String get leaderboardEmpty =>
-      isEn ? 'No scores yet — be the first!' : 'Todavía no hay puntajes. ¡Sé el primero!';
+  String get leaderboardEmpty => isEn
+      ? 'No scores yet — be the first!'
+      : 'Todavía no hay puntajes. ¡Sé el primero!';
   String get leaderboardOffline => isEn
       ? "Couldn't load the leaderboard. Check your connection."
       : 'No se pudo cargar el ranking. Revisá tu conexión.';
@@ -143,8 +152,8 @@ class AppStrings {
   String get clearPredictionsTitle =>
       isEn ? 'Clear your predictions?' : '¿Borrar tus pronósticos?';
   String get clearPredictionsBody => isEn
-      ? 'All your predictions will be deleted. This cannot be undone.'
-      : 'Se eliminarán todos tus pronósticos. No hay vuelta atrás.';
+      ? 'Editable future predictions will be deleted. Locked picks stay saved.'
+      : 'Se eliminarán los pronósticos futuros editables. Los cerrados quedan guardados.';
   String get simulateThisGroup =>
       isEn ? 'Simulate this group' : 'Simular este grupo';
   String get completeGroupsForThirds => isEn
@@ -179,8 +188,7 @@ class AppStrings {
   String get goalsAndCards => isEn ? 'Goals & cards' : 'Goles y tarjetas';
   String get whereToWatch => isEn ? 'Where to watch' : 'Dónde verlo';
   String get broadcastCountry => isEn ? 'TV country' : 'País de TV';
-  String get selectCountry =>
-      isEn ? 'Choose your country' : 'Elegí tu país';
+  String get selectCountry => isEn ? 'Choose your country' : 'Elegí tu país';
   String get stadiumCapacity =>
       isEn ? 'Stadium capacity' : 'Capacidad del estadio';
   String spectators(String value) =>
@@ -202,6 +210,13 @@ class AppStrings {
       : 'Para avisarte los goles al instante con la app cerrada, Android necesita permiso de alarmas exactas. Sin él igual recibís los goles, pero con menos inmediatez.';
   String get exactAlarmEnable => isEn ? 'Enable' : 'Activar';
   String get exactAlarmNotNow => isEn ? 'Not now' : 'Ahora no';
+  String get pickemNudgeTitle =>
+      isEn ? "New: the Pick'em!" : '¡Nuevo: el Pick\'em!';
+  String get pickemNudgeBody => isEn
+      ? 'Predict every match and earn points (6 exact, 3 for the result). Compete on the global leaderboard!'
+      : 'Predecí cada partido y sumá puntos (6 exacto, 3 resultado). ¡Competí en el ranking global!';
+  String get pickemNudgeGo => isEn ? "Go to Pick'em" : 'Ir al Pick\'em';
+  String get pickemNudgeLater => isEn ? 'Later' : 'Después';
 
   // ----------------------------------------------------------- tour guiado
   String get tourSkip => isEn ? 'Skip' : 'Saltar';
@@ -269,12 +284,14 @@ class AppStrings {
   String get topScorers => isEn ? 'Top scorers' : 'Goleadores';
   String get topAssists => isEn ? 'Assists' : 'Asistencias';
   String get goalkeepers => isEn ? 'Goalkeepers' : 'Arqueros';
-  String get standoutPlayers => isEn ? 'Standout players' : 'Figuras del torneo';
+  String get standoutPlayers =>
+      isEn ? 'Standout players' : 'Figuras del torneo';
   String get standoutNote => isEn
       ? 'Impact index computed by the app (goals, assists, clean sheets, saves).'
       : 'Índice de impacto calculado por la app (goles, asistencias, vallas, atajadas).';
   String get fairPlay => isEn ? 'Fair Play' : 'Juego limpio';
-  String get fairPlayTeams => isEn ? 'Team Fair Play' : 'Juego limpio por equipo';
+  String get fairPlayTeams =>
+      isEn ? 'Team Fair Play' : 'Juego limpio por equipo';
   String get bookedPlayers => isEn ? 'Most booked players' : 'Más amonestados';
   String get bestAttack => isEn ? 'Best attack' : 'Mejor ataque';
   String get bestDefense => isEn ? 'Best defense' : 'Mejor defensa';
@@ -304,6 +321,50 @@ class AppStrings {
       ? '$n ${n == 1 ? 'assist' : 'assists'}'
       : '$n ${n == 1 ? 'asistencia' : 'asistencias'}';
   String savesCount(int n) => isEn ? '$n saves' : '$n atajadas';
+
+  // ---- Carta de jugador ----
+  String get playerSkills => isEn ? 'Skills' : 'Habilidades';
+  String get playerOverall => isEn ? 'OVR' : 'MEDIA';
+  String get playerClub => isEn ? 'Club' : 'Club';
+  String get playerTournamentTitle =>
+      isEn ? 'In the tournament' : 'En el torneo';
+  String get playerNoTournament => isEn
+      ? "Hasn't featured in the tournament yet."
+      : 'Todavía no sumó acciones en el torneo.';
+  String get playerCuratedNote => isEn
+      ? 'Approximate ratings computed by the app — not official.'
+      : 'Valoraciones aproximadas calculadas por la app, no oficiales.';
+  String get noHatTricks =>
+      isEn ? 'No hat-tricks yet.' : 'Todavía no hubo hat-tricks.';
+  String hatTrickGoals(int n) => isEn ? '$n goals' : '$n goles';
+
+  String skillLabel(String key) => switch (key) {
+    'pac' => isEn ? 'Pace' : 'Ritmo',
+    'sho' => isEn ? 'Shooting' : 'Tiro',
+    'pas' => isEn ? 'Passing' : 'Pase',
+    'dri' => isEn ? 'Dribbling' : 'Regate',
+    'def' => isEn ? 'Defending' : 'Defensa',
+    'phy' => isEn ? 'Physical' : 'Físico',
+    _ => key,
+  };
+
+  String skillShort(String key) => switch (key) {
+    'pac' => isEn ? 'PAC' : 'RIT',
+    'sho' => isEn ? 'SHO' : 'TIR',
+    'pas' => 'PAS',
+    'dri' => isEn ? 'DRI' : 'REG',
+    'def' => 'DEF',
+    'phy' => isEn ? 'PHY' : 'FÍS',
+    _ => key.toUpperCase(),
+  };
+
+  String posLabel(String pos) => switch (pos) {
+    'GK' => isEn ? 'Goalkeeper' : 'Arquero',
+    'DEF' => isEn ? 'Defender' : 'Defensor',
+    'MID' => isEn ? 'Midfielder' : 'Mediocampista',
+    'FWD' => isEn ? 'Forward' : 'Delantero',
+    _ => pos,
+  };
 
   String stageLabel(Stage stage) => switch (stage) {
     Stage.group => groupStage,

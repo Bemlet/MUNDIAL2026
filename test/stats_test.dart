@@ -250,6 +250,9 @@ void main() {
       expect(t.avgGoals, 3.0);
       expect(t.penalties, 1);
       expect(t.hatTricks, 1);
+      expect(t.hatTrickList, hasLength(1));
+      expect(t.hatTrickList.first.player.name, 'Tripletista');
+      expect(t.hatTrickList.first.goals, 3);
       expect(t.attendance, 80000);
       expect(t.biggestWin?.winnerEspn, 'A');
       expect(t.biggestWin?.margin, 4);

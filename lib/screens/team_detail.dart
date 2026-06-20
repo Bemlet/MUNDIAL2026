@@ -8,6 +8,7 @@ import '../models.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'matches_screen.dart' show RealMatchCard;
+import 'player_detail.dart';
 
 class TeamDetailScreen extends StatelessWidget {
   final String teamId;
@@ -137,23 +138,41 @@ class TeamDetailScreen extends StatelessWidget {
                     runSpacing: 8,
                     children: [
                       for (final p in t.stars)
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Wc.surface,
+                        Material(
+                          color: Colors.transparent,
+                          child: InkWell(
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Wc.line),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.star, size: 14, color: Wc.gold),
-                              const SizedBox(width: 6),
-                              Text(p, style: outfit(13, FontWeight.w700)),
-                            ],
+                            onTap: () => openPlayerProfile(
+                              context,
+                              state,
+                              name: p,
+                              teamId: t.id,
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Wc.surface,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: Wc.line),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.star, size: 14, color: Wc.gold),
+                                  const SizedBox(width: 6),
+                                  Text(p, style: outfit(13, FontWeight.w700)),
+                                  const SizedBox(width: 4),
+                                  Icon(
+                                    Icons.chevron_right,
+                                    size: 16,
+                                    color: Wc.textDim,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                     ],
