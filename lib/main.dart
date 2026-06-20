@@ -100,6 +100,7 @@ class Shell extends StatefulWidget {
 class _ShellState extends State<Shell> {
   int index = 0;
   bool _exactAlarmPromptChecked = false;
+  bool _pickemNudgeChecked = false;
   int? _tourStep; // null = tour inactivo
   bool _tourStarted = false;
 
@@ -140,6 +141,60 @@ class _ShellState extends State<Shell> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _showExactAlarmDialog(context, state);
     });
+  }
+
+  void _maybeShowPickemNudge(BuildContext context, AppState state) {
+    if (_pickemNudgeChecked || !state.shouldShowPickemNudge) return;
+    _pickemNudgeChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showPickemNudge(context, state);
+    });
+  }
+
+  Future<void> _showPickemNudge(BuildContext context, AppState state) {
+    final l = state.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.leaderboard, color: Wc.gold, size: 22),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(l.pickemNudgeTitle, style: outfit(17, FontWeight.w900)),
+            ),
+          ],
+        ),
+        content: Text(
+          l.pickemNudgeBody,
+          style: outfit(14, FontWeight.w500, color: Wc.textSoft, height: 1.4),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markPickemNudgeShown();
+            },
+            child: Text(
+              l.pickemNudgeLater,
+              style: outfit(13, FontWeight.w700, color: Wc.textDim),
+            ),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Wc.gold,
+              foregroundColor: Wc.onGold,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markPickemNudgeShown();
+              setState(() => index = 4); // pestaña Pick'em
+            },
+            child: Text(l.pickemNudgeGo, style: outfit(13, FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _showExactAlarmDialog(BuildContext context, AppState state) {
@@ -192,6 +247,7 @@ class _ShellState extends State<Shell> {
     }
     _maybeStartTour(state);
     _maybePromptExactAlarm(context, state);
+    _maybeShowPickemNudge(context, state);
     const pages = [
       MatchesScreen(),
       GroupsScreen(),

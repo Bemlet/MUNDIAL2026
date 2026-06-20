@@ -65,6 +65,11 @@ create policy pred_update_own on public.predictions for update using (
   auth.uid() = user_id
   and (select kickoff from public.matches m where m.no = match_no) > now()
 );
+drop policy if exists pred_delete_own on public.predictions;
+create policy pred_delete_own on public.predictions for delete using (
+  auth.uid() = user_id
+  and (select kickoff from public.matches m where m.no = match_no) > now()
+);
 
 -- matches y match_results: lectura pública. La escritura de resultados es solo
 -- vía service_role (la Edge Function), que bypassea RLS — sin policy de write.
@@ -76,7 +81,7 @@ create policy results_read on public.match_results for select using (true);
 -- ------------------------------------------------------------- leaderboard
 -- Vista (security definer por defecto): agrega las predicciones de TODOS sin
 -- exponer las predicciones individuales. 6 exacto / 3 resultado / 0; los
--- partidos previos al 16/jun no puntúan.
+-- partidos previos al 17/jun no puntúan.
 create or replace view public.leaderboard as
 select
   p.id   as user_id,
@@ -84,7 +89,7 @@ select
   p.country,
   coalesce(sum(
     case
-      when m.kickoff < timestamptz '2026-06-16 00:00:00+00' then 0
+      when m.kickoff < timestamptz '2026-06-17 00:00:00+00' then 0
       when r.finished is not true then 0
       when pr.home = r.home and pr.away = r.away then 6
       when sign(pr.home - pr.away) = sign(r.home - r.away) then 3
@@ -92,7 +97,7 @@ select
     end
   ), 0)::int as points,
   coalesce(sum(
-    case when m.kickoff >= timestamptz '2026-06-16 00:00:00+00'
+    case when m.kickoff >= timestamptz '2026-06-17 00:00:00+00'
           and r.finished and pr.home = r.home and pr.away = r.away
          then 1 else 0 end
   ), 0)::int as exact_count

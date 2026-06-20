@@ -44,10 +44,31 @@ void main() {
     });
 
     test('respeta un flag previo en true', () async {
-      SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true});
+      SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'pickemNudgeShown': true});
       final s = AppState();
       await s.load(initialSync: false);
       expect(s.onboardingDone, isTrue);
+    });
+
+    test("aviso del pick'em: nuevo no lo ve, existente sí", () async {
+      // Nuevo: al completar onboarding ya vio el pick'em -> sin aviso.
+      SharedPreferences.setMockInitialValues({});
+      final nuevo = AppState();
+      await nuevo.load(initialSync: false);
+      nuevo.completeOnboarding();
+      expect(nuevo.pickemNudgeShown, isTrue);
+      expect(nuevo.shouldShowPickemNudge, isFalse);
+
+      // Existente (onboarding+tour ya hechos, nunca vio el pick'em) -> aviso.
+      SharedPreferences.setMockInitialValues({
+        'onboardingDone': true,
+        'tourDone': true,
+      });
+      final existente = AppState();
+      await existente.load(initialSync: false);
+      expect(existente.shouldShowPickemNudge, isTrue);
+      existente.markPickemNudgeShown();
+      expect(existente.shouldShowPickemNudge, isFalse);
     });
   });
 
@@ -126,7 +147,7 @@ void main() {
     });
 
     testWidgets('muestra la app cuando el flag es true', (tester) async {
-      final state = await loadState(tester, {'onboardingDone': true, 'tourDone': true});
+      final state = await loadState(tester, {'onboardingDone': true, 'tourDone': true, 'pickemNudgeShown': true});
 
       await tester.pumpWidget(shellApp(state));
       await tester.pump(const Duration(milliseconds: 300));

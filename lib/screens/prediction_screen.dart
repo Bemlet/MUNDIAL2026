@@ -1,4 +1,4 @@
-/// Pestaña Simulador: simulador de pronósticos (grupos, terceros y bracket).
+/// Pestaña Pick'em: pronósticos partido por partido del fixture real.
 library;
 
 import 'package:flutter/material.dart';
@@ -9,8 +9,6 @@ import '../models.dart';
 import '../supabase_service.dart';
 import '../theme.dart';
 import '../widgets.dart';
-import 'bracket_screen.dart' show BracketView;
-import 'groups_screen.dart' show ThirdsCard;
 
 class PredictionScreen extends StatelessWidget {
   const PredictionScreen({super.key});
@@ -23,7 +21,7 @@ class PredictionScreen extends StatelessWidget {
     final (exact, correct) = state.pickemBreakdown;
 
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l.simulatorTab, style: outfit(22, FontWeight.w900)),
@@ -42,28 +40,33 @@ class PredictionScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
                   child: Row(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l.pickemScore,
-                            style: outfit(
-                              11.5,
-                              FontWeight.w600,
-                              color: Wc.textDim,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.pickemScore,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: outfit(
+                                11.5,
+                                FontWeight.w600,
+                                color: Wc.textDim,
+                              ),
                             ),
-                          ),
-                          Text(
-                            l.pickemSummary(exact, correct),
-                            style: outfit(
-                              11.5,
-                              FontWeight.w600,
-                              color: Wc.textDim,
+                            Text(
+                              l.pickemSummary(exact, correct),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: outfit(
+                                11.5,
+                                FontWeight.w600,
+                                color: Wc.textDim,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                      const Spacer(),
                       Text(
                         '$total',
                         style: outfit(30, FontWeight.w900, color: Wc.goldHi),
@@ -73,28 +76,20 @@ class PredictionScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 9),
                         child: Text(
                           l.pts,
-                          style: outfit(
-                            13,
-                            FontWeight.w700,
-                            color: Wc.textDim,
-                          ),
+                          style: outfit(13, FontWeight.w700, color: Wc.textDim),
                         ),
                       ),
                     ],
                   ),
                 ),
                 TabBar(
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
                   indicatorColor: Wc.gold,
                   labelStyle: outfit(13.5, FontWeight.w800),
                   unselectedLabelStyle: outfit(13.5, FontWeight.w600),
                   labelColor: Wc.goldHi,
                   unselectedLabelColor: Wc.textDim,
                   tabs: [
-                    Tab(text: l.groupsTab),
-                    Tab(text: l.bestThirds),
-                    Tab(text: l.bracketTab),
+                    Tab(text: l.pickemPredictionsTab),
                     Tab(text: l.rankingTab),
                   ],
                 ),
@@ -103,12 +98,7 @@ class PredictionScreen extends StatelessWidget {
           ),
         ),
         body: const TabBarView(
-          children: [
-            _GroupsPredTab(),
-            _ThirdsPredTab(),
-            _BracketPredTab(),
-            _LeaderboardTab(),
-          ],
+          children: [_PredictionsTab(), _LeaderboardTab()],
         ),
       ),
     );
@@ -152,55 +142,170 @@ class PredictionScreen extends StatelessWidget {
   }
 }
 
-// ------------------------------------------------------------------ grupos
+// ------------------------------------------------------------- pronósticos
 
-class _GroupsPredTab extends StatelessWidget {
-  const _GroupsPredTab();
+enum _PickemFilter { pending, upcoming, today, mine, closed, all }
+
+class _PredictionsTab extends StatefulWidget {
+  const _PredictionsTab();
 
   @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final groups = state.groupMatches.keys.toList()..sort();
-    return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-      itemCount: groups.length,
-      itemBuilder: (_, i) => _GroupPredBlock(group: groups[i]),
-    );
-  }
+  State<_PredictionsTab> createState() => _PredictionsTabState();
 }
 
-class _GroupPredBlock extends StatelessWidget {
-  final String group;
-  const _GroupPredBlock({required this.group});
+class _PredictionsTabState extends State<_PredictionsTab> {
+  _PickemFilter filter = _PickemFilter.pending;
 
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final l = state.l10n;
-    final ms = state.groupMatches[group]!;
-    final complete = state.predGroupComplete(group);
+    final now = DateTime.now();
+    final visible = [
+      for (final match in state.matches)
+        if (_matchesFilter(state, match, filter, now)) match,
+    ];
+    final children = <Widget>[];
+    Stage? currentStage;
+    String? currentDay;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: GradientCard(
-        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(l.group(group), style: outfit(16, FontWeight.w800)),
-                const SizedBox(width: 8),
-                if (complete)
-                  Icon(Icons.check_circle, size: 16, color: Wc.mint),
-              ],
+    for (final match in visible) {
+      if (currentStage != match.stage) {
+        if (children.isNotEmpty) children.add(const SizedBox(height: 10));
+        children.add(SectionTitle(l.stageLabel(match.stage)));
+        currentStage = match.stage;
+        currentDay = null;
+      }
+      final day = fmtDay(match.dateUtc, l.locale);
+      if (currentDay != day) {
+        children.add(_DateHeader(day));
+        currentDay = day;
+      }
+      children.add(_PickemMatchCard(match: match));
+      children.add(const SizedBox(height: 8));
+    }
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+          child: _PickemFilters(
+            value: filter,
+            onChanged: (value) => setState(() => filter = value),
+          ),
+        ),
+        Expanded(
+          child: visible.isEmpty
+              ? _PickemEmptyState(l.noMatchesForFilter)
+              : ListView(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                  children: children,
+                ),
+        ),
+      ],
+    );
+  }
+
+  bool _matchesFilter(
+    AppState state,
+    WcMatch match,
+    _PickemFilter filter,
+    DateTime now,
+  ) {
+    final predSaved = state.preds.containsKey(match.no);
+    final editable = state.canEditPickem(match, now);
+    final (home, away) = state.realTeams(match);
+    final teamsResolved = home != null && away != null;
+    final kickoffInFuture = now.toUtc().isBefore(match.dateUtc);
+    final localKickoff = localMatchTime(match.dateUtc);
+    final isToday =
+        localKickoff.year == now.year &&
+        localKickoff.month == now.month &&
+        localKickoff.day == now.day;
+
+    return switch (filter) {
+      _PickemFilter.pending => editable && !predSaved,
+      _PickemFilter.upcoming => teamsResolved && kickoffInFuture,
+      _PickemFilter.today => isToday,
+      _PickemFilter.mine => predSaved,
+      _PickemFilter.closed =>
+        !editable &&
+            (state.pickemLocked(match, now) || !state.pickemCounts(match)),
+      _PickemFilter.all => true,
+    };
+  }
+}
+
+class _PickemFilters extends StatelessWidget {
+  final _PickemFilter value;
+  final ValueChanged<_PickemFilter> onChanged;
+
+  const _PickemFilters({required this.value, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    final labels = {
+      _PickemFilter.pending: l.pickemFilterPending,
+      _PickemFilter.upcoming: l.pickemFilterUpcoming,
+      _PickemFilter.today: l.today,
+      _PickemFilter.mine: l.pickemFilterMyPicks,
+      _PickemFilter.closed: l.pickemFilterClosed,
+      _PickemFilter.all: l.all,
+    };
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          for (final f in _PickemFilter.values)
+            Padding(
+              padding: const EdgeInsets.only(right: 6),
+              child: ChoiceChip(
+                label: Text(labels[f]!),
+                selected: value == f,
+                selectedColor: Wc.gold.withValues(alpha: .2),
+                checkmarkColor: Wc.goldHi,
+                visualDensity: const VisualDensity(
+                  horizontal: -3,
+                  vertical: -3,
+                ),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                labelPadding: const EdgeInsets.symmetric(horizontal: 6),
+                labelStyle: outfit(
+                  13,
+                  FontWeight.w600,
+                  color: value == f ? Wc.goldHi : Wc.text,
+                ),
+                onSelected: (_) => onChanged(f),
+              ),
             ),
-            const SizedBox(height: 4),
-            for (final m in ms) _PredRow(match: m),
-            if (ms.any((m) => state.preds.containsKey(m.no))) ...[
-              const Divider(height: 20),
-              _MiniPredTable(group: group),
-            ],
+        ],
+      ),
+    );
+  }
+}
+
+class _PickemEmptyState extends StatelessWidget {
+  final String text;
+
+  const _PickemEmptyState(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.filter_alt_off_outlined, size: 44, color: Wc.textDim),
+            const SizedBox(height: 12),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: outfit(14, FontWeight.w600, color: Wc.textDim),
+            ),
           ],
         ),
       ),
@@ -208,88 +313,86 @@ class _GroupPredBlock extends StatelessWidget {
   }
 }
 
-class _PredRow extends StatelessWidget {
+class _DateHeader extends StatelessWidget {
+  final String text;
+  const _DateHeader(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 4, 4, 8),
+      child: Text(
+        text,
+        style: outfit(12, FontWeight.w800, color: Wc.goldHi, spacing: .6),
+      ),
+    );
+  }
+}
+
+class _PickemMatchCard extends StatelessWidget {
   final WcMatch match;
-  const _PredRow({required this.match});
+  const _PickemMatchCard({required this.match});
 
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final home = state.teams[match.homeSlot]!;
-    final away = state.teams[match.awaySlot]!;
+    final l = state.l10n;
+    final (home, away) = state.realTeams(match);
+    final resolved = home != null && away != null;
     final pred = state.preds[match.no];
+    final editable = state.canEditPickem(match);
 
-    if (state.pickemLocked(match)) {
-      return _LockedPredRow(match: match, home: home, away: away);
-    }
-
-    void update(int dh, int da) {
-      final p = pred ?? Pred(0, 0);
-      state.setPred(
-        match.no,
-        Pred((p.home + dh).clamp(0, 19), (p.away + da).clamp(0, 19)),
-      );
-    }
-
-    Widget score(int? v, void Function(int) delta) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
+    return GradientCard(
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+      child: Column(
         children: [
-          _MiniBtn(
-            icon: Icons.remove,
-            enabled: v != null && v > 0,
-            onTap: () => delta(-1),
-          ),
-          SizedBox(
-            width: 26,
-            child: Text(
-              v?.toString() ?? '·',
-              textAlign: TextAlign.center,
-              style: outfit(
-                17,
-                FontWeight.w900,
-                color: v != null ? Wc.text : Wc.textDim,
+          Row(
+            children: [
+              Pill('${l.matchShort}${match.no}', color: Wc.textDim),
+              const SizedBox(width: 6),
+              if (match.stage == Stage.group)
+                Pill(l.group(match.group!), color: Wc.goldHi)
+              else
+                Pill(l.stageShortLabel(match.stage), color: Wc.goldHi),
+              const Spacer(),
+              Text(
+                fmtTime(match.dateUtc),
+                style: outfit(11.5, FontWeight.w800, color: Wc.textDim),
               ),
-            ),
+            ],
           ),
-          _MiniBtn(icon: Icons.add, enabled: true, onTap: () => delta(1)),
-        ],
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  home.id,
-                  style: outfit(12.5, FontWeight.w800, spacing: .5),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: _PickemTeam(
+                  team: home,
+                  slot: match.homeSlot,
+                  alignEnd: true,
                 ),
-                const SizedBox(width: 7),
-                FlagImg(home.flag, size: 24, radius: 5),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          score(pred?.home, (d) => update(d, 0)),
-          Text(' – ', style: outfit(13, FontWeight.w700, color: Wc.textDim)),
-          score(pred?.away, (d) => update(0, d)),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Row(
-              children: [
-                FlagImg(away.flag, size: 24, radius: 5),
-                const SizedBox(width: 7),
-                Text(
-                  away.id,
-                  style: outfit(12.5, FontWeight.w800, spacing: .5),
+              ),
+              Flexible(
+                flex: 2,
+                child: Center(
+                  child: editable
+                      ? FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: _PredictionScoreEditor(
+                            match: match,
+                            pred: pred,
+                          ),
+                        )
+                      : _PredictionSummary(
+                          match: match,
+                          pred: pred,
+                          teamsResolved: resolved,
+                        ),
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: _PickemTeam(team: away, slot: match.awaySlot),
+              ),
+            ],
           ),
         ],
       ),
@@ -297,16 +400,128 @@ class _PredRow extends StatelessWidget {
   }
 }
 
-/// Fila de un partido ya cerrado (kickoff pasado): muestra el resultado real,
-/// tu pronóstico y los puntos obtenidos (o "no puntúa" si es previo al cutoff).
-class _LockedPredRow extends StatelessWidget {
+class _PickemTeam extends StatelessWidget {
+  final Team? team;
+  final String slot;
+  final bool alignEnd;
+
+  const _PickemTeam({
+    required this.team,
+    required this.slot,
+    this.alignEnd = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    final flag = team == null
+        ? const UnknownFlag(size: 26)
+        : FlagImg(team!.flag, size: 26, radius: 5);
+    final label = Text(
+      team?.id ?? l.slotLabel(slot),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      textAlign: alignEnd ? TextAlign.end : TextAlign.start,
+      style: outfit(
+        team == null ? 10.5 : 12.5,
+        FontWeight.w800,
+        color: team == null ? Wc.textDim : Wc.text,
+        spacing: team == null ? 0 : .5,
+      ),
+    );
+
+    return Row(
+      mainAxisAlignment: alignEnd
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
+      children: alignEnd
+          ? [Flexible(child: label), const SizedBox(width: 7), flag]
+          : [flag, const SizedBox(width: 7), Flexible(child: label)],
+    );
+  }
+}
+
+class _PredictionScoreEditor extends StatelessWidget {
   final WcMatch match;
-  final Team home;
-  final Team away;
-  const _LockedPredRow({
+  final Pred? pred;
+
+  const _PredictionScoreEditor({required this.match, required this.pred});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _ScoreControl(
+          value: pred?.home,
+          onChanged: (delta) => _update(context, delta, 0),
+        ),
+        Text(' – ', style: outfit(13, FontWeight.w700, color: Wc.textDim)),
+        _ScoreControl(
+          value: pred?.away,
+          onChanged: (delta) => _update(context, 0, delta),
+        ),
+      ],
+    );
+  }
+
+  void _update(BuildContext context, int homeDelta, int awayDelta) {
+    final state = AppScope.of(context);
+    final current = state.preds[match.no] ?? Pred(0, 0);
+    state.setPred(
+      match.no,
+      Pred(
+        (current.home + homeDelta).clamp(0, 19),
+        (current.away + awayDelta).clamp(0, 19),
+      ),
+    );
+  }
+}
+
+class _ScoreControl extends StatelessWidget {
+  final int? value;
+  final ValueChanged<int> onChanged;
+
+  const _ScoreControl({required this.value, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _MiniBtn(
+          icon: Icons.remove,
+          enabled: value != null && value! > 0,
+          onTap: () => onChanged(-1),
+        ),
+        SizedBox(
+          width: 26,
+          child: Text(
+            value?.toString() ?? '·',
+            textAlign: TextAlign.center,
+            style: outfit(
+              17,
+              FontWeight.w900,
+              color: value != null ? Wc.text : Wc.textDim,
+            ),
+          ),
+        ),
+        _MiniBtn(icon: Icons.add, enabled: true, onTap: () => onChanged(1)),
+      ],
+    );
+  }
+}
+
+class _PredictionSummary extends StatelessWidget {
+  final WcMatch match;
+  final Pred? pred;
+  final bool teamsResolved;
+
+  const _PredictionSummary({
     required this.match,
-    required this.home,
-    required this.away,
+    required this.pred,
+    required this.teamsResolved,
   });
 
   @override
@@ -314,71 +529,37 @@ class _LockedPredRow extends StatelessWidget {
     final state = AppScope.of(context);
     final l = state.l10n;
     final live = state.liveFor(match);
-    final pred = state.preds[match.no];
-    final counts = state.pickemCounts(match);
-    final finished = state.realPredFor(match) != null;
+    final real = state.realPredFor(match);
     final pts = state.pickemPoints(match);
-    final realScore = live?.homeScore != null
+    final realScore = live?.homeScore != null && live?.awayScore != null
         ? '${live!.homeScore} – ${live.awayScore}'
-        : '– · –';
-
-    final (String chipText, Color chipColor) = !counts
+        : 'VS';
+    final (chipText, chipColor) = !teamsResolved
+        ? (l.pickemUnavailable, Wc.textDim)
+        : !state.pickemCounts(match)
         ? (l.pickemNoScore, Wc.textDim)
-        : !finished
+        : live?.isLive == true
         ? (l.live, Wc.live)
-        : ('+$pts', pts == 6 ? Wc.mint : (pts == 3 ? Wc.goldHi : Wc.textDim));
+        : real != null
+        ? ('+$pts', pts == 6 ? Wc.mint : (pts == 3 ? Wc.goldHi : Wc.textDim))
+        : (l.pickemClosed, Wc.textDim);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(home.id, style: outfit(12.5, FontWeight.w800, spacing: .5)),
-                const SizedBox(width: 7),
-                FlagImg(home.flag, size: 24, radius: 5),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 126,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(realScore, style: outfit(16, FontWeight.w900)),
-                const SizedBox(height: 3),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        pred == null
-                            ? '${l.pickemYourPick} –'
-                            : '${l.pickemYourPick} ${pred.home}-${pred.away}',
-                        style: outfit(10, FontWeight.w600, color: Wc.textDim),
-                      ),
-                      const SizedBox(width: 6),
-                      _LockChip(chipText, chipColor),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
-              children: [
-                FlagImg(away.flag, size: 24, radius: 5),
-                const SizedBox(width: 7),
-                Text(away.id, style: outfit(12.5, FontWeight.w800, spacing: .5)),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(realScore, style: outfit(17, FontWeight.w900)),
+        const SizedBox(height: 3),
+        Text(
+          pred == null
+              ? '${l.pickemYourPick} –'
+              : '${l.pickemYourPick} ${pred!.home}-${pred!.away}',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: outfit(10, FontWeight.w600, color: Wc.textDim),
+        ),
+        const SizedBox(height: 4),
+        _LockChip(chipText, chipColor),
+      ],
     );
   }
 }
@@ -391,13 +572,19 @@ class _LockChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: const BoxConstraints(maxWidth: 112),
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .14),
         borderRadius: BorderRadius.circular(7),
         border: Border.all(color: color.withValues(alpha: .45)),
       ),
-      child: Text(text, style: outfit(10, FontWeight.w800, color: color)),
+      child: Text(
+        text,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: outfit(10, FontWeight.w800, color: color),
+      ),
     );
   }
 }
@@ -429,407 +616,6 @@ class _MiniBtn extends StatelessWidget {
           ),
         ),
         child: Icon(icon, size: 14, color: enabled ? Wc.goldHi : Wc.line),
-      ),
-    );
-  }
-}
-
-class _MiniPredTable extends StatelessWidget {
-  final String group;
-  const _MiniPredTable({required this.group});
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final l = state.l10n;
-    final rows = state.predTable(group);
-    return Column(
-      children: [
-        for (var i = 0; i < rows.length; i++)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.5),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 18,
-                  child: Text(
-                    '${i + 1}',
-                    style: outfit(
-                      10.5,
-                      FontWeight.w800,
-                      color: i < 2
-                          ? Wc.mint
-                          : i == 2
-                          ? Wc.goldHi
-                          : Wc.textDim,
-                    ),
-                  ),
-                ),
-                FlagImg(state.teams[rows[i].teamId]!.flag, size: 18, radius: 4),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    l.teamName(state.teams[rows[i].teamId]!),
-                    style: outfit(11.5, FontWeight.w600),
-                  ),
-                ),
-                Text(
-                  '${rows[i].gd > 0 ? '+' : ''}${rows[i].gd}  ',
-                  style: outfit(11, FontWeight.w600, color: Wc.textDim),
-                ),
-                Text(
-                  '${rows[i].points} ${l.pts}',
-                  style: outfit(11.5, FontWeight.w800, color: Wc.goldHi),
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-// ----------------------------------------------------------------- terceros
-
-class _ThirdsPredTab extends StatelessWidget {
-  const _ThirdsPredTab();
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final thirds = state.predThirdsRanked();
-    if (thirds.isEmpty) {
-      return _emptyState(state.l10n.completeGroupsForThirds);
-    }
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-      children: [
-        ThirdsCard(thirds: thirds, real: false),
-        if (!state.allGroupsPredicted)
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              state.l10n.completeAllGroupsForBracketThirds,
-              textAlign: TextAlign.center,
-              style: outfit(12.5, FontWeight.w500, color: Wc.textDim),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-// ------------------------------------------------------------------ bracket
-
-class _BracketPredTab extends StatelessWidget {
-  const _BracketPredTab();
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final l = state.l10n;
-    final champion = state.predChampion;
-
-    return Column(
-      children: [
-        if (champion != null)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
-            child: GradientCard(
-              gradient: Wc.championGradient,
-              borderColor: Wc.gold,
-              child: Row(
-                children: [
-                  Icon(Icons.emoji_events, color: Wc.gold, size: 34),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l.yourWorldChampionUpper,
-                          style: outfit(
-                            10.5,
-                            FontWeight.w800,
-                            color: Wc.goldHi,
-                            spacing: 1.2,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          l.teamName(champion),
-                          style: outfit(20, FontWeight.w900),
-                        ),
-                      ],
-                    ),
-                  ),
-                  FlagImg(champion.flag, size: 44),
-                ],
-              ),
-            ),
-          )
-        else if (!state.allGroupsPredicted)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
-            child: GradientCard(
-              child: Text(
-                l.completeGroupsForBracket,
-                textAlign: TextAlign.center,
-                style: outfit(12.5, FontWeight.w600, color: Wc.textDim),
-              ),
-            ),
-          ),
-        Expanded(
-          child: BracketView(
-            teamsOf: state.predTeams,
-            scoreOf: (m) {
-              final p = state.preds[m.no];
-              return p == null ? null : (p.home, p.away, false);
-            },
-            winnerOf: state.predWinner,
-            onTap: (m) => _editKo(context, state, m),
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _editKo(BuildContext context, AppState state, WcMatch m) {
-    if (state.pickemLocked(m)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(state.l10n.pickemLockedToast)),
-      );
-      return;
-    }
-    final (home, away) = state.predTeams(m);
-    if (home == null || away == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(state.l10n.unknownKnockoutTeams)));
-      return;
-    }
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Wc.surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      isScrollControlled: true,
-      builder: (_) => _KoEditorSheet(match: m, home: home, away: away),
-    );
-  }
-}
-
-class _KoEditorSheet extends StatefulWidget {
-  final WcMatch match;
-  final Team home;
-  final Team away;
-
-  const _KoEditorSheet({
-    required this.match,
-    required this.home,
-    required this.away,
-  });
-
-  @override
-  State<_KoEditorSheet> createState() => _KoEditorSheetState();
-}
-
-class _KoEditorSheetState extends State<_KoEditorSheet> {
-  int h = 0;
-  int a = 0;
-  String? penWinner;
-  bool _initialized = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_initialized) return;
-    _initialized = true;
-    final p = AppScope.of(context).preds[widget.match.no];
-    h = p?.home ?? 0;
-    a = p?.away ?? 0;
-    penWinner = p?.penWinner;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final l = state.l10n;
-    final tie = h == a;
-    final canSave = !tie || penWinner != null;
-
-    Widget stepper(int v, void Function(int) set) {
-      return Column(
-        children: [
-          IconButton(
-            onPressed: () => set((v + 1).clamp(0, 19)),
-            icon: Icon(Icons.keyboard_arrow_up, size: 30, color: Wc.goldHi),
-          ),
-          Text('$v', style: outfit(34, FontWeight.w900)),
-          IconButton(
-            onPressed: v > 0 ? () => set(v - 1) : null,
-            icon: Icon(
-              Icons.keyboard_arrow_down,
-              size: 30,
-              color: v > 0 ? Wc.textDim : Wc.line,
-            ),
-          ),
-        ],
-      );
-    }
-
-    return SafeArea(
-      top: false,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          20,
-          16,
-          20,
-          20 + MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Wc.line,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(height: 14),
-            Text(
-              l.stageLabel(widget.match.stage),
-              style: outfit(12, FontWeight.w800, color: Wc.goldHi, spacing: 1),
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      FlagImg(widget.home.flag, size: 46),
-                      const SizedBox(height: 6),
-                      Text(
-                        l.teamName(widget.home),
-                        textAlign: TextAlign.center,
-                        style: outfit(13.5, FontWeight.w800),
-                      ),
-                    ],
-                  ),
-                ),
-                stepper(
-                  h,
-                  (v) => setState(() {
-                    h = v;
-                    if (h != a) penWinner = null;
-                  }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    '–',
-                    style: outfit(26, FontWeight.w800, color: Wc.textDim),
-                  ),
-                ),
-                stepper(
-                  a,
-                  (v) => setState(() {
-                    a = v;
-                    if (h != a) penWinner = null;
-                  }),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      FlagImg(widget.away.flag, size: 46),
-                      const SizedBox(height: 6),
-                      Text(
-                        l.teamName(widget.away),
-                        textAlign: TextAlign.center,
-                        style: outfit(13.5, FontWeight.w800),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            if (tie) ...[
-              const SizedBox(height: 14),
-              Text(
-                l.tiePenaltyQuestion,
-                style: outfit(13, FontWeight.w700, color: Wc.textDim),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (final t in [widget.home, widget.away])
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      child: ChoiceChip(
-                        avatar: FlagImg(t.flag, size: 18, radius: 4),
-                        label: Text(l.teamName(t)),
-                        selected: penWinner == t.id,
-                        selectedColor: Wc.gold.withValues(alpha: .25),
-                        labelStyle: outfit(
-                          12.5,
-                          FontWeight.w700,
-                          color: penWinner == t.id ? Wc.goldHi : Wc.text,
-                        ),
-                        onSelected: (_) => setState(() => penWinner = t.id),
-                      ),
-                    ),
-                ],
-              ),
-            ],
-            const SizedBox(height: 18),
-            Row(
-              children: [
-                if (AppScope.of(context).preds[widget.match.no] != null)
-                  TextButton(
-                    onPressed: () {
-                      state.setPred(widget.match.no, null);
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      l.remove,
-                      style: outfit(13, FontWeight.w600, color: Wc.textDim),
-                    ),
-                  ),
-                const Spacer(),
-                FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: canSave ? Wc.gold : Wc.line,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 28,
-                      vertical: 12,
-                    ),
-                  ),
-                  onPressed: canSave
-                      ? () {
-                          state.setPred(
-                            widget.match.no,
-                            Pred(h, a, h == a ? penWinner : null),
-                          );
-                          Navigator.pop(context);
-                        }
-                      : null,
-                  child: Text(
-                    l.save,
-                    style: outfit(
-                      14,
-                      FontWeight.w800,
-                      color: const Color(0xFF221A00),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -998,7 +784,11 @@ class _LeaderRow extends StatelessWidget {
   final int rank;
   final LeaderEntry entry;
   final bool isMe;
-  const _LeaderRow({required this.rank, required this.entry, required this.isMe});
+  const _LeaderRow({
+    required this.rank,
+    required this.entry,
+    required this.isMe,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1053,24 +843,4 @@ class _LeaderRow extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _emptyState(String text) {
-  return Center(
-    child: Padding(
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.edit_note, size: 48, color: Wc.textDim),
-          const SizedBox(height: 12),
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: outfit(14, FontWeight.w600, color: Wc.textDim),
-          ),
-        ],
-      ),
-    ),
-  );
 }

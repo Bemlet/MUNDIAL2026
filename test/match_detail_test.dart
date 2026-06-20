@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mundial2026/app_state.dart';
 import 'package:mundial2026/main.dart';
+import 'package:mundial2026/models.dart';
 import 'package:mundial2026/screens/match_detail.dart';
 import 'package:mundial2026/stats.dart';
 import 'package:mundial2026/theme.dart';
@@ -139,4 +140,106 @@ void main() {
 
     expect(find.text('Goles y tarjetas'), findsNothing);
   });
+
+  testWidgets('detalle de grupo bloqueado no permite editar pronóstico', (
+    tester,
+  ) async {
+    late AppState state;
+    await tester.runAsync(() async {
+      SharedPreferences.setMockInitialValues({});
+      state = AppState();
+      await state.load(initialSync: false);
+    });
+
+    final original = state.byNo[1]!;
+    state.byNo[1] = WcMatch.fromJson({
+      'no': original.no,
+      'stage': 'group',
+      'group': original.group,
+      'home': original.homeSlot,
+      'away': original.awaySlot,
+      'date': DateTime.now()
+          .toUtc()
+          .subtract(const Duration(hours: 1))
+          .toIso8601String(),
+      'venue': original.venue,
+      'espnId': original.espnId,
+    });
+
+    await tester.pumpWidget(
+      AppScope(
+        state: state,
+        child: MaterialApp(
+          theme: buildTheme(),
+          home: const MatchDetailScreen(matchNo: 1),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('Cerrado'), findsOneWidget);
+    expect(find.byIcon(Icons.keyboard_arrow_up), findsNothing);
+    expect(find.byIcon(Icons.keyboard_arrow_down), findsNothing);
+  });
+
+  testWidgets(
+    'detalle de eliminatoria permite editar si los equipos reales están resueltos',
+    (tester) async {
+      late AppState state;
+      await tester.runAsync(() async {
+        SharedPreferences.setMockInitialValues({});
+        state = AppState();
+        await state.load(initialSync: false);
+      });
+
+      final original = state.byNo[73]!;
+      final match = WcMatch.fromJson({
+        'no': original.no,
+        'stage': 'r32',
+        'group': null,
+        'home': original.homeSlot,
+        'away': original.awaySlot,
+        'date': DateTime.now()
+            .toUtc()
+            .add(const Duration(days: 7))
+            .toIso8601String(),
+        'venue': original.venue,
+        'espnId': original.espnId,
+      });
+      state.byNo[73] = match;
+      final home = state.teams['MEX']!;
+      final away = state.teams['RSA']!;
+      state.live[match.espnId] = LiveInfo(
+        espnId: match.espnId,
+        status: 'STATUS_SCHEDULED',
+        detail: '',
+        homeScore: null,
+        awayScore: null,
+        homeEspn: home.espn,
+        awayEspn: away.espn,
+      );
+
+      await tester.pumpWidget(
+        AppScope(
+          state: state,
+          child: MaterialApp(
+            theme: buildTheme(),
+            home: const MatchDetailScreen(matchNo: 73),
+          ),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.byIcon(Icons.keyboard_arrow_up), findsNWidgets(2));
+
+      final firstStepper = find.byIcon(Icons.keyboard_arrow_up).first;
+      await tester.ensureVisible(firstStepper);
+      await tester.pump();
+      await tester.tap(firstStepper);
+      await tester.pump();
+
+      expect(state.preds[73]!.home, 1);
+      expect(state.preds[73]!.away, 0);
+    },
+  );
 }

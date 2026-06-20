@@ -96,10 +96,12 @@ void main() {
     expect(s.preds.containsKey(unplayed.no), isTrue);
   });
 
-  test("pick'em: cutoff 16/jun y puntaje 6/3/0", () async {
+  test("pick'em: cutoff 17/jun y puntaje 6/3/0", () async {
     SharedPreferences.setMockInitialValues({});
     final s = AppState();
     await s.load(initialSync: false);
+
+    expect(AppState.pickemStart, DateTime.utc(2026, 6, 17));
 
     LiveInfo ft(WcMatch m, int h, int a) => LiveInfo(
       espnId: m.espnId,
@@ -111,7 +113,7 @@ void main() {
       awayEspn: s.teams[m.awaySlot]!.espn,
     );
 
-    // Partido anterior al 16/jun: aunque acierte exacto, NO puntúa.
+    // Partido anterior al 17/jun: aunque acierte exacto, NO puntúa.
     final pre = s.matches.firstWhere(
       (m) => m.stage == Stage.group && m.dateUtc.isBefore(AppState.pickemStart),
     );
@@ -119,9 +121,10 @@ void main() {
     s.preds[pre.no] = Pred(2, 1);
     expect(s.pickemPoints(pre), 0);
 
-    // Partido del 16/jun en adelante: exacto = 6, resultado = 3, erró = 0.
+    // Partido del 17/jun en adelante: exacto = 6, resultado = 3, erró = 0.
     final post = s.matches.firstWhere(
-      (m) => m.stage == Stage.group && !m.dateUtc.isBefore(AppState.pickemStart),
+      (m) =>
+          m.stage == Stage.group && !m.dateUtc.isBefore(AppState.pickemStart),
     );
     s.live[post.espnId] = ft(post, 2, 1);
     s.preds[post.no] = Pred(2, 1);
@@ -131,6 +134,114 @@ void main() {
     s.preds[post.no] = Pred(0, 2);
     expect(s.pickemPoints(post), 0);
   });
+
+  test("pick'em: la edición se bloquea en el kickoff exacto", () {
+    final s = AppState();
+    final m = WcMatch.fromJson({
+      'no': 999,
+      'stage': 'group',
+      'group': 'A',
+      'home': 'MEX',
+      'away': 'RSA',
+      'date': '2026-06-17T00:00:00Z',
+      'venue': 'Test',
+      'espnId': 'test',
+    });
+
+    expect(s.pickemLocked(m, DateTime.utc(2026, 6, 16, 23, 59, 59)), isFalse);
+    expect(s.pickemLocked(m, DateTime.utc(2026, 6, 17)), isTrue);
+    expect(s.pickemLocked(m, DateTime.utc(2026, 6, 17, 0, 0, 1)), isTrue);
+  });
+
+  test(
+    "pick'em: canEditPickem requiere equipos resueltos, puntaje y kickoff futuro",
+    () async {
+      SharedPreferences.setMockInitialValues({});
+      final s = AppState();
+      await s.load(initialSync: false);
+
+      final editable = s.byNo[20]!;
+      expect(
+        s.canEditPickem(
+          editable,
+          editable.dateUtc.subtract(const Duration(seconds: 1)),
+        ),
+        isTrue,
+      );
+      expect(s.canEditPickem(editable, editable.dateUtc), isFalse);
+
+      final beforeCutoff = s.byNo[18]!;
+      expect(
+        s.canEditPickem(
+          beforeCutoff,
+          beforeCutoff.dateUtc.subtract(const Duration(seconds: 1)),
+        ),
+        isFalse,
+      );
+
+      final unresolvedKnockout = s.byNo[73]!;
+      expect(
+        s.canEditPickem(
+          unresolvedKnockout,
+          unresolvedKnockout.dateUtc.subtract(const Duration(seconds: 1)),
+        ),
+        isFalse,
+      );
+    },
+  );
+
+  test("pick'em: setPred no muta picks bloqueados y permite futuros", () async {
+    SharedPreferences.setMockInitialValues({});
+    final s = AppState();
+    await s.load(initialSync: false);
+
+    final m = s.byNo[20]!;
+    final beforeKickoff = m.dateUtc.subtract(const Duration(seconds: 1));
+    final atKickoff = m.dateUtc;
+
+    s.setPred(m.no, Pred(1, 0), now: beforeKickoff);
+    expect(s.preds[m.no]!.home, 1);
+
+    s.setPred(m.no, Pred(2, 0), now: atKickoff);
+    expect(s.preds[m.no]!.home, 1);
+
+    s.setPred(m.no, null, now: atKickoff);
+    expect(s.preds[m.no], isNotNull);
+
+    s.setPred(m.no, null, now: beforeKickoff);
+    expect(s.preds.containsKey(m.no), isFalse);
+  });
+
+  test("pick'em: clearPreds borra solo pronósticos editables", () async {
+    SharedPreferences.setMockInitialValues({});
+    final s = AppState();
+    await s.load(initialSync: false);
+
+    final locked = s.byNo[19]!;
+    final editable = s.byNo[20]!;
+    final now = DateTime.utc(2026, 6, 17, 2);
+    s.preds[locked.no] = Pred(1, 1);
+    s.preds[editable.no] = Pred(2, 0);
+
+    s.clearPreds(now: now);
+
+    expect(s.preds[locked.no], isNotNull);
+    expect(s.preds.containsKey(editable.no), isFalse);
+  });
+
+  test(
+    'carga: poda pronósticos legacy de eliminatorias sin equipos reales',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        'preds': '{"73":{"h":1,"a":0},"20":{"h":2,"a":1}}',
+      });
+      final s = AppState();
+      await s.load(initialSync: false);
+
+      expect(s.preds.containsKey(73), isFalse);
+      expect(s.preds[20], isNotNull);
+    },
+  );
 
   test('cambiar la fase de grupos invalida penales huérfanos', () async {
     SharedPreferences.setMockInitialValues({});

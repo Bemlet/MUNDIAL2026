@@ -181,7 +181,7 @@ void main() {
     await initializeDateFormatting('es');
     Intl.defaultLocale = 'es';
 
-    SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true});
+    SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'pickemNudgeShown': true});
     state = AppState();
     await state.load(initialSync: false);
     state.setCountry('MX');

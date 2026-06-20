@@ -21,7 +21,7 @@ void main() {
   });
 
   test('tourDone: default false, completeTour persiste, shouldRunTour', () async {
-    SharedPreferences.setMockInitialValues({'onboardingDone': true});
+    SharedPreferences.setMockInitialValues({'onboardingDone': true, 'pickemNudgeShown': true});
     final s = AppState();
     await s.load(initialSync: false);
 
@@ -53,7 +53,7 @@ void main() {
   );
 
   testWidgets('el Shell corre el tour y "Saltar" lo termina', (tester) async {
-    final state = await loaded(tester, {'onboardingDone': true}); // tourDone false
+    final state = await loaded(tester, {'onboardingDone': true, 'pickemNudgeShown': true}); // tourDone false
 
     await tester.pumpWidget(shellApp(state));
     await tester.pump(); // dispara el post-frame que inicia el tour
@@ -70,7 +70,7 @@ void main() {
   });
 
   testWidgets('"Siguiente" avanza al segundo paso', (tester) async {
-    final state = await loaded(tester, {'onboardingDone': true});
+    final state = await loaded(tester, {'onboardingDone': true, 'pickemNudgeShown': true});
 
     await tester.pumpWidget(shellApp(state));
     await tester.pump();

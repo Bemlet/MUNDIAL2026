@@ -134,9 +134,7 @@ class MatchDetailScreen extends StatelessWidget {
                 child: Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: [
-                    for (final c in channels) _ChannelChip(name: c),
-                  ],
+                  children: [for (final c in channels) _ChannelChip(name: c)],
                 ),
               ),
             ],
@@ -176,9 +174,11 @@ class MatchDetailScreen extends StatelessWidget {
             ),
 
             // ------------------------------------------------- tu pronóstico
-            if (m.stage == Stage.group && home != null && away != null) ...[
+            if (home != null && away != null) ...[
               SectionTitle(l10n.yourPrediction),
-              _PredEditorCard(match: m, home: home, away: away),
+              state.canEditPickem(m)
+                  ? _PredEditorCard(match: m, home: home, away: away)
+                  : _LockedPredictionCard(match: m, home: home, away: away),
               if (pred != null && finished && l?.homeScore != null) ...[
                 const SizedBox(height: 8),
                 _predResult(pred, l!, l10n),
@@ -188,9 +188,8 @@ class MatchDetailScreen extends StatelessWidget {
               GradientCard(
                 child: Builder(
                   builder: (context) {
-                    final (ph, pa) = state.predTeams(m);
                     return Text(
-                      '${ph == null ? l10n.slotLabel(m.homeSlot) : l10n.teamName(ph)} ${pred.home} – ${pred.away} ${pa == null ? l10n.slotLabel(m.awaySlot) : l10n.teamName(pa)}'
+                      '${home == null ? l10n.slotLabel(m.homeSlot) : l10n.teamName(home)} ${pred.home} – ${pred.away} ${away == null ? l10n.slotLabel(m.awaySlot) : l10n.teamName(away)}'
                       '${pred.penWinner != null ? '  ·  ${l10n.teamName(state.teams[pred.penWinner]!)} ${l10n.byPenalties}' : ''}',
                       textAlign: TextAlign.center,
                       style: outfit(15, FontWeight.w800),
@@ -372,6 +371,96 @@ class MatchDetailScreen extends StatelessWidget {
   }
 }
 
+/// Pronóstico cerrado: muestra marcador real si existe, pick guardado y estado.
+class _LockedPredictionCard extends StatelessWidget {
+  final WcMatch match;
+  final Team home;
+  final Team away;
+
+  const _LockedPredictionCard({
+    required this.match,
+    required this.home,
+    required this.away,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l = state.l10n;
+    final live = state.liveFor(match);
+    final pred = state.preds[match.no];
+    final counts = state.pickemCounts(match);
+    final real = state.realPredFor(match);
+    final pts = state.pickemPoints(match);
+    final realScore = live?.homeScore != null && live?.awayScore != null
+        ? '${live!.homeScore} – ${live.awayScore}'
+        : 'VS';
+    final (chipText, chipColor) = !counts
+        ? (l.pickemNoScore, Wc.textDim)
+        : live?.isLive == true
+        ? (l.live, Wc.live)
+        : real != null
+        ? ('+$pts', pts == 6 ? Wc.mint : (pts == 3 ? Wc.goldHi : Wc.textDim))
+        : (l.pickemClosed, Wc.textDim);
+
+    return GradientCard(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    FlagImg(home.flag, size: 34),
+                    const SizedBox(height: 4),
+                    Text(
+                      l.teamName(home),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: outfit(12, FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 110,
+                child: Column(
+                  children: [
+                    Text(realScore, style: outfit(24, FontWeight.w900)),
+                    const SizedBox(height: 4),
+                    FittedBox(child: Pill(chipText, color: chipColor)),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    FlagImg(away.flag, size: 34),
+                    const SizedBox(height: 4),
+                    Text(
+                      l.teamName(away),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: outfit(12, FontWeight.w700),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            pred == null
+                ? '${l.pickemYourPick} –'
+                : '${l.pickemYourPick} ${pred.home}-${pred.away}',
+            style: outfit(12, FontWeight.w600, color: Wc.textDim),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// Un evento del partido (gol o tarjeta) normalizado para el timeline.
 class _Ev {
   final int? minute;
@@ -397,7 +486,11 @@ class _MatchEventsCard extends StatelessWidget {
   final Team? home;
   final Team? away;
 
-  const _MatchEventsCard({required this.stats, required this.home, required this.away});
+  const _MatchEventsCard({
+    required this.stats,
+    required this.home,
+    required this.away,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -457,16 +550,24 @@ class _MatchEventsCard extends StatelessWidget {
     );
 
     final content = Row(
-      mainAxisAlignment: isHome ? MainAxisAlignment.start : MainAxisAlignment.end,
+      mainAxisAlignment: isHome
+          ? MainAxisAlignment.start
+          : MainAxisAlignment.end,
       children: isHome
           ? [
               marker,
               const SizedBox(width: 9),
               nameWidget,
-              if (minute.isNotEmpty) ...[const SizedBox(width: 8), minuteWidget],
+              if (minute.isNotEmpty) ...[
+                const SizedBox(width: 8),
+                minuteWidget,
+              ],
             ]
           : [
-              if (minute.isNotEmpty) ...[minuteWidget, const SizedBox(width: 8)],
+              if (minute.isNotEmpty) ...[
+                minuteWidget,
+                const SizedBox(width: 8),
+              ],
               nameWidget,
               const SizedBox(width: 9),
               marker,
@@ -562,7 +663,7 @@ class _ChannelChip extends StatelessWidget {
   }
 }
 
-/// Editor de pronóstico para un partido de grupos.
+/// Editor de pronóstico para un partido con equipos reales resueltos.
 class _PredEditorCard extends StatelessWidget {
   final WcMatch match;
   final Team home;

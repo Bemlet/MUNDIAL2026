@@ -121,8 +121,10 @@ class SupabaseService {
           .from('leaderboard')
           .select('user_id, nickname, points, exact_count')
           .order('points', ascending: false)
+          .order('exact_count', ascending: false)
+          .order('nickname', ascending: true)
           .limit(100);
-      return [
+      return sortLeaderboardForDisplay([
         for (final r in rows as List)
           LeaderEntry(
             userId: '${r['user_id'] ?? ''}',
@@ -130,9 +132,27 @@ class SupabaseService {
             points: (r['points'] as num?)?.toInt() ?? 0,
             exactCount: (r['exact_count'] as num?)?.toInt() ?? 0,
           ),
-      ];
+      ]);
     } catch (_) {
       return const [];
     }
+  }
+
+  static List<LeaderEntry> sortLeaderboardForDisplay(
+    Iterable<LeaderEntry> entries,
+  ) {
+    final sorted = entries.toList()
+      ..sort((a, b) {
+        final points = b.points.compareTo(a.points);
+        if (points != 0) return points;
+        final exacts = b.exactCount.compareTo(a.exactCount);
+        if (exacts != 0) return exacts;
+        final nickname = a.nickname.toLowerCase().compareTo(
+          b.nickname.toLowerCase(),
+        );
+        if (nickname != 0) return nickname;
+        return a.userId.compareTo(b.userId);
+      });
+    return sorted;
   }
 }
