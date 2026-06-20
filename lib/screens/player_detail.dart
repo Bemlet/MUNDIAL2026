@@ -136,7 +136,11 @@ class _Header extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  _Avatar(name: name, photoId: photoId),
+                  _Avatar(
+                    name: name,
+                    photoUrl: profile?.photo,
+                    photoId: photoId,
+                  ),
                   if (profile != null)
                     Positioned(
                       right: 0,
@@ -193,20 +197,27 @@ class _Header extends StatelessWidget {
 
 class _Avatar extends StatelessWidget {
   final String name;
-  final String? photoId;
-  const _Avatar({required this.name, required this.photoId});
+  final String? photoUrl; // foto curada (Wikimedia)
+  final String? photoId; // id de atleta ESPN (fallback)
+  const _Avatar({required this.name, this.photoUrl, this.photoId});
 
   @override
   Widget build(BuildContext context) {
     const size = 104.0;
     final fallback = _Initials(name: name, size: size);
-    final child = photoId == null || photoId!.isEmpty
+    final url = (photoUrl != null && photoUrl!.isNotEmpty)
+        ? photoUrl
+        : (photoId != null && photoId!.isNotEmpty)
+            ? 'https://a.espncdn.com/i/headshots/soccer/players/full/$photoId.png'
+            : null;
+    final child = url == null
         ? fallback
         : Image.network(
-            'https://a.espncdn.com/i/headshots/soccer/players/full/$photoId.png',
+            url,
             width: size,
             height: size,
             fit: BoxFit.cover,
+            headers: const {'User-Agent': 'Golazo-WC2026/1.0'},
             errorBuilder: (_, __, ___) => fallback,
             loadingBuilder: (_, child, progress) =>
                 progress == null ? child : fallback,

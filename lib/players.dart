@@ -15,6 +15,7 @@ class PlayerProfile {
   final String teamId;
   final String pos; // GK / DEF / MID / FWD
   final String club;
+  final String? photo; // URL de foto curada (Wikimedia), si existe
   final Map<String, int> skills; // pac, sho, pas, dri, def, phy (0-99)
 
   const PlayerProfile({
@@ -23,15 +24,18 @@ class PlayerProfile {
     required this.pos,
     required this.club,
     required this.skills,
+    this.photo,
   });
 
   factory PlayerProfile.fromJson(String name, Map<String, dynamic> j) {
     final raw = (j['skills'] as Map?) ?? const {};
+    final photo = '${j['photo'] ?? ''}';
     return PlayerProfile(
       name: name,
       teamId: '${j['team'] ?? ''}',
       pos: '${j['pos'] ?? ''}',
       club: '${j['club'] ?? ''}',
+      photo: photo.isEmpty ? null : photo,
       skills: {
         for (final k in kSkillOrder) k: (raw[k] as num?)?.round() ?? 50,
       },
