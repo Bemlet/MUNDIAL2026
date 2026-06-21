@@ -125,6 +125,7 @@ class AppState extends ChangeNotifier {
   bool exactAlarmAsked = false; // ya mostramos el prompt una vez
   bool pickemNudgeShown = false; // ya avisamos del pick'em a este usuario
   bool playerIntroShown = false; // ya avisamos de las cartas de jugador
+  bool lineupsIntroShown = false; // ya avisamos de formaciones + perfiles
   AppLanguage language = AppLanguage.es;
 
   AppStrings get l10n => AppStrings(language);
@@ -274,6 +275,7 @@ class AppState extends ChangeNotifier {
     exactAlarmAsked = p.getBool('exactAlarmAsked') ?? false;
     pickemNudgeShown = p.getBool('pickemNudgeShown') ?? false;
     playerIntroShown = p.getBool('playerIntroShown') ?? false;
+    lineupsIntroShown = p.getBool('lineupsIntroShown') ?? false;
     country = p.getString('country') ?? _detectCountry();
     _pruneUnresolvedKnockoutPickemPreds(notify: false);
   }
@@ -340,6 +342,8 @@ class AppState extends ChangeNotifier {
     // Tampoco repetir el aviso de cartas de jugador: ya está en el onboarding.
     playerIntroShown = true;
     _prefs?.setBool('playerIntroShown', true);
+    lineupsIntroShown = true;
+    _prefs?.setBool('lineupsIntroShown', true);
     notifyListeners();
   }
 
@@ -373,6 +377,22 @@ class AppState extends ChangeNotifier {
     if (playerIntroShown) return;
     playerIntroShown = true;
     _prefs?.setBool('playerIntroShown', true);
+    notifyListeners();
+  }
+
+  /// ¿Mostrar el aviso de formaciones + perfiles? (una vez, tras el de cartas).
+  bool get shouldShowLineupsIntro =>
+      loaded &&
+      onboardingDone &&
+      tourDone &&
+      playerIntroShown &&
+      !lineupsIntroShown &&
+      (exactAlarmGranted || exactAlarmAsked);
+
+  void markLineupsIntroShown() {
+    if (lineupsIntroShown) return;
+    lineupsIntroShown = true;
+    _prefs?.setBool('lineupsIntroShown', true);
     notifyListeners();
   }
 

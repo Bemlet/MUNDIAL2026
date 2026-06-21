@@ -107,7 +107,8 @@ class _MatchesScreenState extends State<MatchesScreen> {
           child: Row(
             children: [
               Text('GOLAZO', style: outfit(22, FontWeight.w900)),
-              Text(" '26", style: outfit(22, FontWeight.w900, color: Wc.gold)),
+              const SizedBox(width: 8),
+              Image.asset('assets/branding/fifa_logo.png', height: 26),
               const Spacer(),
               IconButton(
                 icon: Icon(
@@ -199,11 +200,6 @@ class _MatchesScreenState extends State<MatchesScreen> {
                   Text(
                     l.hostCountries,
                     style: outfit(13, FontWeight.w500, color: Wc.textDim),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    l.localTimeNotice,
-                    style: outfit(12, FontWeight.w600, color: Wc.mint),
                   ),
                   if (liveNow.isNotEmpty) ...[
                     const SizedBox(height: 14),

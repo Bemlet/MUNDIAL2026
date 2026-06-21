@@ -152,6 +152,7 @@ void main() {
         'tourDone': true,
         'pickemNudgeShown': true,
         'playerIntroShown': true,
+        'lineupsIntroShown': true,
       });
 
       await tester.pumpWidget(shellApp(state));
@@ -167,6 +168,7 @@ void main() {
         'onboardingDone': true,
         'tourDone': true,
         'pickemNudgeShown': true,
+        'lineupsIntroShown': true,
         // playerIntroShown ausente -> debe mostrarse una vez
       });
 

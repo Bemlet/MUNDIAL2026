@@ -102,6 +102,7 @@ class _ShellState extends State<Shell> {
   bool _exactAlarmPromptChecked = false;
   bool _pickemNudgeChecked = false;
   bool _playerIntroChecked = false;
+  bool _lineupsIntroChecked = false;
   int? _tourStep; // null = tour inactivo
   bool _tourStarted = false;
 
@@ -158,6 +159,50 @@ class _ShellState extends State<Shell> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _showPlayerIntro(context, state);
     });
+  }
+
+  void _maybeShowLineupsIntro(BuildContext context, AppState state) {
+    if (_lineupsIntroChecked || !state.shouldShowLineupsIntro) return;
+    _lineupsIntroChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showLineupsIntro(context, state);
+    });
+  }
+
+  Future<void> _showLineupsIntro(BuildContext context, AppState state) {
+    final l = state.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.sports_soccer, color: Wc.gold, size: 22),
+            const SizedBox(width: 8),
+            Expanded(
+              child:
+                  Text(l.lineupsIntroTitle, style: outfit(17, FontWeight.w900)),
+            ),
+          ],
+        ),
+        content: Text(
+          l.lineupsIntroBody,
+          style: outfit(14, FontWeight.w500, color: Wc.textSoft, height: 1.4),
+        ),
+        actions: [
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Wc.gold,
+              foregroundColor: Wc.onGold,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markLineupsIntroShown();
+            },
+            child: Text(l.playerIntroLater, style: outfit(13, FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _showPlayerIntro(BuildContext context, AppState state) {
@@ -304,6 +349,7 @@ class _ShellState extends State<Shell> {
     _maybePromptExactAlarm(context, state);
     _maybeShowPickemNudge(context, state);
     _maybeShowPlayerIntro(context, state);
+    _maybeShowLineupsIntro(context, state);
     const pages = [
       MatchesScreen(),
       GroupsScreen(),

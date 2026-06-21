@@ -279,6 +279,11 @@ class AppStrings {
       : 'Tocá cualquier figura en Stats o cualquier estrella de una selección para ver su carta: foto, radar de habilidades, sus stats del torneo y una reseña.';
   String get playerIntroGo => isEn ? 'See Stats' : 'Ver Stats';
   String get playerIntroLater => isEn ? 'Got it' : 'Entendido';
+  String get lineupsIntroTitle =>
+      isEn ? 'New: lineups & player profiles' : 'Nuevo: formaciones y perfiles';
+  String get lineupsIntroBody => isEn
+      ? 'Open a played or live match to see both lineups on the pitch, substitutions and match stats. Tap any player — including substitutes — to open their profile with photo and bio.'
+      : 'Entrá a un partido jugado o en vivo para ver las formaciones en la cancha, los cambios y las estadísticas. Tocá cualquier jugador —incluidos los suplentes— para abrir su perfil con foto y reseña.';
 
   // ----------------------------------------------------------- estadísticas
   String get statsTab => isEn ? 'Stats' : 'Stats';

@@ -982,7 +982,8 @@ class _SubsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppScope.of(context).l10n;
+    final state = AppScope.of(context);
+    final l = state.l10n;
     final bench = lineup?.bench ?? const [];
     final cross = end ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     return Column(
@@ -997,21 +998,30 @@ class _SubsList extends StatelessWidget {
           Text('—', style: outfit(12, FontWeight.w600, color: Wc.textDim))
         else
           for (final p in bench)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 1),
-              child: Text(
-                p.subbedIn
-                    ? (end
-                        ? '${p.player.name} ↑${_min(p)}'
-                        : '↑${_min(p)} ${p.player.name}')
-                    : p.player.name,
-                textAlign: end ? TextAlign.right : TextAlign.left,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: outfit(
-                  11.5,
-                  p.subbedIn ? FontWeight.w800 : FontWeight.w500,
-                  color: p.subbedIn ? Wc.mint : Wc.textSoft,
+            InkWell(
+              onTap: () => openPlayerProfile(
+                context,
+                state,
+                name: p.player.name,
+                teamId: team?.id ?? '',
+                espnId: p.player.id,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Text(
+                  p.subbedIn
+                      ? (end
+                          ? '${p.player.name} ↑${_min(p)}'
+                          : '↑${_min(p)} ${p.player.name}')
+                      : p.player.name,
+                  textAlign: end ? TextAlign.right : TextAlign.left,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: outfit(
+                    11.5,
+                    p.subbedIn ? FontWeight.w800 : FontWeight.w500,
+                    color: p.subbedIn ? Wc.mint : Wc.textSoft,
+                  ),
                 ),
               ),
             ),
