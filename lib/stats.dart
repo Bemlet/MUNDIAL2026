@@ -73,6 +73,7 @@ class LineupPlayer {
   final int? place; // formationPlace (1..11) si está
   final bool subbedIn;
   final bool subbedOut;
+  final int? subMinute; // minuto del cambio (si se conoce)
 
   const LineupPlayer({
     required this.player,
@@ -82,6 +83,7 @@ class LineupPlayer {
     this.place,
     this.subbedIn = false,
     this.subbedOut = false,
+    this.subMinute,
   });
 
   bool get goalkeeper => pos == 'G';
@@ -252,6 +254,7 @@ class MatchStats {
   MatchStats mergeSummary(Map<String, dynamic> summary) {
     final lines = <PlayerLine>[];
     final lineups = <Lineup>[];
+    final subMinutes = _parseSubMinutes(summary);
     for (final r in (summary['rosters'] as List?) ?? const []) {
       final roster = r as Map;
       final teamName = '${(roster['team'] ?? const {})['displayName'] ?? ''}';
@@ -288,6 +291,7 @@ class MatchStats {
             place: int.tryParse('${p['formationPlace'] ?? ''}'),
             subbedIn: p['subbedIn'] == true,
             subbedOut: p['subbedOut'] == true,
+            subMinute: subMinutes[ref.id],
           ),
         );
       }
@@ -647,6 +651,27 @@ Map<String, double> _statMap(List<dynamic> stats) {
     } else {
       final parsed = double.tryParse('${s['displayValue'] ?? ''}'.replaceAll('%', ''));
       if (parsed != null) out[name] = parsed;
+    }
+  }
+  return out;
+}
+
+/// Construye un mapa id de atleta → minuto del cambio, a partir de los eventos
+/// del `summary` (tolerante a la forma: busca en `keyEvents` y `commentary`).
+Map<String, int> _parseSubMinutes(Map<String, dynamic> summary) {
+  final out = <String, int>{};
+  for (final key in const ['keyEvents', 'commentary']) {
+    for (final raw in (summary[key] as List?) ?? const []) {
+      final ev = raw as Map;
+      final play = (ev['play'] ?? ev) as Map;
+      final type = '${(play['type'] ?? const {})['text'] ?? ''}'.toLowerCase();
+      if (!type.contains('substitut')) continue;
+      final minute = _minuteOf('${(play['clock'] ?? const {})['displayValue'] ?? ''}');
+      if (minute == null) continue;
+      for (final a in (play['athletesInvolved'] as List?) ?? const []) {
+        final id = '${(a as Map)['id'] ?? ''}';
+        if (id.isNotEmpty) out[id] = minute;
+      }
     }
   }
   return out;

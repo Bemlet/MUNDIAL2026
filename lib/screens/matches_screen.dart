@@ -71,6 +71,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
     }
 
     final next = state.nextMatch;
+    final liveNow = [
+      for (final m in state.matches)
+        if (state.liveFor(m)?.isLive == true) m,
+    ];
 
     return RefreshIndicator(
       color: Wc.gold,
@@ -187,7 +191,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
                     l.localTimeNotice,
                     style: outfit(12, FontWeight.w600, color: Wc.mint),
                   ),
-                  if (next != null) ...[
+                  if (liveNow.isNotEmpty) ...[
+                    const SizedBox(height: 14),
+                    _LiveNowStrip(matches: liveNow),
+                  ] else if (next != null) ...[
                     const SizedBox(height: 14),
                     _NextMatchCard(match: next),
                   ],
@@ -657,8 +664,63 @@ class LiveScorebug extends StatelessWidget {
             style: outfit(scoreSize, FontWeight.w900),
           ),
         ),
+        if (live?.hasPens ?? false)
+          Text(
+            live!.penText(l.penaltyMark),
+            style: outfit(11, FontWeight.w800, color: Wc.goldHi),
+          ),
         const SizedBox(height: 6),
         LiveBadge(text: (live?.detail.isEmpty ?? true) ? l.live : live!.detail),
+      ],
+    );
+  }
+}
+
+/// Tira "EN VIVO ahora": lista todos los partidos en curso (para simultáneos),
+/// cada uno con su scorebug. El primero grande; el resto, compactos.
+class _LiveNowStrip extends StatelessWidget {
+  final List<WcMatch> matches;
+  const _LiveNowStrip({required this.matches});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    final single = matches.length == 1;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 2, bottom: 6),
+          child: Row(
+            children: [
+              const LivePulse(),
+              const SizedBox(width: 7),
+              Text(
+                matches.length > 1
+                    ? '${l.liveNowTitle} · ${matches.length}'
+                    : l.liveNowTitle,
+                style: outfit(13, FontWeight.w900, color: Wc.live, spacing: .5),
+              ),
+            ],
+          ),
+        ),
+        for (final m in matches)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Material(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(18),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(18),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => MatchDetailScreen(matchNo: m.no),
+                  ),
+                ),
+                child: LiveScorebug(match: m, big: single),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -709,6 +771,11 @@ class RealMatchCard extends StatelessWidget {
             '${live!.homeScore} – ${live.awayScore}',
             style: outfit(dense ? 19 : 24, FontWeight.w900),
           ),
+          if (live.hasPens)
+            Text(
+              live.penText(strings.penaltyMark),
+              style: outfit(10, FontWeight.w800, color: Wc.goldHi),
+            ),
           const SizedBox(height: 3),
           if (isLive)
             LiveBadge(text: live.detail.isEmpty ? strings.live : live.detail)

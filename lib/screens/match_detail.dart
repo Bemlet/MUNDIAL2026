@@ -83,10 +83,22 @@ class MatchDetailScreen extends StatelessWidget {
                       SizedBox(
                         width: 110,
                         child: (isLive || finished) && l?.homeScore != null
-                            ? Text(
-                                '${l!.homeScore} – ${l.awayScore}',
-                                textAlign: TextAlign.center,
-                                style: outfit(36, FontWeight.w900),
+                            ? Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '${l!.homeScore} – ${l.awayScore}',
+                                    textAlign: TextAlign.center,
+                                    style: outfit(36, FontWeight.w900),
+                                  ),
+                                  if (l.hasPens)
+                                    Text(
+                                      l.penText(l10n.penaltyMark),
+                                      textAlign: TextAlign.center,
+                                      style: outfit(12.5, FontWeight.w800,
+                                          color: Wc.goldHi),
+                                    ),
+                                ],
                               )
                             : Text(
                                 'VS',
@@ -937,6 +949,8 @@ class _SubsList extends StatelessWidget {
 
   const _SubsList({required this.team, required this.lineup, required this.end});
 
+  String _min(LineupPlayer p) => p.subMinute != null ? "${p.subMinute}'" : '';
+
   @override
   Widget build(BuildContext context) {
     final l = AppScope.of(context).l10n;
@@ -958,7 +972,9 @@ class _SubsList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 1),
               child: Text(
                 p.subbedIn
-                    ? (end ? '${p.player.name} ↑' : '↑ ${p.player.name}')
+                    ? (end
+                        ? '${p.player.name} ↑${_min(p)}'
+                        : '↑${_min(p)} ${p.player.name}')
                     : p.player.name,
                 textAlign: end ? TextAlign.right : TextAlign.left,
                 maxLines: 1,

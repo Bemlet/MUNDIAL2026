@@ -335,6 +335,8 @@ class AppStrings {
       : '$n ${n == 1 ? 'asistencia' : 'asistencias'}';
   String savesCount(int n) => isEn ? '$n saves' : '$n atajadas';
 
+  String get liveNowTitle => isEn ? 'Live now' : 'EN VIVO ahora';
+
   // ---- Alineaciones ----
   String get lineupsTitle => isEn ? 'Lineups' : 'Alineaciones';
   String get substitutesLabel => isEn ? 'Substitutes' : 'Suplentes';

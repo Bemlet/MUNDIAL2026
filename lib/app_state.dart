@@ -427,15 +427,19 @@ class AppState extends ChangeNotifier {
         final comp = e['competitions'][0];
         String he = '', ae = '';
         int? hs, as;
+        int? hp, ap;
         for (final c in comp['competitors']) {
           final name = c['team']?['displayName'] ?? '';
           final score = int.tryParse('${c['score'] ?? ''}');
+          final pens = int.tryParse('${c['shootoutScore'] ?? ''}');
           if (c['homeAway'] == 'home') {
             he = name;
             hs = score;
+            hp = pens;
           } else {
             ae = name;
             as = score;
+            ap = pens;
           }
         }
         final type = e['status']?['type'] ?? {};
@@ -463,6 +467,8 @@ class AppState extends ChangeNotifier {
           awayScore: as,
           homeEspn: he,
           awayEspn: ae,
+          homePens: hp,
+          awayPens: ap,
         );
         live[id] = info;
         // Estadísticas Nivel 1 del scoreboard; preserva datos Nivel 2 cacheados.
@@ -992,6 +998,7 @@ class AppState extends ChangeNotifier {
     'pl': p.place,
     'in': p.subbedIn,
     'out': p.subbedOut,
+    'm': p.subMinute,
   };
 
   static LineupPlayer _lineupPlayerFromJson(Map j) => LineupPlayer(
@@ -1006,6 +1013,7 @@ class AppState extends ChangeNotifier {
     place: j['pl'],
     subbedIn: j['in'] == true,
     subbedOut: j['out'] == true,
+    subMinute: j['m'],
   );
 
   // --------------------------------------------------------------- en vivo

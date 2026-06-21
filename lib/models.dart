@@ -135,6 +135,8 @@ class LiveInfo {
   final String detail; // texto legible ("FT", "45'+2", "Sáb, 13 jun")
   final int? homeScore;
   final int? awayScore;
+  final int? homePens; // tanda de penales (solo eliminatorias empatadas)
+  final int? awayPens;
   final String homeEspn; // displayName: puede ser placeholder en eliminatorias
   final String awayEspn;
 
@@ -146,7 +148,16 @@ class LiveInfo {
     required this.awayScore,
     required this.homeEspn,
     required this.awayEspn,
+    this.homePens,
+    this.awayPens,
   });
+
+  /// ¿Se definió por penales? (ambos marcadores de tanda presentes).
+  bool get hasPens => homePens != null && awayPens != null;
+
+  /// Texto de la tanda, p. ej. "(4 – 3 pen)". Vacío si no hubo penales.
+  String penText(String mark) =>
+      hasPens ? '($homePens – $awayPens $mark)' : '';
 
   bool get isFinished =>
       status.contains('FINAL') ||
@@ -168,6 +179,8 @@ class LiveInfo {
     'as': awayScore,
     'he': homeEspn,
     'ae': awayEspn,
+    'hp': homePens,
+    'ap': awayPens,
   };
 
   factory LiveInfo.fromJson(Map<String, dynamic> j) => LiveInfo(
@@ -178,6 +191,8 @@ class LiveInfo {
     awayScore: j['as'],
     homeEspn: j['he'] ?? '',
     awayEspn: j['ae'] ?? '',
+    homePens: j['hp'],
+    awayPens: j['ap'],
   );
 }
 
