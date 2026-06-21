@@ -19,6 +19,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.4
+
+# Ícono de la app: trofeo estilizado propio (no usa la marca FIFA).
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/branding/app_icon.png"
+  adaptive_icon_background: "#0E1730"
+  adaptive_icon_foreground: "assets/branding/app_icon_fg.png"
 
 flutter:
   uses-material-design: true
