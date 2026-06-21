@@ -51,6 +51,7 @@ class AppState extends ChangeNotifier {
   final Map<String, MatchStats> matchStats = {}; // espnId -> stats del partido
   final Map<String, List<PlayerLine>> _playerLines = {}; // espnId -> Nivel 2
   final Map<String, List<Lineup>> _lineups = {}; // espnId -> alineaciones
+  final Map<String, PlayerEnrichment> _enrich = {}; // nombre norm. -> bio/foto
   final Set<String> _statsFetched = {}; // 'espnId#firma' ya descargados
   bool _fetchingDetails = false;
 
@@ -249,6 +250,14 @@ class AppState extends ChangeNotifier {
         _restoreLineups(lineupsCache);
       } catch (_) {
         // Caché corrupta: se reconstruye en el próximo sync.
+      }
+    }
+    final enrichCache = p.getString('playerEnrichCache');
+    if (enrichCache != null) {
+      try {
+        _restoreEnrich(enrichCache);
+      } catch (_) {
+        // Caché corrupta: se vuelve a pedir a demanda.
       }
     }
     final ts = p.getInt('lastSync');
@@ -1015,6 +1024,82 @@ class AppState extends ChangeNotifier {
     subbedOut: j['out'] == true,
     subMinute: j['m'],
   );
+
+  // ---------------------------------------- enriquecimiento de jugadores
+  static const _wikiUa = 'Golazo-WC2026/1.0 (personal; evermosquerag@gmail.com)';
+
+  /// Trae a demanda (y cachea) la reseña + foto de un jugador desde Wikipedia.
+  /// Devuelve datos vacíos si no hay artículo. No bloquea si falla la red.
+  Future<PlayerEnrichment?> enrichPlayer(String name) async {
+    final key = PlayerDb.normalize(name);
+    final cached = _enrich[key];
+    if (cached != null) return cached;
+    final fetched = await _fetchEnrichment(name);
+    final result = fetched ?? const PlayerEnrichment();
+    _enrich[key] = result; // cachea también el "vacío" para no reintentar
+    if (!result.isEmpty) await _persistEnrich();
+    return result;
+  }
+
+  Future<PlayerEnrichment?> _fetchEnrichment(String name) async {
+    final es = await _wikiSummary('es', name);
+    final en = await _wikiSummary('en', name);
+    final bioEs = _trimExtract(es?['extract']);
+    final bioEn = _trimExtract(en?['extract']);
+    final photo = (es?['thumbnail']?['source'] ?? en?['thumbnail']?['source'])
+        as String?;
+    if (bioEs == null && bioEn == null && (photo == null || photo.isEmpty)) {
+      return null;
+    }
+    return PlayerEnrichment(bioEs: bioEs, bioEn: bioEn, photo: photo);
+  }
+
+  Future<Map<String, dynamic>?> _wikiSummary(String lang, String title) async {
+    try {
+      final t = Uri.encodeComponent(title.trim().replaceAll(' ', '_'));
+      final res = await http
+          .get(
+            Uri.parse('https://$lang.wikipedia.org/api/rest_v1/page/summary/$t'),
+            headers: {'User-Agent': _wikiUa},
+          )
+          .timeout(const Duration(seconds: 10));
+      if (res.statusCode != 200) return null;
+      final d = jsonDecode(res.body) as Map<String, dynamic>;
+      if (d['type'] == 'disambiguation') return null;
+      return d;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  String? _trimExtract(dynamic s) {
+    if (s is! String) return null;
+    final t = s.trim().replaceAll(RegExp(r'\s+'), ' ');
+    if (t.isEmpty) return null;
+    if (t.length <= 320) return t;
+    final cut = t.substring(0, 320);
+    final dot = cut.lastIndexOf('. ');
+    return dot > 140 ? cut.substring(0, dot + 1) : '${cut.trimRight()}…';
+  }
+
+  Future<void> _persistEnrich() async {
+    final p = _prefs;
+    if (p == null) return;
+    await p.setString(
+      'playerEnrichCache',
+      jsonEncode({
+        for (final e in _enrich.entries)
+          if (!e.value.isEmpty) e.key: e.value.toJson(),
+      }),
+    );
+  }
+
+  void _restoreEnrich(String raw) {
+    final map = jsonDecode(raw) as Map<String, dynamic>;
+    for (final e in map.entries) {
+      _enrich[e.key] = PlayerEnrichment.fromJson(e.value as Map);
+    }
+  }
 
   // --------------------------------------------------------------- en vivo
 

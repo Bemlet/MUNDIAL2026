@@ -362,6 +362,9 @@ class AppStrings {
   String get playerCuratedNote => isEn
       ? 'Approximate ratings computed by the app — not official.'
       : 'Valoraciones aproximadas calculadas por la app, no oficiales.';
+  String get playerWikiNote => isEn
+      ? 'Profile and photo from Wikipedia.'
+      : 'Reseña y foto tomadas de Wikipedia.';
   String get noHatTricks =>
       isEn ? 'No hat-tricks yet.' : 'Todavía no hubo hat-tricks.';
   String hatTrickGoals(int n) => isEn ? '$n goals' : '$n goles';

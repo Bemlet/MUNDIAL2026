@@ -13,8 +13,8 @@ import '../players.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
-/// Abre la carta de un jugador. No navega si no hay nada para mostrar (ni
-/// perfil curado ni stats del torneo).
+/// Abre la carta de un jugador. Si no tiene perfil curado, la carta trae su
+/// reseña y foto de Wikipedia a demanda.
 void openPlayerProfile(
   BuildContext context,
   AppState state, {
@@ -22,9 +22,9 @@ void openPlayerProfile(
   required String teamId,
   String? espnId,
 }) {
+  if (name.trim().isEmpty) return;
   final profile = state.players.lookup(name);
   final tour = state.playerTournament(name);
-  if (profile == null && tour == null) return;
   Navigator.of(context).push(
     MaterialPageRoute(
       builder: (_) => PlayerDetailScreen(
@@ -36,7 +36,7 @@ void openPlayerProfile(
   );
 }
 
-class PlayerDetailScreen extends StatelessWidget {
+class PlayerDetailScreen extends StatefulWidget {
   final String name;
   final String teamId;
   final String? espnId;
@@ -49,13 +49,49 @@ class PlayerDetailScreen extends StatelessWidget {
   });
 
   @override
+  State<PlayerDetailScreen> createState() => _PlayerDetailScreenState();
+}
+
+class _PlayerDetailScreenState extends State<PlayerDetailScreen> {
+  Future<PlayerEnrichment?>? _enrich;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Solo para jugadores sin perfil curado: traer bio + foto de Wikipedia.
+    if (_enrich == null) {
+      final state = AppScope.of(context);
+      if (state.players.lookup(widget.name) == null) {
+        _enrich = state.enrichPlayer(widget.name);
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
+    final profile = state.players.lookup(widget.name);
+    if (profile != null) return _content(state, profile, null);
+    return FutureBuilder<PlayerEnrichment?>(
+      future: _enrich,
+      builder: (_, snap) => _content(state, null, snap.data),
+    );
+  }
+
+  Widget _content(
+    AppState state,
+    PlayerProfile? profile,
+    PlayerEnrichment? enrich,
+  ) {
     final l = state.l10n;
-    final profile = state.players.lookup(name);
-    final tour = state.playerTournament(name);
-    final team = state.teams[teamId];
-    final photoId = espnId ?? tour?.espnId;
+    final tour = state.playerTournament(widget.name);
+    final team = state.teams[widget.teamId];
+    final photoUrl = profile?.photo ?? enrich?.photo;
+    final photoId = widget.espnId ?? tour?.espnId;
+    final bio = profile?.bio(isEn: l.isEn) ?? enrich?.bio(isEn: l.isEn);
+    final loadingBio = profile == null &&
+        enrich == null &&
+        (_enrich != null);
 
     return Scaffold(
       body: SafeArea(
@@ -68,9 +104,10 @@ class PlayerDetailScreen extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 background: _Header(
                   state: state,
-                  name: name,
-                  teamId: teamId,
+                  name: widget.name,
+                  teamId: widget.teamId,
                   profile: profile,
+                  photoUrl: photoUrl,
                   photoId: photoId,
                 ),
               ),
@@ -79,16 +116,26 @@ class PlayerDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
               sliver: SliverList.list(
                 children: [
-                  if (profile?.bio(isEn: l.isEn)?.isNotEmpty ?? false) ...[
+                  if (bio != null && bio.isNotEmpty) ...[
                     SectionTitle(l.playerAbout),
                     GradientCard(
                       child: Text(
-                        profile!.bio(isEn: l.isEn)!,
-                        style: outfit(
-                          13.5,
-                          FontWeight.w500,
-                          color: Wc.textSoft,
-                          height: 1.5,
+                        bio,
+                        style: outfit(13.5, FontWeight.w500,
+                            color: Wc.textSoft, height: 1.5),
+                      ),
+                    ),
+                  ] else if (loadingBio) ...[
+                    SectionTitle(l.playerAbout),
+                    const GradientCard(
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
                         ),
                       ),
                     ),
@@ -99,14 +146,17 @@ class PlayerDetailScreen extends StatelessWidget {
                   ],
                   SectionTitle(l.playerTournamentTitle),
                   _TournamentCard(state: state, tour: tour, team: team),
-                  if (profile != null)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(4, 10, 4, 0),
-                      child: Text(
-                        l.playerCuratedNote,
-                        style: outfit(11, FontWeight.w500, color: Wc.textDim),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4, 10, 4, 0),
+                    child: Text(
+                      profile != null
+                          ? l.playerCuratedNote
+                          : (bio != null || photoUrl != null
+                              ? l.playerWikiNote
+                              : ''),
+                      style: outfit(11, FontWeight.w500, color: Wc.textDim),
                     ),
+                  ),
                 ],
               ),
             ),
@@ -124,6 +174,7 @@ class _Header extends StatelessWidget {
   final String name;
   final String teamId;
   final PlayerProfile? profile;
+  final String? photoUrl;
   final String? photoId;
 
   const _Header({
@@ -131,6 +182,7 @@ class _Header extends StatelessWidget {
     required this.name,
     required this.teamId,
     required this.profile,
+    required this.photoUrl,
     required this.photoId,
   });
 
@@ -152,7 +204,7 @@ class _Header extends StatelessWidget {
                 children: [
                   _Avatar(
                     name: name,
-                    photoUrl: profile?.photo,
+                    photoUrl: photoUrl,
                     photoId: photoId,
                   ),
                   if (profile != null)

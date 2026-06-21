@@ -75,6 +75,32 @@ class PlayerProfile {
   }
 }
 
+/// Datos traídos a demanda (Wikipedia) para jugadores sin perfil curado:
+/// reseña en ES/EN y foto. Se cachea para no re-descargar.
+class PlayerEnrichment {
+  final String? bioEs;
+  final String? bioEn;
+  final String? photo;
+
+  const PlayerEnrichment({this.bioEs, this.bioEn, this.photo});
+
+  String? bio({required bool isEn}) =>
+      isEn ? (bioEn ?? bioEs) : (bioEs ?? bioEn);
+
+  bool get isEmpty =>
+      (bioEs == null || bioEs!.isEmpty) &&
+      (bioEn == null || bioEn!.isEmpty) &&
+      (photo == null || photo!.isEmpty);
+
+  Map<String, dynamic> toJson() => {'es': bioEs, 'en': bioEn, 'p': photo};
+
+  factory PlayerEnrichment.fromJson(Map j) => PlayerEnrichment(
+    bioEs: j['es'] as String?,
+    bioEn: j['en'] as String?,
+    photo: j['p'] as String?,
+  );
+}
+
 /// Índice de perfiles con búsqueda tolerante a acentos y mayúsculas.
 class PlayerDb {
   final Map<String, PlayerProfile> _byName;
