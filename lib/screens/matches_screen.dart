@@ -98,26 +98,17 @@ class _MatchesScreenState extends State<MatchesScreen> {
       });
     }
 
-    return RefreshIndicator(
-      color: Wc.gold,
-      backgroundColor: Wc.surface,
-      onRefresh: state.sync,
-      child: CustomScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            pinned: false,
-            floating: true,
-            title: Row(
-              children: [
-                Text('GOLAZO', style: outfit(22, FontWeight.w900)),
-                Text(
-                  " '26",
-                  style: outfit(22, FontWeight.w900, color: Wc.gold),
-                ),
-              ],
-            ),
-            actions: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Barra de título (fija).
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 4, 0),
+          child: Row(
+            children: [
+              Text('GOLAZO', style: outfit(22, FontWeight.w900)),
+              Text(" '26", style: outfit(22, FontWeight.w900, color: Wc.gold)),
+              const Spacer(),
               IconButton(
                 icon: Icon(
                   state.darkMode
@@ -198,12 +189,13 @@ class _MatchesScreenState extends State<MatchesScreen> {
                 ),
             ],
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+        ),
+        // Encabezado fijo: anfitriones, próximo/EN VIVO, búsqueda, filtros.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
                   Text(
                     l.hostCountries,
                     style: outfit(13, FontWeight.w500, color: Wc.textDim),
@@ -240,7 +232,16 @@ class _MatchesScreenState extends State<MatchesScreen> {
                 ],
               ),
             ),
-          ),
+        const SizedBox(height: 2),
+        // Lista de partidos (scrollea y se ancla al día actual al abrir).
+        Expanded(
+          child: RefreshIndicator(
+            color: Wc.gold,
+            backgroundColor: Wc.surface,
+            onRefresh: state.sync,
+            child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
           for (final e in sections.entries) ...[
             SliverToBoxAdapter(
               child: Padding(
@@ -271,8 +272,11 @@ class _MatchesScreenState extends State<MatchesScreen> {
               ),
             ),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
-        ],
-      ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
