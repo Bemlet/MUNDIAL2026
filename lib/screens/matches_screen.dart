@@ -26,6 +26,9 @@ class _MatchesScreenState extends State<MatchesScreen> {
   MatchFilter filter = MatchFilter.all;
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = '';
+  // Al abrir, la lista se posiciona en el día del partido actual/próximo.
+  final GlobalKey _anchorKey = GlobalKey();
+  bool _anchored = false;
 
   @override
   void dispose() {
@@ -75,6 +78,25 @@ class _MatchesScreenState extends State<MatchesScreen> {
       for (final m in state.matches)
         if (state.liveFor(m)?.isLive == true) m,
     ];
+
+    // Día a anclar al abrir: el del partido actual/próximo (o el último jugado).
+    final anchorMatch = next ?? (state.matches.isEmpty ? null : state.matches.last);
+    final anchorDay =
+        anchorMatch != null ? fmtDay(anchorMatch.dateUtc, l.locale) : null;
+    if (!_anchored && filter == MatchFilter.all && query.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final ctx = _anchorKey.currentContext;
+        if (!_anchored && ctx != null) {
+          _anchored = true;
+          Scrollable.ensureVisible(
+            ctx,
+            alignment: 0,
+            duration: const Duration(milliseconds: 450),
+            curve: Curves.easeOutCubic,
+          );
+        }
+      });
+    }
 
     return RefreshIndicator(
       color: Wc.gold,
@@ -222,6 +244,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
           for (final e in sections.entries) ...[
             SliverToBoxAdapter(
               child: Padding(
+                key: e.key == anchorDay ? _anchorKey : null,
                 padding: const EdgeInsets.fromLTRB(20, 14, 20, 6),
                 child: Text(
                   e.key,
