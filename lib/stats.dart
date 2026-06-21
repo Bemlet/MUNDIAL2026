@@ -64,6 +64,47 @@ class PlayerLine {
   });
 }
 
+/// Un jugador dentro de la alineación de un partido (del `summary`).
+class LineupPlayer {
+  final PlayerRef player;
+  final int number; // dorsal (0 si desconocido)
+  final String pos; // abreviatura ESPN: G / D / M / F
+  final bool starter;
+  final int? place; // formationPlace (1..11) si está
+  final bool subbedIn;
+  final bool subbedOut;
+
+  const LineupPlayer({
+    required this.player,
+    required this.pos,
+    required this.starter,
+    this.number = 0,
+    this.place,
+    this.subbedIn = false,
+    this.subbedOut = false,
+  });
+
+  bool get goalkeeper => pos == 'G';
+}
+
+/// Alineación de un equipo: formación + jugadores (titulares y banco).
+class Lineup {
+  final String teamEspn;
+  final String formation; // p. ej. "4-3-3" (puede venir vacío)
+  final List<LineupPlayer> players;
+
+  const Lineup({
+    required this.teamEspn,
+    required this.formation,
+    required this.players,
+  });
+
+  List<LineupPlayer> get starters =>
+      players.where((p) => p.starter).toList();
+  List<LineupPlayer> get bench => players.where((p) => !p.starter).toList();
+  bool get hasStarters => starters.isNotEmpty;
+}
+
 /// Línea por equipo de un partido (stats del scoreboard + marcador).
 class TeamLine {
   final String teamEspn;
@@ -98,6 +139,7 @@ class MatchStats {
   final List<CardEvent> cards;
   final List<TeamLine> teamLines;
   final List<PlayerLine> playerLines;
+  final List<Lineup> lineups;
 
   const MatchStats({
     required this.espnId,
@@ -108,18 +150,21 @@ class MatchStats {
     this.cards = const [],
     this.teamLines = const [],
     this.playerLines = const [],
+    this.lineups = const [],
   });
 
-  MatchStats copyWith({List<PlayerLine>? playerLines}) => MatchStats(
-    espnId: espnId,
-    started: started,
-    finished: finished,
-    attendance: attendance,
-    goals: goals,
-    cards: cards,
-    teamLines: teamLines,
-    playerLines: playerLines ?? this.playerLines,
-  );
+  MatchStats copyWith({List<PlayerLine>? playerLines, List<Lineup>? lineups}) =>
+      MatchStats(
+        espnId: espnId,
+        started: started,
+        finished: finished,
+        attendance: attendance,
+        goals: goals,
+        cards: cards,
+        teamLines: teamLines,
+        playerLines: playerLines ?? this.playerLines,
+        lineups: lineups ?? this.lineups,
+      );
 
   /// Parsea un evento del scoreboard de ESPN. Tolerante a campos ausentes.
   static MatchStats fromScoreboardEvent(Map<String, dynamic> event) {
@@ -206,21 +251,24 @@ class MatchStats {
   /// atajadas, arqueros. Devuelve una copia; no muta.
   MatchStats mergeSummary(Map<String, dynamic> summary) {
     final lines = <PlayerLine>[];
+    final lineups = <Lineup>[];
     for (final r in (summary['rosters'] as List?) ?? const []) {
       final roster = r as Map;
       final teamName = '${(roster['team'] ?? const {})['displayName'] ?? ''}';
+      final lps = <LineupPlayer>[];
       for (final raw in (roster['roster'] as List?) ?? const []) {
         final p = raw as Map;
         final ath = (p['athlete'] ?? const {}) as Map;
         final pos = '${(p['position'] ?? const {})['abbreviation'] ?? ''}';
+        final ref = PlayerRef(
+          id: '${ath['id'] ?? ath['displayName'] ?? ''}',
+          name: '${ath['displayName'] ?? ''}',
+          teamEspn: teamName,
+        );
         final stat = _statMap((p['stats'] as List?) ?? const []);
         lines.add(
           PlayerLine(
-            player: PlayerRef(
-              id: '${ath['id'] ?? ath['displayName'] ?? ''}',
-              name: '${ath['displayName'] ?? ''}',
-              teamEspn: teamName,
-            ),
+            player: ref,
             goalkeeper: pos == 'G',
             starter: p['starter'] == true,
             goals: (stat['totalGoals'] ?? 0).round(),
@@ -231,9 +279,27 @@ class MatchStats {
             red: (stat['redCards'] ?? 0).round(),
           ),
         );
+        lps.add(
+          LineupPlayer(
+            player: ref,
+            number: int.tryParse('${ath['jersey'] ?? p['jersey'] ?? ''}') ?? 0,
+            pos: pos,
+            starter: p['starter'] == true,
+            place: int.tryParse('${p['formationPlace'] ?? ''}'),
+            subbedIn: p['subbedIn'] == true,
+            subbedOut: p['subbedOut'] == true,
+          ),
+        );
       }
+      lineups.add(
+        Lineup(
+          teamEspn: teamName,
+          formation: '${roster['formation'] ?? ''}',
+          players: lps,
+        ),
+      );
     }
-    return copyWith(playerLines: lines);
+    return copyWith(playerLines: lines, lineups: lineups);
   }
 }
 

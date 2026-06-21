@@ -335,6 +335,18 @@ class AppStrings {
       : '$n ${n == 1 ? 'asistencia' : 'asistencias'}';
   String savesCount(int n) => isEn ? '$n saves' : '$n atajadas';
 
+  // ---- Alineaciones ----
+  String get lineupsTitle => isEn ? 'Lineups' : 'Alineaciones';
+  String get substitutesLabel => isEn ? 'Substitutes' : 'Suplentes';
+  String get matchStatsTitle => isEn ? 'Match stats' : 'Estadísticas del partido';
+  String get statShots => isEn ? 'Shots' : 'Tiros';
+  String get statShotsOnTarget => isEn ? 'On target' : 'Al arco';
+  String get statCorners => isEn ? 'Corners' : 'Córners';
+  String get statFouls => isEn ? 'Fouls' : 'Faltas';
+  String get lineupsPending => isEn
+      ? 'Lineups appear close to kickoff.'
+      : 'Las alineaciones aparecen cerca del inicio.';
+
   // ---- Carta de jugador ----
   String get playerAbout => isEn ? 'About' : 'Sobre el jugador';
   String get playerSkills => isEn ? 'Skills' : 'Habilidades';

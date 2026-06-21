@@ -50,6 +50,7 @@ class AppState extends ChangeNotifier {
   // Estadísticas del torneo (Nivel 1: scoreboard; Nivel 2: summary por partido).
   final Map<String, MatchStats> matchStats = {}; // espnId -> stats del partido
   final Map<String, List<PlayerLine>> _playerLines = {}; // espnId -> Nivel 2
+  final Map<String, List<Lineup>> _lineups = {}; // espnId -> alineaciones
   final Set<String> _statsFetched = {}; // 'espnId#firma' ya descargados
   bool _fetchingDetails = false;
 
@@ -238,6 +239,14 @@ class AppState extends ChangeNotifier {
     if (statsCache != null) {
       try {
         _restorePlayerLines(statsCache);
+      } catch (_) {
+        // Caché corrupta: se reconstruye en el próximo sync.
+      }
+    }
+    final lineupsCache = p.getString('lineupsCache');
+    if (lineupsCache != null) {
+      try {
+        _restoreLineups(lineupsCache);
       } catch (_) {
         // Caché corrupta: se reconstruye en el próximo sync.
       }
@@ -461,9 +470,10 @@ class AppState extends ChangeNotifier {
           Map<String, dynamic>.from(e as Map),
         );
         final cachedLines = _playerLines[id];
-        matchStats[id] = cachedLines == null
+        final cachedLineups = _lineups[id];
+        matchStats[id] = (cachedLines == null && cachedLineups == null)
             ? ms
-            : ms.copyWith(playerLines: cachedLines);
+            : ms.copyWith(playerLines: cachedLines, lineups: cachedLineups);
         final match = byEspnId[id];
         if (match != null) {
           await _processLiveNotifications(match, previous, info);
@@ -867,6 +877,7 @@ class AppState extends ChangeNotifier {
           final data = jsonDecode(res.body) as Map<String, dynamic>;
           final merged = ms.mergeSummary(data);
           _playerLines[ms.espnId] = merged.playerLines;
+          _lineups[ms.espnId] = merged.lineups;
           matchStats[ms.espnId] = merged;
           _statsFetched.add(key);
           changed = true;
@@ -876,6 +887,7 @@ class AppState extends ChangeNotifier {
       }
       if (changed) {
         await _persistPlayerLines();
+        await _persistLineups();
         notifyListeners();
       }
     } finally {
@@ -932,6 +944,68 @@ class AppState extends ChangeNotifier {
     conceded: j['c'] ?? 0,
     yellow: j['y'] ?? 0,
     red: j['r'] ?? 0,
+  );
+
+  Future<void> _persistLineups() async {
+    final p = _prefs;
+    if (p == null) return;
+    await p.setString(
+      'lineupsCache',
+      jsonEncode({
+        for (final e in _lineups.entries)
+          e.key: [
+            for (final lu in e.value)
+              {
+                't': lu.teamEspn,
+                'f': lu.formation,
+                'p': [for (final pl in lu.players) _lineupPlayerToJson(pl)],
+              },
+          ],
+      }),
+    );
+  }
+
+  void _restoreLineups(String raw) {
+    final map = jsonDecode(raw) as Map<String, dynamic>;
+    for (final e in map.entries) {
+      _lineups[e.key] = [
+        for (final lu in e.value as List)
+          Lineup(
+            teamEspn: '${(lu as Map)['t']}',
+            formation: '${lu['f'] ?? ''}',
+            players: [
+              for (final pj in (lu['p'] as List? ?? const []))
+                _lineupPlayerFromJson(pj as Map),
+            ],
+          ),
+      ];
+    }
+  }
+
+  static Map<String, dynamic> _lineupPlayerToJson(LineupPlayer p) => {
+    'i': p.player.id,
+    'n': p.player.name,
+    't': p.player.teamEspn,
+    'num': p.number,
+    'pos': p.pos,
+    's': p.starter,
+    'pl': p.place,
+    'in': p.subbedIn,
+    'out': p.subbedOut,
+  };
+
+  static LineupPlayer _lineupPlayerFromJson(Map j) => LineupPlayer(
+    player: PlayerRef(
+      id: '${j['i']}',
+      name: '${j['n']}',
+      teamEspn: '${j['t']}',
+    ),
+    number: j['num'] ?? 0,
+    pos: '${j['pos'] ?? ''}',
+    starter: j['s'] == true,
+    place: j['pl'],
+    subbedIn: j['in'] == true,
+    subbedOut: j['out'] == true,
   );
 
   // --------------------------------------------------------------- en vivo

@@ -11,6 +11,7 @@ import '../stats.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'groups_screen.dart' show GroupTableCard;
+import 'player_detail.dart';
 import 'team_detail.dart';
 
 class MatchDetailScreen extends StatelessWidget {
@@ -117,6 +118,13 @@ class MatchDetailScreen extends StatelessWidget {
                 when ms.goals.isNotEmpty || ms.cards.isNotEmpty) ...[
               SectionTitle(l10n.goalsAndCards),
               _MatchEventsCard(stats: ms, home: home, away: away),
+            ],
+
+            // ------------------------------------------------- alineaciones
+            if (state.matchStats[m.espnId] case final ms?
+                when ms.lineups.any((lu) => lu.hasStarters)) ...[
+              SectionTitle(l10n.lineupsTitle),
+              _LineupsCard(stats: ms, home: home, away: away),
             ],
 
             // -------------------------------------------------- dónde verlo
@@ -630,6 +638,430 @@ class _CardBadge extends StatelessWidget {
             color: Colors.black.withValues(alpha: .22),
             blurRadius: 2,
             offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Sección de alineaciones: cancha con los 11, suplentes y stats del partido.
+class _LineupsCard extends StatelessWidget {
+  final MatchStats stats;
+  final Team? home;
+  final Team? away;
+
+  const _LineupsCard({required this.stats, required this.home, required this.away});
+
+  Lineup? _lineupFor(Team? t, int fallbackIndex) {
+    if (t != null) {
+      for (final lu in stats.lineups) {
+        if (lu.teamEspn == t.espn) return lu;
+      }
+    }
+    return stats.lineups.length > fallbackIndex
+        ? stats.lineups[fallbackIndex]
+        : null;
+  }
+
+  TeamLine? _teamLineFor(Team? t, int fallbackIndex) {
+    if (t != null) {
+      for (final tl in stats.teamLines) {
+        if (tl.teamEspn == t.espn) return tl;
+      }
+    }
+    return stats.teamLines.length > fallbackIndex
+        ? stats.teamLines[fallbackIndex]
+        : null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    final homeLu = _lineupFor(home, 0);
+    final awayLu = _lineupFor(away, 1);
+    final homeTL = _teamLineFor(home, 0);
+    final awayTL = _teamLineFor(away, 1);
+
+    return GradientCard(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          // Formaciones.
+          Row(
+            children: [
+              Expanded(
+                child: _formationLabel(l, home, homeLu, alignEnd: false),
+              ),
+              Icon(Icons.stadium, size: 16, color: Wc.textDim),
+              Expanded(
+                child: _formationLabel(l, away, awayLu, alignEnd: true),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          _PitchView(
+            homeLineup: homeLu,
+            awayLineup: awayLu,
+            homeTeam: home,
+            awayTeam: away,
+          ),
+          if (homeLu != null || awayLu != null) ...[
+            const SizedBox(height: 12),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _SubsList(team: home, lineup: homeLu, end: false)),
+                const SizedBox(width: 8),
+                Expanded(child: _SubsList(team: away, lineup: awayLu, end: true)),
+              ],
+            ),
+          ],
+          if (homeTL != null && awayTL != null && _hasStats(homeTL, awayTL)) ...[
+            const Divider(height: 22),
+            _TeamStatsCard(home: homeTL, away: awayTL),
+          ],
+        ],
+      ),
+    );
+  }
+
+  bool _hasStats(TeamLine a, TeamLine b) =>
+      a.possessionPct > 0 ||
+      b.possessionPct > 0 ||
+      a.shots + b.shots + a.corners + b.corners + a.fouls + b.fouls > 0;
+
+  Widget _formationLabel(AppStrings l, Team? t, Lineup? lu, {required bool alignEnd}) {
+    final name = t != null ? l.teamName(t) : '';
+    final formation = lu?.formation ?? '';
+    return Column(
+      crossAxisAlignment:
+          alignEnd ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        Text(
+          name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: outfit(13, FontWeight.w800),
+        ),
+        if (formation.isNotEmpty)
+          Text(formation, style: outfit(11.5, FontWeight.w700, color: Wc.goldHi)),
+      ],
+    );
+  }
+}
+
+/// La cancha con los 11 de cada equipo (local abajo, visitante arriba).
+class _PitchView extends StatelessWidget {
+  final Lineup? homeLineup;
+  final Lineup? awayLineup;
+  final Team? homeTeam;
+  final Team? awayTeam;
+
+  const _PitchView({
+    required this.homeLineup,
+    required this.awayLineup,
+    required this.homeTeam,
+    required this.awayTeam,
+  });
+
+  // y por línea (fracción del alto): local abajo, visitante arriba.
+  static const _yHome = {'G': 0.95, 'D': 0.80, 'M': 0.66, 'F': 0.55};
+  static const _yAway = {'G': 0.05, 'D': 0.20, 'M': 0.34, 'F': 0.45};
+
+  List<Widget> _dots(BuildContext context, Lineup? lu, Team? team, bool home) {
+    if (lu == null) return const [];
+    final lines = <String, List<LineupPlayer>>{'G': [], 'D': [], 'M': [], 'F': []};
+    for (final p in lu.starters) {
+      (lines[p.pos] ?? lines['M']!).add(p);
+    }
+    for (final list in lines.values) {
+      list.sort((a, b) => (a.place ?? a.number).compareTo(b.place ?? b.number));
+    }
+    final ys = home ? _yHome : _yAway;
+    final color = home ? Wc.gold : Wc.mint;
+    final out = <Widget>[];
+    for (final k in const ['G', 'D', 'M', 'F']) {
+      final pls = lines[k]!;
+      for (var i = 0; i < pls.length; i++) {
+        final fx = (i + 1) / (pls.length + 1);
+        out.add(
+          Align(
+            alignment: Alignment(fx * 2 - 1, ys[k]! * 2 - 1),
+            child: _PlayerDot(player: pls[i], team: team, color: color),
+          ),
+        );
+      }
+    }
+    return out;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(14),
+      child: AspectRatio(
+        aspectRatio: 0.74,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            CustomPaint(painter: _PitchPainter()),
+            ..._dots(context, homeLineup, homeTeam, true),
+            ..._dots(context, awayLineup, awayTeam, false),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Dibuja el campo de juego (césped + líneas).
+class _PitchPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final grass = Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0xFF1B6B3A), Color(0xFF15823F)],
+      ).createShader(Rect.fromLTWH(0, 0, w, h));
+    canvas.drawRect(Rect.fromLTWH(0, 0, w, h), grass);
+
+    // Franjas de césped.
+    final stripe = Paint()..color = Colors.white.withValues(alpha: .04);
+    const n = 8;
+    for (var i = 0; i < n; i += 2) {
+      canvas.drawRect(Rect.fromLTWH(0, h * i / n, w, h / n), stripe);
+    }
+
+    final line = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.white.withValues(alpha: .55)
+      ..strokeWidth = 1.5;
+    final pad = w * 0.04;
+    final field = Rect.fromLTWH(pad, pad, w - pad * 2, h - pad * 2);
+    canvas.drawRRect(RRect.fromRectAndRadius(field, const Radius.circular(6)), line);
+    canvas.drawLine(Offset(pad, h / 2), Offset(w - pad, h / 2), line);
+    canvas.drawCircle(Offset(w / 2, h / 2), w * 0.13, line);
+    canvas.drawCircle(Offset(w / 2, h / 2), 2, line..style = PaintingStyle.fill);
+    line.style = PaintingStyle.stroke;
+
+    // Áreas (arriba y abajo).
+    final boxW = w * 0.46, boxH = h * 0.13;
+    canvas.drawRect(
+      Rect.fromLTWH((w - boxW) / 2, pad, boxW, boxH),
+      line,
+    );
+    canvas.drawRect(
+      Rect.fromLTWH((w - boxW) / 2, h - pad - boxH, boxW, boxH),
+      line,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_) => false;
+}
+
+/// Un jugador en la cancha: dorsal + apellido, abre su carta al tocar.
+class _PlayerDot extends StatelessWidget {
+  final LineupPlayer player;
+  final Team? team;
+  final Color color;
+
+  const _PlayerDot({required this.player, required this.team, required this.color});
+
+  String get _last {
+    final parts = player.player.name.trim().split(RegExp(r'\s+'));
+    return parts.isEmpty ? '' : parts.last;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => openPlayerProfile(
+        context,
+        state,
+        name: player.player.name,
+        teamId: team?.id ?? '',
+        espnId: player.player.id,
+      ),
+      child: SizedBox(
+        width: 56,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 28,
+              height: 28,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white.withValues(alpha: .8), width: 1.5),
+              ),
+              child: Text(
+                player.number > 0 ? '${player.number}' : '',
+                style: outfit(12.5, FontWeight.w900, color: const Color(0xFF14201A)),
+              ),
+            ),
+            const SizedBox(height: 2),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: .45),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                player.subbedOut ? '$_last ↓' : _last,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: outfit(9.5, FontWeight.w700, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Lista de suplentes de un equipo (marca con ↑ a los que entraron).
+class _SubsList extends StatelessWidget {
+  final Team? team;
+  final Lineup? lineup;
+  final bool end;
+
+  const _SubsList({required this.team, required this.lineup, required this.end});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    final bench = lineup?.bench ?? const [];
+    final cross = end ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    return Column(
+      crossAxisAlignment: cross,
+      children: [
+        Text(
+          l.substitutesLabel,
+          style: outfit(10.5, FontWeight.w800, color: Wc.textDim, spacing: .5),
+        ),
+        const SizedBox(height: 4),
+        if (bench.isEmpty)
+          Text('—', style: outfit(12, FontWeight.w600, color: Wc.textDim))
+        else
+          for (final p in bench)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 1),
+              child: Text(
+                p.subbedIn
+                    ? (end ? '${p.player.name} ↑' : '↑ ${p.player.name}')
+                    : p.player.name,
+                textAlign: end ? TextAlign.right : TextAlign.left,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: outfit(
+                  11.5,
+                  p.subbedIn ? FontWeight.w800 : FontWeight.w500,
+                  color: p.subbedIn ? Wc.mint : Wc.textSoft,
+                ),
+              ),
+            ),
+      ],
+    );
+  }
+}
+
+/// Comparativa de estadísticas por equipo (posesión, tiros, córners, faltas).
+class _TeamStatsCard extends StatelessWidget {
+  final TeamLine home;
+  final TeamLine away;
+
+  const _TeamStatsCard({required this.home, required this.away});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    return Column(
+      children: [
+        Text(
+          l.matchStatsTitle,
+          style: outfit(11, FontWeight.w800, color: Wc.textDim, spacing: .5),
+        ),
+        const SizedBox(height: 8),
+        if (home.possessionPct > 0 || away.possessionPct > 0)
+          _row('${home.possessionPct.round()}%', l.statPossession,
+              '${away.possessionPct.round()}%', home.possessionPct, away.possessionPct),
+        _row('${home.shots}', l.statShots, '${away.shots}',
+            home.shots.toDouble(), away.shots.toDouble()),
+        _row('${home.shotsOnTarget}', l.statShotsOnTarget, '${away.shotsOnTarget}',
+            home.shotsOnTarget.toDouble(), away.shotsOnTarget.toDouble()),
+        _row('${home.corners}', l.statCorners, '${away.corners}',
+            home.corners.toDouble(), away.corners.toDouble()),
+        _row('${home.fouls}', l.statFouls, '${away.fouls}',
+            home.fouls.toDouble(), away.fouls.toDouble()),
+      ],
+    );
+  }
+
+  Widget _row(String hv, String label, String av, double h, double a) {
+    final total = h + a;
+    final hf = total <= 0 ? 0.5 : h / total;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 36,
+                child: Text(hv, style: outfit(13, FontWeight.w900)),
+              ),
+              Expanded(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: outfit(11.5, FontWeight.w600, color: Wc.textDim),
+                ),
+              ),
+              SizedBox(
+                width: 36,
+                child: Text(
+                  av,
+                  textAlign: TextAlign.right,
+                  style: outfit(13, FontWeight.w900),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Expanded(
+                flex: (hf * 100).round().clamp(1, 99),
+                child: Container(
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Wc.gold,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 3),
+              Expanded(
+                flex: (100 - (hf * 100).round()).clamp(1, 99),
+                child: Container(
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Wc.mint,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
