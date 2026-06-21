@@ -12,7 +12,9 @@
         "def": 42,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Ra%C3%BAl_Jim%C3%A9nez_04032026_%281%29.jpg/330px-Ra%C3%BAl_Jim%C3%A9nez_04032026_%281%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Ra%C3%BAl_Jim%C3%A9nez_04032026_%281%29.jpg/330px-Ra%C3%BAl_Jim%C3%A9nez_04032026_%281%29.jpg",
+      "bio_en": "Raúl Alonso Jiménez Rodríguez is a Mexican professional footballer who plays as a striker for EFL Championship club Wolverhampton Wanderers and the Mexico national team.",
+      "bio_es": "Raúl Alonso Jiménez Rodríguez es un futbolista mexicano que juega de delantero en el Fulham F. C. de la Premier League."
     },
     "Edson Álvarez": {
       "team": "MEX",
@@ -26,7 +28,9 @@
         "def": 84,
         "phy": 83
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Edson_%C3%81lvarez.png/330px-Edson_%C3%81lvarez.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Edson_%C3%81lvarez.png/330px-Edson_%C3%81lvarez.png",
+      "bio_en": "Edson Omar Álvarez Velázquez is a Mexican professional footballer who plays as a defensive midfielder or centre-back for Süper Lig club Fenerbahçe, on loan from EFL Championship club West Ham United, and captains the Mexico national team.",
+      "bio_es": "Edson Omar Álvarez Velázquez es un futbolista mexicano que juega como defensa central o mediocentro defensivo en el Fenerbahçe S. K. de la Superliga de Turquía. Es internacional absoluto con la selección de México, de la cual es capitán."
     },
     "Gilberto Mora": {
       "team": "MEX",
@@ -53,7 +57,9 @@
         "def": 82,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Ronwen_Williams_AFCON2025Q_35.jpg/330px-Ronwen_Williams_AFCON2025Q_35.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Ronwen_Williams_AFCON2025Q_35.jpg/330px-Ronwen_Williams_AFCON2025Q_35.jpg",
+      "bio_en": "Ronwen Hayden Williams is a South African soccer player who plays as a goalkeeper for Premier Soccer League club Mamelodi Sundowns and captains the South Africa national team.",
+      "bio_es": "Ronwen Williams es un futbolista de Sudáfrica que juega en la posición de guardameta con el Mamelodi Sundowns de la premier Soccer League."
     },
     "Percy Tau": {
       "team": "RSA",
@@ -67,7 +73,9 @@
         "def": 40,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Percy_Tau_in_2019_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Percy_Tau_in_2019_%28cropped%29.jpg",
+      "bio_en": "Percy Muzi Tau is a South African professional footballer who plays as a winger for and the South Africa national team.",
+      "bio_es": "Percy Muzi Tau es un futbolista sudafricano. Juega de delantero y su equipo es el Nam Định F. C. de la V.League 1."
     },
     "Teboho Mokoena": {
       "team": "RSA",
@@ -80,7 +88,9 @@
         "dri": 74,
         "def": 76,
         "phy": 76
-      }
+      },
+      "bio_en": "Teboho Mokoena is a South African professional soccer player who plays as a midfielder for Premiership side Mamelodi Sundowns and the South Africa national team.",
+      "bio_es": "Teboho Mokoena es un futbolista sudafricano que juega en la posición de centrocampista en el Mamelodi Sundowns de la Premier Soccer League."
     },
     "Son Heung-min": {
       "team": "KOR",
@@ -94,7 +104,9 @@
         "def": 45,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg/330px-BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg/330px-BFA_2023_-2_Heung-Min_Son_%28cropped%29.jpg",
+      "bio_en": "Son Heung-min is a South Korean professional footballer who plays as a left winger for Major League Soccer club Los Angeles FC and captains the South Korea national team.",
+      "bio_es": "Son Heung-min es un futbolista surcoreano que juega como delantero en Los Angeles F. C. de la Major League Soccer."
     },
     "Lee Kang-in": {
       "team": "KOR",
@@ -108,7 +120,9 @@
         "def": 55,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Lee_Kang-in_-_2022_%2852551771501%29_%28cropped%29.jpg/330px-Lee_Kang-in_-_2022_%2852551771501%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Lee_Kang-in_-_2022_%2852551771501%29_%28cropped%29.jpg/330px-Lee_Kang-in_-_2022_%2852551771501%29_%28cropped%29.jpg",
+      "bio_en": "Lee Kang-in is a South Korean professional footballer who plays as an attacking midfielder or winger for Ligue 1 club Paris Saint-Germain and the South Korea national team.",
+      "bio_es": "Lee Kang-in, también conocido como Kang-in Lee o Kangin, es un futbolista surcoreano que juega como centrocampista en el Paris Saint-Germain F. C. de la Ligue 1 francesa."
     },
     "Kim Min-jae": {
       "team": "KOR",
@@ -122,7 +136,9 @@
         "def": 87,
         "phy": 88
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/FC_Red_Bull_Salzburg_gegen_Bayern_M%C3%BCnchen_%282025-01-06_Testspiel%29_26.jpg/330px-FC_Red_Bull_Salzburg_gegen_Bayern_M%C3%BCnchen_%282025-01-06_Testspiel%29_26.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/FC_Red_Bull_Salzburg_gegen_Bayern_M%C3%BCnchen_%282025-01-06_Testspiel%29_26.jpg/330px-FC_Red_Bull_Salzburg_gegen_Bayern_M%C3%BCnchen_%282025-01-06_Testspiel%29_26.jpg",
+      "bio_en": "Kim Min-jae is a South Korean professional footballer who plays as a centre-back for Bundesliga club Bayern Munich and the South Korea national team.",
+      "bio_es": "Kim Min-jae es un futbolista surcoreano que juega en la posición de defensa para el Bayern de Múnich de la Bundesliga de Alemania."
     },
     "Patrik Schick": {
       "team": "CZE",
@@ -136,7 +152,9 @@
         "def": 38,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/2020-03-10_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League_Achtelfinale%2C_RB_Leipzig_-_Tottenham_Hotspur_1DX_3672_by_Stepro.jpg/330px-2020-03-10_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League_Achtelfinale%2C_RB_Leipzig_-_Tottenham_Hotspur_1DX_3672_by_Stepro.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/2020-03-10_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League_Achtelfinale%2C_RB_Leipzig_-_Tottenham_Hotspur_1DX_3672_by_Stepro.jpg/330px-2020-03-10_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League_Achtelfinale%2C_RB_Leipzig_-_Tottenham_Hotspur_1DX_3672_by_Stepro.jpg",
+      "bio_en": "Patrik Schick is a Czech professional footballer who plays as a striker for Bundesliga club Bayer Leverkusen and the Czech Republic national team.",
+      "bio_es": "Patrik Schick es un futbolista checo. Juega de delantero y su equipo es el Bayer 04 Leverkusen de la 1. Bundesliga de Alemania."
     },
     "Tomáš Souček": {
       "team": "CZE",
@@ -150,7 +168,9 @@
         "def": 80,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Tom%C3%A1%C5%A1_Sou%C4%8Dek_WHU.jpeg/330px-Tom%C3%A1%C5%A1_Sou%C4%8Dek_WHU.jpeg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Tom%C3%A1%C5%A1_Sou%C4%8Dek_WHU.jpeg/330px-Tom%C3%A1%C5%A1_Sou%C4%8Dek_WHU.jpeg",
+      "bio_en": "Tomáš Souček is a Czech professional footballer who plays as a midfielder for EFL Championship club West Ham United and the Czech Republic national team.",
+      "bio_es": "Tomáš Souček es un futbolista checo que juega en la demarcación de centrocampista para el West Ham United F. C. de la Premier League."
     },
     "Adam Hložek": {
       "team": "CZE",
@@ -164,7 +184,9 @@
         "def": 45,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Adam_Hlo%C5%BEek%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%282%29_%28cropped%29.jpg/330px-Adam_Hlo%C5%BEek%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%282%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Adam_Hlo%C5%BEek%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%282%29_%28cropped%29.jpg/330px-Adam_Hlo%C5%BEek%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%282%29_%28cropped%29.jpg",
+      "bio_en": "Adam Hložek is a Czech professional footballer who plays as a forward for Bundesliga club TSG Hoffenheim and the Czech Republic national team.",
+      "bio_es": "Adam Hložek es un futbolista checo que juega de delantero y su equipo es el TSG 1899 Hoffenheim de la 1. Bundesliga."
     },
     "Alphonso Davies": {
       "team": "CAN",
@@ -178,7 +200,9 @@
         "def": 78,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Alphonso_Davies_in_2022.jpg/330px-Alphonso_Davies_in_2022.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Alphonso_Davies_in_2022.jpg/330px-Alphonso_Davies_in_2022.jpg",
+      "bio_en": "Alphonso Boyle Davies is a professional soccer player who plays as a left-back, winger, or wing-back for Bundesliga club Bayern Munich and captains the Canada national team.",
+      "bio_es": "Alphonso Boyle Davies es un futbolista canadiense que juega tanto de defensa como centrocampista en el Bayern de Múnich de la Bundesliga de Alemania."
     },
     "Jonathan David": {
       "team": "CAN",
@@ -192,7 +216,9 @@
         "def": 42,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Jonathan_David_asse_losc_2425_%28cropped%29.jpg/330px-Jonathan_David_asse_losc_2425_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Jonathan_David_asse_losc_2425_%28cropped%29.jpg/330px-Jonathan_David_asse_losc_2425_%28cropped%29.jpg",
+      "bio_en": "Jonathan Christian David is a professional soccer player who plays as a forward for Serie A club Juventus. Born in the United States, he plays for the Canada national team.",
+      "bio_es": "Jonathan Christian David es un futbolista canadiense que juega en la posición de delantero para la Juventus F. C. de la Serie A de Italia."
     },
     "Stephen Eustáquio": {
       "team": "CAN",
@@ -206,7 +232,9 @@
         "def": 76,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f5/S_Eustaqui_Canada_national_football_team_WC2022_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f5/S_Eustaqui_Canada_national_football_team_WC2022_%28cropped%29.jpg",
+      "bio_en": "Stephen Antunes Eustáquio is a Canadian professional soccer player who plays as a midfielder for Major League Soccer club Los Angeles FC, on loan from Primeira Liga club Porto, and vice-captains the Canada national team.",
+      "bio_es": "Stephen Antunes Eustáquio es un futbolista canadiense que juega en la posición de mediocampista en el Los Angeles F. C. de la Major League Soccer."
     },
     "Edin Džeko": {
       "team": "BIH",
@@ -220,7 +248,9 @@
         "def": 42,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/20150331_2026_AUT_BIH_2177_Edin_D%C5%BEeko_%28cropped%29.jpg/330px-20150331_2026_AUT_BIH_2177_Edin_D%C5%BEeko_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/20150331_2026_AUT_BIH_2177_Edin_D%C5%BEeko_%28cropped%29.jpg/330px-20150331_2026_AUT_BIH_2177_Edin_D%C5%BEeko_%28cropped%29.jpg",
+      "bio_en": "Edin Džeko is a Bosnian professional footballer who plays as a striker for Bundesliga club Schalke 04 and captains the Bosnia and Herzegovina national team. Nicknamed the \"Bosnian Diamond\" or simply the \"Diamond\", he is widely regarded as one of the best strikers of his generation.",
+      "bio_es": "Edin Džeko es un futbolista bosnio que juega como delantero y su equipo es el F. C. Schalke 04 de la 2. Bundesliga de Alemania."
     },
     "Ermedin Demirović": {
       "team": "BIH",
@@ -233,7 +263,9 @@
         "dri": 76,
         "def": 46,
         "phy": 82
-      }
+      },
+      "bio_en": "Ermedin Demirović is a professional footballer who plays as a forward for Bundesliga club VfB Stuttgart. Born in Germany, he plays for the Bosnia and Herzegovina national team.",
+      "bio_es": "Ermedin Demirović es un futbolista bosnio-alemán que juega en la posición de delantero en el VfB Stuttgart de la 1. Bundesliga de Alemania."
     },
     "Sead Kolašinac": {
       "team": "BIH",
@@ -247,7 +279,9 @@
         "def": 82,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kolasinac_2015.jpg/330px-Kolasinac_2015.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kolasinac_2015.jpg/330px-Kolasinac_2015.jpg",
+      "bio_en": "Sead Kolašinac is a professional footballer who plays as a centre-back for Serie A club Atalanta. Born in Germany, he plays for the Bosnia and Herzegovina national team.",
+      "bio_es": "Sead Kolašinac es un futbolista bosnio que juega de defensa y su equipo es el Atalanta B. C. de la Serie A de Italia."
     },
     "Akram Afif": {
       "team": "QAT",
@@ -261,7 +295,9 @@
         "def": 46,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Qatar_v_Lebanon_%2837%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Qatar_v_Lebanon_%2837%29_%28cropped%29.jpg",
+      "bio_en": "Akram Hassan Afif Yahya Afif is a Qatari professional footballer who plays as a left winger for Qatar Stars League club Al Sadd and the Qatar national team.",
+      "bio_es": "Akram Hassan Afif Yahia es un futbolista catarí que juega como delantero en el Al-Sadd S. C. de la Liga de fútbol de Catar. Es internacional con la selección de fútbol de Catar desde 2015."
     },
     "Almoez Ali": {
       "team": "QAT",
@@ -275,7 +311,9 @@
         "def": 40,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/8/80/Moez_Ali_at_Qatar_v_Japan_%E2%80%93_AFC_Asian_Cup_2019_final_32_%282%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/8/80/Moez_Ali_at_Qatar_v_Japan_%E2%80%93_AFC_Asian_Cup_2019_final_32_%282%29.jpg",
+      "bio_en": "Almoez Ali Zainalabedeen Mohamed Abdulla is a professional footballer who plays as a striker for Qatar Stars League club Al-Duhail, which he currently captains. Born in Sudan, he plays for the Qatar national team.",
+      "bio_es": "Almoez Alí Abdulla es un futbolista catarí que juega como delantero en el Al-Duhail S. C. de la Liga de fútbol de Catar."
     },
     "Hassan Al-Haydos": {
       "team": "QAT",
@@ -289,7 +327,9 @@
         "def": 58,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/d/df/Qatar_-_Japan%2C_AFC_Asian_Cup_2019_58_-_Hassan_Al_Haydos.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/d/df/Qatar_-_Japan%2C_AFC_Asian_Cup_2019_58_-_Hassan_Al_Haydos.jpg",
+      "bio_en": "Hassan Khalid Hassan Al-Haydos is a Qatari professional footballer who plays as a forward for and captains Qatar Stars League club Al Sadd and the Qatar national team.",
+      "bio_es": "Hassan Khalid Al-Haydos es un futbolista catarí que juega como delantero en el Al-Sadd Sports Club de la Liga de fútbol de Catar, y la selección de fútbol de Catar, equipos de los que es capitán."
     },
     "Granit Xhaka": {
       "team": "SUI",
@@ -303,7 +343,9 @@
         "def": 80,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Granit_Xhaka_%28cropped%29.jpg/330px-Granit_Xhaka_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Granit_Xhaka_%28cropped%29.jpg/330px-Granit_Xhaka_%28cropped%29.jpg",
+      "bio_en": "Granit Xhaka is a Swiss professional footballer who plays as a defensive midfielder for and captains both Premier League club Sunderland and the Switzerland national team.",
+      "bio_es": "Granit Xhaka es un futbolista suizo que juega como centrocampista en el Sunderland A. F. C. de la Premier League."
     },
     "Manuel Akanji": {
       "team": "SUI",
@@ -317,7 +359,9 @@
         "def": 86,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2792_%28Manuel_Akanji%29.jpg/330px-2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2792_%28Manuel_Akanji%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2792_%28Manuel_Akanji%29.jpg/330px-2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2792_%28Manuel_Akanji%29.jpg",
+      "bio_en": "Manuel Obafemi Akanji is a Swiss professional footballer who plays as a defender for Serie A club Inter Milan, on loan from Premier League club Manchester City, and the Switzerland national team.",
+      "bio_es": "Manuel Obafemi Akanji es un futbolista suizo que juega como defensa en el Inter de Milán de la Serie A de Italia."
     },
     "Breel Embolo": {
       "team": "SUI",
@@ -331,7 +375,9 @@
         "def": 44,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/2022128160447_2022-05-08_Fussball_Eintracht_Frankfurt_vs_Borussia_M%C3%B6nchengladbach_-_Sven_-_1D_X_MK_II_-_1422_-_B70I7533_%28cropped%29.jpg/330px-2022128160447_2022-05-08_Fussball_Eintracht_Frankfurt_vs_Borussia_M%C3%B6nchengladbach_-_Sven_-_1D_X_MK_II_-_1422_-_B70I7533_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/2022128160447_2022-05-08_Fussball_Eintracht_Frankfurt_vs_Borussia_M%C3%B6nchengladbach_-_Sven_-_1D_X_MK_II_-_1422_-_B70I7533_%28cropped%29.jpg/330px-2022128160447_2022-05-08_Fussball_Eintracht_Frankfurt_vs_Borussia_M%C3%B6nchengladbach_-_Sven_-_1D_X_MK_II_-_1422_-_B70I7533_%28cropped%29.jpg",
+      "bio_en": "Breel Donald Embolo is a professional footballer who plays as a forward for Ligue 1 club Rennes and the Switzerland national team.",
+      "bio_es": "Breel Donald Embolo es un futbolista suizo que juega como delantero en el Stade Rennes F. C. de la Ligue 1 de Francia."
     },
     "Vinícius Júnior": {
       "team": "BRA",
@@ -345,7 +391,9 @@
         "def": 40,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/2023_05_06_Final_de_la_Copa_del_Rey_-_52879242230_%28cropped%29.jpg/330px-2023_05_06_Final_de_la_Copa_del_Rey_-_52879242230_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/2023_05_06_Final_de_la_Copa_del_Rey_-_52879242230_%28cropped%29.jpg/330px-2023_05_06_Final_de_la_Copa_del_Rey_-_52879242230_%28cropped%29.jpg",
+      "bio_en": "Vinícius José Paixão de Oliveira Júnior, commonly known as Vinícius Júnior or Vini Jr., is a Brazilian professional footballer who plays as a forward for La Liga club Real Madrid and the Brazil national team. Considered one of the best players in the world, he is known for his pace, technique, and dribbling ability.",
+      "bio_es": "Vinícius José Paixão de Oliveira Júnior, más conocido como Vinícius Jr. o Vini Jr., es un futbolista brasileño que juega como delantero en el Real Madrid C. F. de la Primera División de España. Además, es propietario del F. C. Alverca desde el 18 de febrero de 2025."
     },
     "Rodrygo": {
       "team": "BRA",
@@ -359,7 +407,9 @@
         "def": 42,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Rodrygo_2023_%28cropped%29.jpg/330px-Rodrygo_2023_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Rodrygo_2023_%28cropped%29.jpg/330px-Rodrygo_2023_%28cropped%29.jpg",
+      "bio_en": "Rodrygo Silva de Goes, better known as Rodrygo, is a Brazilian professional footballer who plays primarily as a winger for La Liga club Real Madrid and the Brazil national team.",
+      "bio_es": "Rodrygo Silva de Goes es un futbolista brasileño que juega como delantero en el Real Madrid C. F. de la Primera División de España."
     },
     "Estêvão": {
       "team": "BRA",
@@ -373,7 +423,9 @@
         "def": 40,
         "phy": 62
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Estevao-Palmeiras-Liverpool-abr24_%28cropped%29.jpg/330px-Estevao-Palmeiras-Liverpool-abr24_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Estevao-Palmeiras-Liverpool-abr24_%28cropped%29.jpg/330px-Estevao-Palmeiras-Liverpool-abr24_%28cropped%29.jpg",
+      "bio_en": "Estêvão Willian Almeida de Oliveira Gonçalves, known as Estêvão Willian, is a Brazilian professional footballer who plays as a winger for Premier League club Chelsea and the Brazil national team. He is regarded as one of the best young players in the world.",
+      "bio_es": "Estêvão Willian Almeida de Oliveira Gonçalves es un futbolista brasileño que juega como delantero en el Chelsea F. C. de la Premier League de Inglaterra."
     },
     "Achraf Hakimi": {
       "team": "MAR",
@@ -387,7 +439,9 @@
         "def": 80,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Achraf_Hakimi_Morocco_v_Norway_7_June_2026-32.jpg/330px-Achraf_Hakimi_Morocco_v_Norway_7_June_2026-32.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Achraf_Hakimi_Morocco_v_Norway_7_June_2026-32.jpg/330px-Achraf_Hakimi_Morocco_v_Norway_7_June_2026-32.jpg",
+      "bio_en": "Achraf Hakimi Mouh is a professional footballer who plays as a right-back for Ligue 1 club Paris Saint-Germain and captains the Morocco national team. He is widely regarded as one of the best right-backs in the world.",
+      "bio_es": "Achraf Hakimi Mouh es un futbolista hispanomarroquí que juega de defensa en el Paris Saint-Germain F. C. de la Ligue 1 de Francia y en la selección de Marruecos."
     },
     "Brahim Díaz": {
       "team": "MAR",
@@ -401,7 +455,9 @@
         "def": 46,
         "phy": 64
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Brahim_Diaz_Morocco_v_Norway_7_June_2026-36_%28cropped%29.jpg/330px-Brahim_Diaz_Morocco_v_Norway_7_June_2026-36_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Brahim_Diaz_Morocco_v_Norway_7_June_2026-36_%28cropped%29.jpg/330px-Brahim_Diaz_Morocco_v_Norway_7_June_2026-36_%28cropped%29.jpg",
+      "bio_en": "Brahim Abdelkader Díaz, also known mononymously as Brahim, is a professional footballer who plays as an attacking midfielder or winger for La Liga club Real Madrid. Born in Spain, he plays for the Morocco national team.",
+      "bio_es": "Brahim Abdelkader Díaz es un futbolista hispanomarroquí que juega de centrocampista en el Real Madrid C. F. de la Primera División de España. Desde 2024 es internacional absoluto con la selección de Marruecos."
     },
     "Azzedine Ounahi": {
       "team": "MAR",
@@ -415,7 +471,9 @@
         "def": 68,
         "phy": 72
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Azzedine_Ounahi_Morocco_v_Norway_7_June_2026-37.jpg/330px-Azzedine_Ounahi_Morocco_v_Norway_7_June_2026-37.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Azzedine_Ounahi_Morocco_v_Norway_7_June_2026-37.jpg/330px-Azzedine_Ounahi_Morocco_v_Norway_7_June_2026-37.jpg",
+      "bio_en": "Azzedine Ounahi is a Moroccan professional footballer who plays as a midfielder for Segunda División club Girona and the Morocco national team.",
+      "bio_es": "Azzedine Ounahi es un futbolista marroquí que juega de centrocampista en el Girona F. C. de la Primera División de España."
     },
     "Scott McTominay": {
       "team": "SCO",
@@ -429,7 +487,9 @@
         "def": 80,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Scott_McTominay_Scotland_v_Bolivia_6_June_2026-41.jpg/330px-Scott_McTominay_Scotland_v_Bolivia_6_June_2026-41.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Scott_McTominay_Scotland_v_Bolivia_6_June_2026-41.jpg/330px-Scott_McTominay_Scotland_v_Bolivia_6_June_2026-41.jpg",
+      "bio_en": "Scott Francis McTominay is a professional footballer who plays as a midfielder for Serie A club Napoli and the Scotland national team.",
+      "bio_es": "Scott Francis McTominay es un futbolista británico que juega como centrocampista en la S. S. C. Napoli de la Serie A de Italia."
     },
     "Andy Robertson": {
       "team": "SCO",
@@ -443,7 +503,9 @@
         "def": 82,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Andy_Robertson_Scotland_v_Bolivia_6_June_2026-43.jpg/330px-Andy_Robertson_Scotland_v_Bolivia_6_June_2026-43.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Andy_Robertson_Scotland_v_Bolivia_6_June_2026-43.jpg/330px-Andy_Robertson_Scotland_v_Bolivia_6_June_2026-43.jpg",
+      "bio_en": "Andrew Henry Robertson is a Scottish professional footballer who plays as a left-back for Premier League club Liverpool and captains the Scotland national team. He will leave Liverpool on 30 June 2026, upon the expiry of his contract, and will join Tottenham Hotspur.",
+      "bio_es": "Andrew Henry Robertson es un futbolista británico que juega como defensa en el Liverpool F. C. de la Premier League de Inglaterra. A partir del 1 de julio de 2026 será jugador del Tottenham Hotspur F. C."
     },
     "John McGinn": {
       "team": "SCO",
@@ -457,7 +519,9 @@
         "def": 76,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/John_McGinn_Scotland_v_Bolivia_6_June_2026-2.jpg/330px-John_McGinn_Scotland_v_Bolivia_6_June_2026-2.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/John_McGinn_Scotland_v_Bolivia_6_June_2026-2.jpg/330px-John_McGinn_Scotland_v_Bolivia_6_June_2026-2.jpg",
+      "bio_en": "John McGinn is a Scottish footballer who plays as a midfielder for Premier League club Aston Villa, which he captains, and the Scotland national team.",
+      "bio_es": "John McGinn es un futbolista escocés. Juega de centrocampista y su equipo es el Aston Villa F. C. de la Premier League de Inglaterra."
     },
     "Duckens Nazon": {
       "team": "HAI",
@@ -471,7 +535,9 @@
         "def": 38,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/2025_Iran_Football_Premier_League_Esteghlal_and_Zob_Ahan_football_match_3_Mehr_%28cropped%29.jpg/330px-2025_Iran_Football_Premier_League_Esteghlal_and_Zob_Ahan_football_match_3_Mehr_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/2025_Iran_Football_Premier_League_Esteghlal_and_Zob_Ahan_football_match_3_Mehr_%28cropped%29.jpg/330px-2025_Iran_Football_Premier_League_Esteghlal_and_Zob_Ahan_football_match_3_Mehr_%28cropped%29.jpg",
+      "bio_en": "Duckens Moïse Nazon is a professional footballer who plays as a striker for Persian Gulf Pro League club Esteghlal. He is the all-time top goalscorer for the Haiti national team with 44 goals, and is a member of the Haiti squad for the 2026 FIFA World Cup.",
+      "bio_es": "Duckens Moisés Nazon es un futbolista franco-haitiano que juega en el Esteghlal F. C. de la Iran Pro League."
     },
     "Frantzdy Pierrot": {
       "team": "HAI",
@@ -484,7 +550,9 @@
         "dri": 70,
         "def": 40,
         "phy": 84
-      }
+      },
+      "bio_en": "Frantzdy Pierrot is a Haitian professional footballer who plays as a forward for Süper Lig club Çaykur Rizespor, on loan from AEK Athens, and the Haiti national team.",
+      "bio_es": "Frantzdy Pierrot es un futbolista haitiano que juega de delantero para el Çaykur Rizespor de la Superliga de Turquía."
     },
     "Danley Jean Jacques": {
       "team": "HAI",
@@ -498,7 +566,9 @@
         "def": 76,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Danley_Jean_Jacques_Philadelphia_Union_New_York_City_FC_Nov_23_2025-062_%28cropped%29.jpg/330px-Danley_Jean_Jacques_Philadelphia_Union_New_York_City_FC_Nov_23_2025-062_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Danley_Jean_Jacques_Philadelphia_Union_New_York_City_FC_Nov_23_2025-062_%28cropped%29.jpg/330px-Danley_Jean_Jacques_Philadelphia_Union_New_York_City_FC_Nov_23_2025-062_%28cropped%29.jpg",
+      "bio_en": "Danley Jean Jacques is a Haitian professional footballer who plays as a midfielder for Major League Soccer club Philadelphia Union and the Haiti national team. He usually plays as a central midfielder or defensive midfielder.",
+      "bio_es": "Danley Jean Jacques es un futbolista haitiano que juega de centrocampista para el Philadelphia Union de la Major League Soccer."
     },
     "Christian Pulisic": {
       "team": "USA",
@@ -512,7 +582,9 @@
         "def": 48,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Christian_Pulisic_USMNT_v_Belgium_Mar_28_2026-73_%28cropped%29.jpg/330px-Christian_Pulisic_USMNT_v_Belgium_Mar_28_2026-73_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Christian_Pulisic_USMNT_v_Belgium_Mar_28_2026-73_%28cropped%29.jpg/330px-Christian_Pulisic_USMNT_v_Belgium_Mar_28_2026-73_%28cropped%29.jpg",
+      "bio_en": "Christian Mate Pulisic is an American professional soccer player who plays as a winger, attacking midfielder and forward for Serie A club AC Milan and the United States national team.",
+      "bio_es": "Christian Mate Pulisic es un futbolista estadounidense que juega de delantero en el A. C. Milan de la Serie A de Italia."
     },
     "Weston McKennie": {
       "team": "USA",
@@ -526,7 +598,9 @@
         "def": 80,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Weston_McKennie_USMNT_v_Belgium_Mar_28_2026-68_%28cropped%29.jpg/330px-Weston_McKennie_USMNT_v_Belgium_Mar_28_2026-68_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Weston_McKennie_USMNT_v_Belgium_Mar_28_2026-68_%28cropped%29.jpg/330px-Weston_McKennie_USMNT_v_Belgium_Mar_28_2026-68_%28cropped%29.jpg",
+      "bio_en": "Weston James Earl McKennie is an American professional soccer player who plays primarily as a midfielder for Serie A club Juventus and the United States national team. A highly versatile player, he has been described as a \"Swiss Army Knife\" and is routinely deployed in any outfield position.",
+      "bio_es": "Weston James Earl McKennie es un futbolista estadounidense que juega de centrocampista para la Juventus F. C. de la Serie A de Italia."
     },
     "Antonee Robinson": {
       "team": "USA",
@@ -540,7 +614,9 @@
         "def": 82,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Antonee_Robinson_USMNT_v_Portugal_Mar_31_2026-173_%28cropped%29.jpg/330px-Antonee_Robinson_USMNT_v_Portugal_Mar_31_2026-173_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Antonee_Robinson_USMNT_v_Portugal_Mar_31_2026-173_%28cropped%29.jpg/330px-Antonee_Robinson_USMNT_v_Portugal_Mar_31_2026-173_%28cropped%29.jpg",
+      "bio_en": "Antonee Robinson is a professional soccer player who plays as a left-back for Premier League club Fulham. Born in England, he represents the United States national team.",
+      "bio_es": "Antonee Robinson es un futbolista estadounidense que juega como defensa en el Fulham F. C. de la Premier League de Inglaterra."
     },
     "Miguel Almirón": {
       "team": "PAR",
@@ -554,7 +630,9 @@
         "def": 56,
         "phy": 72
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Miguel_Almir%C3%B3n_Red_Bull_Atlanta_5.31.25-069_%28cropped%29.jpg/330px-Miguel_Almir%C3%B3n_Red_Bull_Atlanta_5.31.25-069_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Miguel_Almir%C3%B3n_Red_Bull_Atlanta_5.31.25-069_%28cropped%29.jpg/330px-Miguel_Almir%C3%B3n_Red_Bull_Atlanta_5.31.25-069_%28cropped%29.jpg",
+      "bio_en": "Miguel Ángel Almirón Rejala is a Paraguayan professional footballer who plays as an attacking midfielder or right winger for Major League Soccer club Atlanta United and the Paraguay national team.",
+      "bio_es": "Miguel Ángel Almirón Rejala es un futbolista paraguayo que juega como mediapunta o extremo y su equipo actual es el Atlanta United F. C. de la Major League Soccer de los Estados Unidos."
     },
     "Julio Enciso": {
       "team": "PAR",
@@ -567,7 +645,8 @@
         "dri": 86,
         "def": 46,
         "phy": 66
-      }
+      },
+      "bio_es": "Julio César Enciso Espínola es un futbolista paraguayo que se desempeña como mediapunta en el Racing de Estrasburgo de la Ligue 1 de Francia. Es internacional con la Selección de fútbol de Paraguay y reconocido como una de las mayores promesas del fútbol sudamericano."
     },
     "Gustavo Gómez": {
       "team": "PAR",
@@ -581,7 +660,9 @@
         "def": 86,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Gustavo-Gomez-Palmeiras-Athletico-jul-2022-2.jpg/330px-Gustavo-Gomez-Palmeiras-Athletico-jul-2022-2.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Gustavo-Gomez-Palmeiras-Athletico-jul-2022-2.jpg/330px-Gustavo-Gomez-Palmeiras-Athletico-jul-2022-2.jpg",
+      "bio_en": "Gustavo Raúl Gómez Portillo is a Paraguayan professional footballer who plays as a centre-back for and captains both Campeonato Brasileiro Série A club Palmeiras and the Paraguay national team.",
+      "bio_es": "Gustavo Raúl Gómez Portillo es un futbolista paraguayo que juega en la demarcación de defensa central y actualmente milita en el club Palmeiras, del Campeonato Brasileño de Serie A. Es internacional absoluto con la selección de fútbol de Paraguay desde 2013, de la cual es capitán."
     },
     "Mathew Ryan": {
       "team": "AUS",
@@ -595,7 +676,9 @@
         "def": 82,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Ryan_rcl_asse_2425.png/330px-Ryan_rcl_asse_2425.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Ryan_rcl_asse_2425.png/330px-Ryan_rcl_asse_2425.png",
+      "bio_en": "Mathew David Ryan is an Australian professional soccer player who currently plays as a goalkeeper for La Liga club Levante and captains the Australia national team.",
+      "bio_es": "Mathew David Ryan es un futbolista australiano. Juega como portero y su equipo es el Levante U. D. de la Primera División de España. Es internacional absoluto y capitán de la selección de Australia."
     },
     "Jackson Irvine": {
       "team": "AUS",
@@ -609,7 +692,9 @@
         "def": 78,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/6/66/4822293_AE7I6590_%28Jackson_Irvine%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/6/66/4822293_AE7I6590_%28Jackson_Irvine%29.jpg",
+      "bio_en": "Jackson Alexander Irvine is an Australian professional soccer player who plays as a central midfielder for Bundesliga club FC St. Pauli, which he captains, and the Australia national team.",
+      "bio_es": "Jackson Alexander Irvine es un futbolista australiano que juega como centrocampista en el F. C. St. Pauli de la 1. Bundesliga."
     },
     "Craig Goodwin": {
       "team": "AUS",
@@ -623,7 +708,9 @@
         "def": 48,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Craig_Goodwin_ADL.jpg/330px-Craig_Goodwin_ADL.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Craig_Goodwin_ADL.jpg/330px-Craig_Goodwin_ADL.jpg",
+      "bio_en": "Craig Alexander Goodwin is an Australian professional soccer player who plays as a left winger for Adelaide United and the Australia national team. Known for his agility, crossing and shot placement, he is Adelaide United's all-time leading goalscorer and considered one of the club's greatest players.",
+      "bio_es": "Craig Alexander Goodwin es un futbolista australiano que juega de delantero y su equipo es el Adelaide United de la A-League."
     },
     "Arda Güler": {
       "team": "TUR",
@@ -637,7 +724,9 @@
         "def": 50,
         "phy": 62
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/2/26/Derbide_Fenerbah%C3%A7e_Yedek_Oyuncu_Arda_G%C3%BCler_%282021-22_S%C3%BCper_Lig_-_Cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/2/26/Derbide_Fenerbah%C3%A7e_Yedek_Oyuncu_Arda_G%C3%BCler_%282021-22_S%C3%BCper_Lig_-_Cropped%29.jpg",
+      "bio_en": "Arda Güler is a Turkish professional footballer who primarily plays as an attacking midfielder for La Liga club Real Madrid and the Turkey national team. He is regarded as one of the best young players in the world.",
+      "bio_es": "Arda Güler es un futbolista turco que juega como centrocampista en el Real Madrid C. F. de la Primera División de España."
     },
     "Hakan Çalhanoğlu": {
       "team": "TUR",
@@ -651,7 +740,9 @@
         "def": 76,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/AUT_vs._TUR_2016-03-29_%28342%29.jpg/330px-AUT_vs._TUR_2016-03-29_%28342%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/AUT_vs._TUR_2016-03-29_%28342%29.jpg/330px-AUT_vs._TUR_2016-03-29_%28342%29.jpg",
+      "bio_en": "Hakan Çalhanoğlu is a professional footballer who plays as a defensive midfielder for Serie A club Inter Milan. Born in Germany, he plays for and captains the Turkey national team.",
+      "bio_es": "Hakan Çalhanoğlu es un futbolista turco que juega como centrocampista en el Inter de Milán de la Serie A de Italia."
     },
     "Kenan Yıldız": {
       "team": "TUR",
@@ -665,7 +756,9 @@
         "def": 44,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Kenan_yildiz_vogue_2026.jpg/330px-Kenan_yildiz_vogue_2026.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Kenan_yildiz_vogue_2026.jpg/330px-Kenan_yildiz_vogue_2026.jpg",
+      "bio_en": "Kenan Yıldız is a professional footballer who plays as an attacking midfielder or winger for Serie A club Juventus. Born in Regensburg, Germany, he plays for the Turkey national team.",
+      "bio_es": "Kenan Yıldız es un futbolista turco. Juega de delantero y su equipo es la Juventus F. C. de la Serie A de Italia."
     },
     "Jamal Musiala": {
       "team": "GER",
@@ -679,7 +772,9 @@
         "def": 52,
         "phy": 70
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Jamal_Musiala_2022_%28cropped%29.jpg/330px-Jamal_Musiala_2022_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Jamal_Musiala_2022_%28cropped%29.jpg/330px-Jamal_Musiala_2022_%28cropped%29.jpg",
+      "bio_en": "Jamal Musiala is a German professional footballer who plays as an attacking midfielder for Bundesliga club Bayern Munich and the Germany national team. Widely regarded as one of the best attacking midfielders in the world, Musiala is known for his dribbling, passing, goal threat, and technical skills.",
+      "bio_es": "Jamal Musiala es un futbolista alemán que juega como centrocampista en el Bayern de Múnich de la Bundesliga de Alemania. Es internacional con la selección de Alemania."
     },
     "Florian Wirtz": {
       "team": "GER",
@@ -693,7 +788,9 @@
         "def": 54,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Florian_Wirtz%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29_%28cropped%29.jpg/330px-Florian_Wirtz%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Florian_Wirtz%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29_%28cropped%29.jpg/330px-Florian_Wirtz%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29_%28cropped%29.jpg",
+      "bio_en": "Florian Richard Wirtz is a German professional footballer who plays as an attacking midfielder or left midfielder for Premier League club Liverpool and the Germany national team. He is widely regarded as one of the best attacking midfielders in the world.",
+      "bio_es": "Florian Richard Wirtz es un futbolista alemán que juega de mediocampista o delantero en el Liverpool Football Club de la Premier League. Es internacional absoluto con la selección de fútbol de Alemania."
     },
     "Joshua Kimmich": {
       "team": "GER",
@@ -707,7 +804,9 @@
         "def": 82,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2019-06-11_Fu%C3%9Fball%2C_M%C3%A4nner%2C_L%C3%A4nderspiel%2C_Deutschland-Estland_StP_2078_LR10_by_Stepro_%28cropped%29.jpg/330px-2019-06-11_Fu%C3%9Fball%2C_M%C3%A4nner%2C_L%C3%A4nderspiel%2C_Deutschland-Estland_StP_2078_LR10_by_Stepro_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2019-06-11_Fu%C3%9Fball%2C_M%C3%A4nner%2C_L%C3%A4nderspiel%2C_Deutschland-Estland_StP_2078_LR10_by_Stepro_%28cropped%29.jpg/330px-2019-06-11_Fu%C3%9Fball%2C_M%C3%A4nner%2C_L%C3%A4nderspiel%2C_Deutschland-Estland_StP_2078_LR10_by_Stepro_%28cropped%29.jpg",
+      "bio_en": "Joshua Walter Kimmich is a German professional footballer who plays as a defensive midfielder or right-back for Bundesliga club Bayern Munich and captains the Germany national team.",
+      "bio_es": "Joshua Walter Kimmich es un futbolista alemán que juega como centrocampista o defensa en el Bayern de Múnich de la Bundesliga alemana."
     },
     "Leandro Bacuna": {
       "team": "CUW",
@@ -721,7 +820,9 @@
         "def": 72,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Leandro_Bacuna.jpg/330px-Leandro_Bacuna.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Leandro_Bacuna.jpg/330px-Leandro_Bacuna.jpg",
+      "bio_en": "Leandro Jones Johan Bacuna is a professional footballer who plays as a midfielder or right-back for TFF First League club Iğdır FK. Born in the Netherlands, he represents the Curaçao national team. He is their joint most-capped player along with Eloy Room.",
+      "bio_es": "Leandro Jones Johan Bacuna es un futbolista curazoleño. Juega como centrocampista en el Iğdır F. K. de la TFF Primera División y en la selección de Curazao."
     },
     "Juninho Bacuna": {
       "team": "CUW",
@@ -735,7 +836,9 @@
         "def": 68,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Juninho_bacuna-1531777726.jpeg/330px-Juninho_bacuna-1531777726.jpeg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Juninho_bacuna-1531777726.jpeg/330px-Juninho_bacuna-1531777726.jpeg",
+      "bio_en": "Juninho Bacuna is a professional footballer who plays as a central midfielder for Eerste Divisie club Volendam on loan from Turkish club Gaziantep. Born in the Netherlands, he represents the Curaçao national team.",
+      "bio_es": "Juninho Gracielo Bacuna es un futbolista curazoleño que juega de centrocampista en el F. C. Volendam de la Eredivisie. Es internacional absoluto con Curazao."
     },
     "Eloy Room": {
       "team": "CUW",
@@ -749,7 +852,9 @@
         "def": 80,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Room_Eloy_Columbus_Crew_SC_Meet_the_Team_2019.jpg/330px-Room_Eloy_Columbus_Crew_SC_Meet_the_Team_2019.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Room_Eloy_Columbus_Crew_SC_Meet_the_Team_2019.jpg/330px-Room_Eloy_Columbus_Crew_SC_Meet_the_Team_2019.jpg",
+      "bio_en": "Eloy Victor Room is a professional footballer who plays as a goalkeeper for USL Championship club Miami FC. Born in the Netherlands, he plays for the Curaçao national team. He is Curaçao's joint most capped player along with Leandro Bacuna.",
+      "bio_es": "Eloy Victor Room es un futbolista curazoleño que juega de guardameta en el Miami F. C. de la USL Championship."
     },
     "Franck Kessié": {
       "team": "CIV",
@@ -763,7 +868,9 @@
         "def": 82,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Franck_Yannick_Kessi%C3%A9.jpg/330px-Franck_Yannick_Kessi%C3%A9.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Franck_Yannick_Kessi%C3%A9.jpg/330px-Franck_Yannick_Kessi%C3%A9.jpg",
+      "bio_en": "Franck Yannick Kessié is an Ivorian professional footballer who plays as a central midfielder for Saudi Pro League club Al-Ahli and the Ivory Coast national team.",
+      "bio_es": "Franck Yannick Kessié es un futbolista marfileño que juega como centrocampista en el Al-Ahli Saudi F. C. de la Liga Profesional Saudí."
     },
     "Amad Diallo": {
       "team": "CIV",
@@ -777,7 +884,9 @@
         "def": 50,
         "phy": 70
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Manchester_United_v_BSC_Young_Boys%2C_8_December_2021_%2817%29_%28cropped%29.jpg/330px-Manchester_United_v_BSC_Young_Boys%2C_8_December_2021_%2817%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Manchester_United_v_BSC_Young_Boys%2C_8_December_2021_%2817%29_%28cropped%29.jpg/330px-Manchester_United_v_BSC_Young_Boys%2C_8_December_2021_%2817%29_%28cropped%29.jpg",
+      "bio_en": "Amad Diallo, sometimes known mononymously as Amad, is an Ivorian professional footballer who plays as a winger or attacking midfielder for Premier League club Manchester United and the Ivory Coast national team.",
+      "bio_es": "Amad Diallo es un futbolista marfileño. Juega en la posición de delantero para el Manchester United F. C. de la Premier League."
     },
     "Seko Fofana": {
       "team": "CIV",
@@ -791,7 +900,9 @@
         "def": 76,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Seko_Fofana.jpg/330px-Seko_Fofana.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Seko_Fofana.jpg/330px-Seko_Fofana.jpg",
+      "bio_en": "Seko Mohamed Fofana is a professional footballer who plays as a midfielder for Primeira Liga club Porto, on loan from Ligue 1 club Rennes. Born in France, he plays for the Ivory Coast national team.",
+      "bio_es": "Seko Fofana es un futbolista francés nacionalizado marfileño. Juega de centrocampista y su club es el F. C. Porto que disputa la Primeira Liga de Portugal."
     },
     "Moisés Caicedo": {
       "team": "ECU",
@@ -805,7 +916,9 @@
         "def": 86,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Moises_Caicedo_2022_%28cropped%29.jpg/330px-Moises_Caicedo_2022_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Moises_Caicedo_2022_%28cropped%29.jpg/330px-Moises_Caicedo_2022_%28cropped%29.jpg",
+      "bio_en": "Moisés Isaac Caicedo Corozo is an Ecuadorian professional footballer who plays as a midfielder for Premier League club Chelsea and the Ecuador national team. Often considered one of the best defensive midfielders in the world, Caicedo is known for his passing and interceptions.",
+      "bio_es": "Moisés Isaac Caicedo Corozo es un futbolista ecuatoriano. Juega como centrocampista y su equipo actual es el Chelsea F. C. de la Premier League de Inglaterra. Es internacional con la selección de fútbol de Ecuador desde el 8 de octubre de 2020."
     },
     "Piero Hincapié": {
       "team": "ECU",
@@ -819,7 +932,9 @@
         "def": 85,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Piero_Hincapi%C3%A9%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29.jpg/330px-Piero_Hincapi%C3%A9%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Piero_Hincapi%C3%A9%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29.jpg/330px-Piero_Hincapi%C3%A9%2C_2022-07-31%2C_Saisoner%C3%B6ffnung_Bayer_04%2C_Leverkusen_%281%29.jpg",
+      "bio_en": "Piero Martín Hincapié Reyna is an Ecuadorian professional footballer who plays as a centre-back or left-back for Premier League club Arsenal, on loan from Bundesliga club Bayer Leverkusen, and the Ecuador national team.",
+      "bio_es": "Piero Martín Hincapié Reyna es un futbolista ecuatoriano. Juega de defensa central o lateral izquierdo y su equipo actual es el Arsenal F. C. de la Premier League de Inglaterra."
     },
     "Kendry Páez": {
       "team": "ECU",
@@ -833,7 +948,9 @@
         "def": 52,
         "phy": 60
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Kendry_Paez_2023_Sudamericano_Sub_17_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Kendry_Paez_2023_Sudamericano_Sub_17_%28cropped%29.jpg",
+      "bio_en": "Ray Kendry Páez Andrade is an Ecuadorian professional footballer who plays as an attacking midfielder or right winger for Argentine Primera División club River Plate, on loan from Premier League club Chelsea, and the Ecuador national team.",
+      "bio_es": "Ray Kendry Páez Andrade es un futbolista ecuatoriano que juega como centrocampista en el Club Atlético River Plate de la Primera División de Argentina."
     },
     "Virgil van Dijk": {
       "team": "NED",
@@ -847,7 +964,9 @@
         "def": 90,
         "phy": 90
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/20160604_AUT_NED_8876_%28cropped%29.jpg/330px-20160604_AUT_NED_8876_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/20160604_AUT_NED_8876_%28cropped%29.jpg/330px-20160604_AUT_NED_8876_%28cropped%29.jpg",
+      "bio_en": "Virgil van Dijk is a Dutch professional footballer who plays as a centre-back for and captains both Premier League club Liverpool and the Netherlands national team.",
+      "bio_es": "Virgil van Dijk es un futbolista neerlandés que juega como defensa en el Liverpool F. C. de la Premier League."
     },
     "Cody Gakpo": {
       "team": "NED",
@@ -861,7 +980,9 @@
         "def": 48,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Cody_Gakpo_06042025_%282%29_%28cropped%29.jpg/330px-Cody_Gakpo_06042025_%282%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Cody_Gakpo_06042025_%282%29_%28cropped%29.jpg/330px-Cody_Gakpo_06042025_%282%29_%28cropped%29.jpg",
+      "bio_en": "Cody Mathès Gakpo is a Dutch professional footballer who plays as a left winger or centre forward for Premier League club Liverpool and the Netherlands national team.",
+      "bio_es": "Cody Mathès Gakpo es un futbolista neerlandés que juega de delantero en el Liverpool F. C. de la Premier League de Inglaterra."
     },
     "Xavi Simons": {
       "team": "NED",
@@ -875,7 +996,9 @@
         "def": 50,
         "phy": 64
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2672_%28Xavi_Simons%29.jpg/330px-2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2672_%28Xavi_Simons%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2672_%28Xavi_Simons%29.jpg/330px-2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2672_%28Xavi_Simons%29.jpg",
+      "bio_en": "Xavi Quentin Shay Simons is a Dutch professional footballer who plays as an attacking midfielder or winger for Premier League club Tottenham Hotspur and the Netherlands national team.",
+      "bio_es": "Xavi Quentin Shay Simons, más conocido como Xavi Simons, es un futbolista neerlandés que juega como centrocampista en el Tottenham Hotspur F. C. de la Premier League."
     },
     "Takefusa Kubo": {
       "team": "JPN",
@@ -889,7 +1012,9 @@
         "def": 48,
         "phy": 62
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Takefusa_Kubo_2019.png/330px-Takefusa_Kubo_2019.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Takefusa_Kubo_2019.png/330px-Takefusa_Kubo_2019.png",
+      "bio_en": "Takefusa Kubo, commonly known as Take Kubo, is a Japanese professional footballer who plays as a right winger for La Liga club Real Sociedad and the Japan national team. He has been dubbed \"Japanese Messi\" by Japanese football fans because of his technical ability.",
+      "bio_es": "Takefusa Kubo es un futbolista japonés que juega de centrocampista en la Real Sociedad de la Primera División de España."
     },
     "Kaoru Mitoma": {
       "team": "JPN",
@@ -903,7 +1028,9 @@
         "def": 50,
         "phy": 72
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Kaoru_Mitoma_%282022%29.jpg/330px-Kaoru_Mitoma_%282022%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Kaoru_Mitoma_%282022%29.jpg/330px-Kaoru_Mitoma_%282022%29.jpg",
+      "bio_en": "Kaoru Mitoma is a Japanese professional footballer who plays as a left winger for Premier League club Brighton & Hove Albion and the Japan national team. He is best known for his dribbling ability and pace.",
+      "bio_es": "Kaoru Mitoma es un futbolista japonés que juega de delantero en el Brighton & Hove Albion F. C. de la Premier League."
     },
     "Wataru Endo": {
       "team": "JPN",
@@ -917,7 +1044,9 @@
         "def": 82,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Wataru_Endo_at_Iran-Japan_pre-match_conference.jpg/330px-Wataru_Endo_at_Iran-Japan_pre-match_conference.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Wataru_Endo_at_Iran-Japan_pre-match_conference.jpg/330px-Wataru_Endo_at_Iran-Japan_pre-match_conference.jpg",
+      "bio_en": "Wataru Endo is a Japanese professional footballer who plays as a defensive midfielder for Premier League club Liverpool.",
+      "bio_es": "Wataru Endō es un futbolista japonés. Juega de centrocampista y su equipo es el Liverpool F. C. de la Premier League de Inglaterra."
     },
     "Alexander Isak": {
       "team": "SWE",
@@ -931,7 +1060,9 @@
         "def": 42,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Alexander_Isak_-_Sweden_-_Greece21_%28cropped%29.jpg/330px-Alexander_Isak_-_Sweden_-_Greece21_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Alexander_Isak_-_Sweden_-_Greece21_%28cropped%29.jpg/330px-Alexander_Isak_-_Sweden_-_Greece21_%28cropped%29.jpg",
+      "bio_en": "Alexander Isak is a Swedish professional footballer who plays as a striker for Premier League club Liverpool and the Sweden national team.",
+      "bio_es": "Alexander Isak es un futbolista sueco que juega en la posición de delantero y su equipo es el Liverpool F. C. de la Premier League de Inglaterra."
     },
     "Viktor Gyökeres": {
       "team": "SWE",
@@ -945,7 +1076,9 @@
         "def": 44,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Viktor_Gy%C3%B6keres_2026-06-04_1.jpg/330px-Viktor_Gy%C3%B6keres_2026-06-04_1.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Viktor_Gy%C3%B6keres_2026-06-04_1.jpg/330px-Viktor_Gy%C3%B6keres_2026-06-04_1.jpg",
+      "bio_en": "Viktor Einar Gyökeres is a Swedish professional footballer who plays as a striker for Premier League club Arsenal and the Sweden national team.",
+      "bio_es": "Viktor Einar Gyökeres es un futbolista sueco que juega en la demarcación de delantero para el Arsenal F. C. de la Premier League."
     },
     "Dejan Kulusevski": {
       "team": "SWE",
@@ -959,7 +1092,9 @@
         "def": 56,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Sweden-Slovenia_Nations_League_2022-09-27_17_Kulusevski_%28cropped%29.jpg/330px-Sweden-Slovenia_Nations_League_2022-09-27_17_Kulusevski_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Sweden-Slovenia_Nations_League_2022-09-27_17_Kulusevski_%28cropped%29.jpg/330px-Sweden-Slovenia_Nations_League_2022-09-27_17_Kulusevski_%28cropped%29.jpg",
+      "bio_en": "Dejan Kuluševski is a Swedish professional footballer who plays as an attacking midfielder or winger for Premier League club Tottenham Hotspur and the Sweden national team.",
+      "bio_es": "Dejan Kulusevski es un futbolista sueco que juega en la demarcación de centrocampista para el Tottenham Hotspur F. C. de la Premier League de Inglaterra."
     },
     "Hannibal Mejbri": {
       "team": "TUN",
@@ -973,7 +1108,9 @@
         "def": 72,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Hannibal_Mejbri_26042025_%281%29.jpg/330px-Hannibal_Mejbri_26042025_%281%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Hannibal_Mejbri_26042025_%281%29.jpg/330px-Hannibal_Mejbri_26042025_%281%29.jpg",
+      "bio_en": "Hannibal Mejbri, also known mononymously as Hannibal, is a professional footballer who plays as a midfielder for EFL Championship club Burnley and the Tunisia national team.",
+      "bio_es": "Hannibal Mejbri es un futbolista franco-tunecino. Juega como centrocampista y su equipo es el Burnley F. C. de la Premier League."
     },
     "Youssef Msakni": {
       "team": "TUN",
@@ -987,7 +1124,9 @@
         "def": 46,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Youssef_Msakni_2015b.jpg/330px-Youssef_Msakni_2015b.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Youssef_Msakni_2015b.jpg/330px-Youssef_Msakni_2015b.jpg",
+      "bio_en": "Youssef Msakni is a Tunisian professional footballer who plays as a winger or forward for Tunisian Ligue Professionnelle 1 club Espérance de Tunis and captains the Tunisia national team.",
+      "bio_es": "Youssef Msakni es un futbolista tunecino. Juega de centrocampista en el Espérance de Tunis de la Championnat de Ligue Profesionelle 1."
     },
     "Aïssa Laïdouni": {
       "team": "TUN",
@@ -1001,7 +1140,9 @@
         "def": 80,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Attaque_de_football_%28cropped%29.jpg/330px-Attaque_de_football_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Attaque_de_football_%28cropped%29.jpg/330px-Attaque_de_football_%28cropped%29.jpg",
+      "bio_en": "Aïssa Bilal Laïdouni is a professional footballer who plays as a defensive midfielder for Qatari club Al-Wakrah. Born in France, he plays for the Tunisia national team.",
+      "bio_es": "Aïssa Bilal Laïdouni, más conocido como Aïssa Laïdouni, es un futbolista tunecino que juega de centrocampista en el Al-Wakrah S. C. de la Liga de fútbol de Catar."
     },
     "Kevin De Bruyne": {
       "team": "BEL",
@@ -1015,7 +1156,9 @@
         "def": 64,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Kevin_De_Bruyne_USMNT_v_Belgium_Mar_28_2026-64_%28cropped%29.jpg/330px-Kevin_De_Bruyne_USMNT_v_Belgium_Mar_28_2026-64_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Kevin_De_Bruyne_USMNT_v_Belgium_Mar_28_2026-64_%28cropped%29.jpg/330px-Kevin_De_Bruyne_USMNT_v_Belgium_Mar_28_2026-64_%28cropped%29.jpg",
+      "bio_en": "Kevin De Bruyne is a Belgian professional footballer who plays as a midfielder for Serie A club Napoli and the Belgium national team. Widely regarded as one of the greatest players of his generation and one of the best players in Premier League history, De Bruyne has been described as a \"complete\" footballer.",
+      "bio_es": "Kevin De Bruyne es un futbolista belga que juega de centrocampista en la S. S. C. Napoli de la Serie A de Italia."
     },
     "Jérémy Doku": {
       "team": "BEL",
@@ -1029,7 +1172,9 @@
         "def": 42,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/J%C3%A9r%C3%A9my_Doku_USMNT_v_Belgium_Mar_28_2026-27_%28cropped%29.jpg/330px-J%C3%A9r%C3%A9my_Doku_USMNT_v_Belgium_Mar_28_2026-27_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/J%C3%A9r%C3%A9my_Doku_USMNT_v_Belgium_Mar_28_2026-27_%28cropped%29.jpg/330px-J%C3%A9r%C3%A9my_Doku_USMNT_v_Belgium_Mar_28_2026-27_%28cropped%29.jpg",
+      "bio_en": "Jérémy Baffour Doku is a Belgian professional footballer who plays as a winger for Premier League club Manchester City and the Belgium national team. He is most known for his speed and dribbling ability.",
+      "bio_es": "Jérémy Doku es un futbolista belga que juega en la demarcación de delantero para el Manchester City F. C. de la Premier League de Inglaterra. Es internacional absoluto con la selección belga."
     },
     "Romelu Lukaku": {
       "team": "BEL",
@@ -1043,7 +1188,9 @@
         "def": 42,
         "phy": 90
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Romelu_Lukaku_2021.jpg/330px-Romelu_Lukaku_2021.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Romelu_Lukaku_2021.jpg/330px-Romelu_Lukaku_2021.jpg",
+      "bio_en": "Romelu Lukaku Bolingoli is a Belgian professional footballer who plays as a striker for Serie A club Napoli and the Belgium national team. Lukaku ranks second for the all-time European men's top goalscorers in international football, with 90 goals.",
+      "bio_es": "Romelu Menama Lukaku Bolingoli es un futbolista belga que juega como delantero en la S. S. C. Napoli de la Serie A de Italia."
     },
     "Mohamed Salah": {
       "team": "EGY",
@@ -1057,7 +1204,9 @@
         "def": 46,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mohamed_Salah_2018.jpg/330px-Mohamed_Salah_2018.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mohamed_Salah_2018.jpg/330px-Mohamed_Salah_2018.jpg",
+      "bio_en": "Mohamed Salah Hamed Mahrous Ghaly is an Egyptian professional footballer who plays as a right winger or right midfielder. He captains the Egypt national team. At club level, he last played for English club Liverpool.",
+      "bio_es": "Mohamed Salah Hamed Mahrous Ghaly, conocido simplemente como Mohamed Salah, es un futbolista egipcio que juega como delantero en el Liverpool F. C. de la Premier League. Es internacional absoluto con la selección de fútbol de Egipto, de la cual es capitán desde 2021."
     },
     "Omar Marmoush": {
       "team": "EGY",
@@ -1071,7 +1220,9 @@
         "def": 48,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OmarMarmoush.png/330px-OmarMarmoush.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/OmarMarmoush.png/330px-OmarMarmoush.png",
+      "bio_en": "Omar Khaled Mohamed Abdelsalam Marmoush is an Egyptian professional footballer who plays as a forward for Premier League club Manchester City and the Egypt national team.",
+      "bio_es": "Omar Khaled Mohamed Marmoush es un futbolista internacional egipcio que juega de delantero para el Manchester City de la Premier League."
     },
     "Mohamed Elneny": {
       "team": "EGY",
@@ -1085,7 +1236,9 @@
         "def": 76,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Mohamed_Elneny_2018.jpg/330px-Mohamed_Elneny_2018.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Mohamed_Elneny_2018.jpg/330px-Mohamed_Elneny_2018.jpg",
+      "bio_en": "Mohamed Naser Elsayed Elneny is an Egyptian professional footballer who plays as a defensive midfielder for the Egypt national team. He is regarded as one of the best Egyptian players in history.",
+      "bio_es": "Mohamed Nasser Elsayed Elneny es un futbolista egipcio que juega como centrocampista en el Al-Jazira Club de la UAE Pro League."
     },
     "Mehdi Taremi": {
       "team": "IRN",
@@ -1099,7 +1252,9 @@
         "def": 46,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/7/74/Iran_-_Japan%2C_AFC_Asian_Cup_2019_42_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/7/74/Iran_-_Japan%2C_AFC_Asian_Cup_2019_42_%28cropped%29.jpg",
+      "bio_en": "Mehdi Taremi is an Iranian professional footballer who plays as a striker for Super League Greece club Olympiacos and the Iran national team.",
+      "bio_es": "Mehdi Taremi es un futbolista iraní que juega de delantero en el Olympiacos F. C. de la Superliga de Grecia."
     },
     "Sardar Azmoun": {
       "team": "IRN",
@@ -1113,7 +1268,9 @@
         "def": 42,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Sardar_Azmoun_-_IRN_vs_USA_-_FIFA_WC_2022.jpg/330px-Sardar_Azmoun_-_IRN_vs_USA_-_FIFA_WC_2022.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Sardar_Azmoun_-_IRN_vs_USA_-_FIFA_WC_2022.jpg/330px-Sardar_Azmoun_-_IRN_vs_USA_-_FIFA_WC_2022.jpg",
+      "bio_en": "Sardar Azmoun ; born 1 January 1995) is an Iranian professional footballer who plays as a forward for UAE Pro League club Shabab Al Ahli.",
+      "bio_es": "Sardar Azmoun es un futbolista profesional iraní que juega como delantero en el Shabab Al-Ahli Club de la UAE Pro League."
     },
     "Alireza Jahanbakhsh": {
       "team": "IRN",
@@ -1127,7 +1284,9 @@
         "def": 52,
         "phy": 70
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/2022_FIFA_World_Cup_England_6%E2%80%932_Iran_-_%2826%29_%28cropped%29.jpg/330px-2022_FIFA_World_Cup_England_6%E2%80%932_Iran_-_%2826%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/2022_FIFA_World_Cup_England_6%E2%80%932_Iran_-_%2826%29_%28cropped%29.jpg/330px-2022_FIFA_World_Cup_England_6%E2%80%932_Iran_-_%2826%29_%28cropped%29.jpg",
+      "bio_en": "Alireza Jahanbakhsh is an Iranian professional footballer who plays as a winger for Belgian Pro League club Dender and captains the Iran national team.",
+      "bio_es": "Alireza Jahanbakhsh Jirandeh es un futbolista iraní. Juega como centrocampista en el FCV Dender EH de la Primera División de Bélgica."
     },
     "Chris Wood": {
       "team": "NZL",
@@ -1141,7 +1300,9 @@
         "def": 42,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Chris_Wood_%28cropped%29.jpg/330px-Chris_Wood_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Chris_Wood_%28cropped%29.jpg/330px-Chris_Wood_%28cropped%29.jpg",
+      "bio_en": "Christopher Grant Wood is a New Zealand professional footballer who plays as a forward for Premier League club Nottingham Forest and captains the New Zealand national team. Widely regarded as one of New Zealand's greatest ever footballers, Wood is one of just six New Zealanders to have played in the Premier League.",
+      "bio_es": "Christopher Grant Wood es un futbolista neozelandés que juega como delantero en el Nottingham Forest F. C. de la Premier League de Inglaterra."
     },
     "Liberato Cacace": {
       "team": "NZL",
@@ -1155,7 +1316,9 @@
         "def": 78,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Liberato_Cacace_30082025_%281%29.jpg/330px-Liberato_Cacace_30082025_%281%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Liberato_Cacace_30082025_%281%29.jpg/330px-Liberato_Cacace_30082025_%281%29.jpg",
+      "bio_en": "Liberato Gianpaolo Cacace is a New Zealand professional footballer who plays as a left-back for EFL Championship club Wrexham and the New Zealand national team.",
+      "bio_es": "Liberato Gianpaolo Cacace es un futbolista neozelandés que juega como defensa en el Wrexham A. F. C. de la EFL Championship de Inglaterra."
     },
     "Marko Stamenic": {
       "team": "NZL",
@@ -1169,7 +1332,9 @@
         "def": 74,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/FC_Zenit_Saint_Petersburg_vs._Red_Star_Belgrade%2C_4_July_2023_%2850%29.jpg/330px-FC_Zenit_Saint_Petersburg_vs._Red_Star_Belgrade%2C_4_July_2023_%2850%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/FC_Zenit_Saint_Petersburg_vs._Red_Star_Belgrade%2C_4_July_2023_%2850%29.jpg/330px-FC_Zenit_Saint_Petersburg_vs._Red_Star_Belgrade%2C_4_July_2023_%2850%29.jpg",
+      "bio_en": "Marko Seufatu Nikola Stamenić is a New Zealand professional footballer who plays as a midfielder for EFL Championship club Swansea City and the New Zealand national team.",
+      "bio_es": "Marko Seufatu Nikola Stamenić es un futbolista neozelandés que juega como centrocampista en el Swansea City A. F. C. de la EFL Championship."
     },
     "Lamine Yamal": {
       "team": "ESP",
@@ -1183,7 +1348,9 @@
         "def": 46,
         "phy": 62
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lamine_Yamal_in_2025.jpg/330px-Lamine_Yamal_in_2025.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lamine_Yamal_in_2025.jpg/330px-Lamine_Yamal_in_2025.jpg",
+      "bio_en": "Lamine Yamal Nasraoui Ebana is a Spanish professional footballer who plays as a right winger or right midfielder for La Liga club FC Barcelona and the Spain national team. He is regarded as one of the best players in the world.",
+      "bio_es": "Lamine Yamal Nasraoui Ebana, conocido simplemente como Lamine Yamal, es un futbolista español que juega como extremo derecho en el F. C. Barcelona de la Primera División de España. Es internacional absoluto con la selección de España."
     },
     "Pedri": {
       "team": "ESP",
@@ -1197,7 +1364,9 @@
         "def": 68,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Pedri.jpg/330px-Pedri.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Pedri.jpg/330px-Pedri.jpg",
+      "bio_en": "Pedro González López, more commonly known as Pedri, is a Spanish professional footballer who plays as a midfielder for La Liga club Barcelona and the Spain national team. Pedri is considered one of the best midfielders in the world.",
+      "bio_es": "Pedro González López, más conocido como Pedri, es un futbolista español que juega como centrocampista en el F. C. Barcelona de la Primera División de España. Es internacional con la selección de España."
     },
     "Nico Williams": {
       "team": "ESP",
@@ -1211,7 +1380,9 @@
         "def": 44,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/ATHLETIC-OSASUNA_SEMIFINAL._MAIDER_GOIKOETXEA_%28168%29_%28cropped%29.jpg/330px-ATHLETIC-OSASUNA_SEMIFINAL._MAIDER_GOIKOETXEA_%28168%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/ATHLETIC-OSASUNA_SEMIFINAL._MAIDER_GOIKOETXEA_%28168%29_%28cropped%29.jpg/330px-ATHLETIC-OSASUNA_SEMIFINAL._MAIDER_GOIKOETXEA_%28168%29_%28cropped%29.jpg",
+      "bio_en": "Nicholas Williams Arthuer is a Spanish professional footballer who plays as a winger for La Liga club Athletic Bilbao and the Spain national team. He is recognised for his speed and dribbling skills.",
+      "bio_es": "Nicholas Williams Arthuer es un futbolista español de ascendencia ghanesa, que juega de extremo en el Athletic Club de la Primera División de España. Es internacional absoluto con la selección española."
     },
     "Ryan Mendes": {
       "team": "CPV",
@@ -1225,7 +1396,9 @@
         "def": 50,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Ryan_Mendes_%28LOSC_Lille%29.JPG/330px-Ryan_Mendes_%28LOSC_Lille%29.JPG"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Ryan_Mendes_%28LOSC_Lille%29.JPG/330px-Ryan_Mendes_%28LOSC_Lille%29.JPG",
+      "bio_en": "Ryan Isaac Mendes da Graça is a Cape Verdean professional footballer who plays as a winger for TFF 1. Lig club Iğdır and the Cape Verde national team.",
+      "bio_es": "Ryan Isaac Mendes da Graça, más conocido como Ryan Mendes, es un futbolista caboverdiano. Juega de delantero y su equipo es el Iğdır F. K. de la TFF Primera División."
     },
     "Jamiro Monteiro": {
       "team": "CPV",
@@ -1239,7 +1412,9 @@
         "def": 72,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Jamiro_Monteiro_Philadelphia_Union_2019.jpg/330px-Jamiro_Monteiro_Philadelphia_Union_2019.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Jamiro_Monteiro_Philadelphia_Union_2019.jpg/330px-Jamiro_Monteiro_Philadelphia_Union_2019.jpg",
+      "bio_en": "Jamiro Gregory Monteiro Alvarenga, commonly known as Jamiro, is a professional footballer who plays as a midfielder for Eredivisie club PEC Zwolle. Born in the Netherlands, he plays for the Cape Verde national team.",
+      "bio_es": "Jamiro Gregory Monteiro Alvarenga es un futbolista caboverdiano. Juega de centrocampista y su equipo es PEC Zwolle de la Eredivisie."
     },
     "Bebé": {
       "team": "CPV",
@@ -1253,7 +1428,9 @@
         "def": 46,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Tiago_Manuel_Dias_Correia.JPG/330px-Tiago_Manuel_Dias_Correia.JPG"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Tiago_Manuel_Dias_Correia.JPG/330px-Tiago_Manuel_Dias_Correia.JPG",
+      "bio_en": "Tiago Manuel Dias Correia, commonly known as Bebé, is a professional footballer who plays as either a winger or attacking midfielder for Primera Federación – Group 2 club Ibiza. Born in Portugal, and a former Portuguese youth international at under-21 level, he represents the Cape Verde national team.",
+      "bio_es": "Tiago Manuel Dias Correia, más conocido como Bebé, es un futbolista caboverdiano. Juega de delantero y su equipo es la U. D. Ibiza de la Primera Federación."
     },
     "Salem Al-Dawsari": {
       "team": "KSA",
@@ -1267,7 +1444,9 @@
         "def": 46,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Salem_Al-Dawsari_2018.jpg/330px-Salem_Al-Dawsari_2018.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Salem_Al-Dawsari_2018.jpg/330px-Salem_Al-Dawsari_2018.jpg",
+      "bio_en": "Salem Mohammed Shafi Al-Dawsari is a Saudi Arabian professional footballer who plays as a left winger and captains both Saudi Pro League club Al-Hilal and the Saudi Arabia national team.",
+      "bio_es": "Salem Muhamed Al-Dawsari es un futbolista saudí. Juega como delantero y su equipo es el Al-Hilal de la Liga Profesional Saudí. También es internacional con la selección de fútbol de Arabia Saudita."
     },
     "Firas Al-Buraikan": {
       "team": "KSA",
@@ -1281,7 +1460,9 @@
         "def": 42,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Firas_Al-Buraikan_2026.jpg/330px-Firas_Al-Buraikan_2026.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Firas_Al-Buraikan_2026.jpg/330px-Firas_Al-Buraikan_2026.jpg",
+      "bio_en": "Firas Tariq Nasser Al-Buraikan, simply known as Feras, is a Saudi Arabian professional footballer who plays as a striker or winger for Saudi Professional League side Al-Ahli and the Saudi Arabia national team.",
+      "bio_es": "Firas Al-Buraikan es un futbolista saudita que juega en la demarcación de delantero para el Al-Ahli Saudi F. C. de la Liga Profesional Saudí."
     },
     "Saud Abdulhamid": {
       "team": "KSA",
@@ -1295,7 +1476,9 @@
         "def": 78,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Saudi_Arabia_v_Oman_%282%29_%28cropped%29.jpg/330px-Saudi_Arabia_v_Oman_%282%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Saudi_Arabia_v_Oman_%282%29_%28cropped%29.jpg/330px-Saudi_Arabia_v_Oman_%282%29_%28cropped%29.jpg",
+      "bio_en": "Saud Abdullah Salem Abdulhamid is a Saudi Arabian professional footballer who plays as a right-back for Ligue 1 club Lens and the Saudi Arabia national team.",
+      "bio_es": "Saud Abdullah Salem Abdulhamid es un futbolista saudí que juega en la demarcación de defensa para el R. C. Lens de la Ligue 1."
     },
     "Federico Valverde": {
       "team": "URU",
@@ -1309,7 +1492,9 @@
         "def": 82,
         "phy": 88
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Federico_Valverde_2021_%28cropped%29.jpg/330px-Federico_Valverde_2021_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Federico_Valverde_2021_%28cropped%29.jpg/330px-Federico_Valverde_2021_%28cropped%29.jpg",
+      "bio_en": "Federico Santiago Valverde Dipetta is a Uruguayan professional footballer who plays as a central midfielder for La Liga club Real Madrid and the Uruguay national team. Known for his versatility, work rate, pace and shooting, he is considered as one of the best midfielders in the world.",
+      "bio_es": "Federico Santiago Valverde Dipetta, conocido deportivamente como Fede Valverde, es un futbolista uruguayo nacionalizado español que juega principalmente como centrocampista y lateral derecho, pero en ocasiones delantero, en el Real Madrid C. F. de la Primera División de España."
     },
     "Darwin Núñez": {
       "team": "URU",
@@ -1323,7 +1508,9 @@
         "def": 42,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Darwin_N%C3%BA%C3%B1ez_%28cropped%29.jpg/330px-Darwin_N%C3%BA%C3%B1ez_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Darwin_N%C3%BA%C3%B1ez_%28cropped%29.jpg/330px-Darwin_N%C3%BA%C3%B1ez_%28cropped%29.jpg",
+      "bio_en": "Darwin Gabriel Núñez Ribeiro is a Uruguayan professional footballer who plays as a striker for Saudi Pro League club Al-Hilal and the Uruguay national team. Nicknamed \"La Pantera\", he is known for his technique, explosive speed, athleticism.",
+      "bio_es": "Darwin Gabriel Núñez Ribeiro es un futbolista uruguayo que juega de delantero en el Al-Hilal Saudi F. C. de la Liga Profesional Saudí. Es internacional absoluto con la selección de fútbol de Uruguay."
     },
     "Rodrigo Bentancur": {
       "team": "URU",
@@ -1337,7 +1524,9 @@
         "def": 80,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/20171114_AUT_URU_4518_-_Rodrigo_Bentancur_%28cropped%29_2.jpg/330px-20171114_AUT_URU_4518_-_Rodrigo_Bentancur_%28cropped%29_2.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/20171114_AUT_URU_4518_-_Rodrigo_Bentancur_%28cropped%29_2.jpg/330px-20171114_AUT_URU_4518_-_Rodrigo_Bentancur_%28cropped%29_2.jpg",
+      "bio_en": "Rodrigo Bentancur Colman is a Uruguayan professional footballer who plays as a central midfielder for Premier League club Tottenham Hotspur and the Uruguay national team.",
+      "bio_es": "Rodrigo Bentancur Colmán es un futbolista uruguayo que juega de centrocampista en el Tottenham Hotspur F. C. de la Premier League de Inglaterra."
     },
     "Kylian Mbappé": {
       "team": "FRA",
@@ -1351,7 +1540,9 @@
         "def": 42,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Picture_with_Mbapp%C3%A9_%28cropped_and_rotated%29.jpg/330px-Picture_with_Mbapp%C3%A9_%28cropped_and_rotated%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Picture_with_Mbapp%C3%A9_%28cropped_and_rotated%29.jpg/330px-Picture_with_Mbapp%C3%A9_%28cropped_and_rotated%29.jpg",
+      "bio_en": "Kylian Mbappé Lottin is a French professional footballer who plays as a forward for La Liga club Real Madrid and captains the France national team. Widely regarded as one of the best players in the world, he is known for his pace, dribbling, and clinical finishing.",
+      "bio_es": "Kylian Mbappé Lottin es un futbolista francés que juega como delantero en el Real Madrid C. F. de la Primera División de España. Es internacional con la selección de Francia."
     },
     "Ousmane Dembélé": {
       "team": "FRA",
@@ -1365,7 +1556,9 @@
         "def": 46,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ousmane_Demb%C3%A9l%C3%A9_2018_%28cropped%29.jpg/330px-Ousmane_Demb%C3%A9l%C3%A9_2018_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ousmane_Demb%C3%A9l%C3%A9_2018_%28cropped%29.jpg/330px-Ousmane_Demb%C3%A9l%C3%A9_2018_%28cropped%29.jpg",
+      "bio_en": "Masour Ousmane Dembélé is a French professional footballer who plays as a forward or right winger for Ligue 1 club Paris Saint-Germain and the France national team.",
+      "bio_es": "Masour Ousmane Dembélé es un futbolista francés que juega de delantero en el Paris Saint-Germain F. C. de la Ligue 1."
     },
     "Aurélien Tchouaméni": {
       "team": "FRA",
@@ -1379,7 +1572,9 @@
         "def": 86,
         "phy": 86
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/0/0f/2025_04_26_Final_de_la_Copa_del_Rey_-_Aur%C3%A9lien_Tchouam%C3%A9ni.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/0/0f/2025_04_26_Final_de_la_Copa_del_Rey_-_Aur%C3%A9lien_Tchouam%C3%A9ni.jpg",
+      "bio_en": "Aurélien Djani Tchouaméni is a French professional footballer who plays as a defensive midfielder or a centre-back for La Liga club Real Madrid and the France national team.",
+      "bio_es": "Aurélien Djani Tchouaméni es un futbolista francés que juega como centrocampista en el Real Madrid C. F. de la Primera División de España."
     },
     "Sadio Mané": {
       "team": "SEN",
@@ -1393,7 +1588,9 @@
         "def": 46,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Sadio_Mane_Al-Nassr.jpg/330px-Sadio_Mane_Al-Nassr.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Sadio_Mane_Al-Nassr.jpg/330px-Sadio_Mane_Al-Nassr.jpg",
+      "bio_en": "Sadio Mané is a Senegalese professional footballer who plays as a left winger for Saudi Pro League club Al-Nassr and the Senegal national team. He is widely regarded as one of the best wingers of his generation and one of the greatest African players of all time.",
+      "bio_es": "Sadio Mané es un futbolista senegalés que juega como delantero en el Al-Nassr F. C. de la Liga Profesional Saudí."
     },
     "Nicolas Jackson": {
       "team": "SEN",
@@ -1407,7 +1604,9 @@
         "def": 42,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/1/11/Nicolas_Jackson_2025_FIFA_Club_World_Cup_Final.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/1/11/Nicolas_Jackson_2025_FIFA_Club_World_Cup_Final.jpg",
+      "bio_en": "Nicolas Jackson is a Senegalese professional footballer who plays as a striker and winger for Premier League club Chelsea, and the Senegal national team.",
+      "bio_es": "Nicolas Jackson es un futbolista senegalés. Juega de delantero y su equipo es el Bayern de Múnich de la Bundesliga de Alemania."
     },
     "Iliman Ndiaye": {
       "team": "SEN",
@@ -1421,7 +1620,9 @@
         "def": 48,
         "phy": 70
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Iliman_Ndiaye.png/330px-Iliman_Ndiaye.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Iliman_Ndiaye.png/330px-Iliman_Ndiaye.png",
+      "bio_en": "Iliman Cheikh Baroy Ndiaye is a professional footballer who plays as a wide midfielder for Premier League club Everton. Born in France, he plays for the Senegal national team.",
+      "bio_es": "Iliman Cheikh Baroy Ndiaye es un futbolista senegalés que juega en el Everton F. C. de la Premier League."
     },
     "Aymen Hussein": {
       "team": "IRQ",
@@ -1435,7 +1636,9 @@
         "def": 42,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/7/78/4822953_AE7I9053_%28cropped2%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/7/78/4822953_AE7I9053_%28cropped2%29.jpg",
+      "bio_en": "Aymen Hussein Ghadhban Al-Mafraje, nicknamed Abu Tubar, is an Iraqi professional footballer who plays as a striker for Iraq Stars League side Al-Karma and the Iraq national team. A prolific goal-scorer, he is currently Iraq's fifth all-time top goal scorer.",
+      "bio_es": "Aymen Hussein Ghadhban es un futbolista iraquí. Juega de delantero y su equipo es el Al-Karma S. C. de la Liga de Estrellas de Irak. Es internacional absoluto por la selección de Irak desde 2015."
     },
     "Ali Al-Hamadi": {
       "team": "IRQ",
@@ -1449,7 +1652,9 @@
         "def": 44,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ali_Al-Hamadi.jpg/330px-Ali_Al-Hamadi.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ali_Al-Hamadi.jpg/330px-Ali_Al-Hamadi.jpg",
+      "bio_en": "Ali Ibrahim Karim Ali Al-Hamadi is an Iraqi professional footballer who plays as a forward for Premier League club Ipswich Town and the Iraq national team.",
+      "bio_es": "Ali Ibrahim Karim Ali Al-Hamadi, más conocido como Ali Al-Hamadi, es un futbolista iraquí que juega de delantero en el Luton Town F. C. de la League One."
     },
     "Ibrahim Bayesh": {
       "team": "IRQ",
@@ -1462,7 +1667,9 @@
         "dri": 76,
         "def": 62,
         "phy": 72
-      }
+      },
+      "bio_en": "Ibrahim Bayesh Kamil Al-Kaabawi is an Iraqi professional footballer who plays Al-Dhafra as a midfielder for UAE Pro League club Al-Dhafra and the Iraq national team.",
+      "bio_es": "Ibrahim Bayesh es un futbolista iraquí que juega en la demarcación de centrocampista para el Al-Dhafra Club de la UAE Pro League."
     },
     "Erling Haaland": {
       "team": "NOR",
@@ -1476,7 +1683,9 @@
         "def": 45,
         "phy": 90
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg/330px-Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg/330px-Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg",
+      "bio_en": "Erling Braut Haaland is a Norwegian professional footballer who plays as a striker for Premier League club Manchester City and the Norway national team.",
+      "bio_es": "Erling Braut Haaland es un futbolista noruego que juega de delantero en el Manchester City F. C. de la Premier League de Inglaterra."
     },
     "Martin Ødegaard": {
       "team": "NOR",
@@ -1490,7 +1699,9 @@
         "def": 56,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Martin_Odegaard_Morocco_v_Norway_7_June_2026-56_%28cropped%29.jpg/330px-Martin_Odegaard_Morocco_v_Norway_7_June_2026-56_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Martin_Odegaard_Morocco_v_Norway_7_June_2026-56_%28cropped%29.jpg/330px-Martin_Odegaard_Morocco_v_Norway_7_June_2026-56_%28cropped%29.jpg",
+      "bio_en": "Martin Ødegaard is a Norwegian professional footballer who plays as a midfielder for and captains both Premier League club Arsenal and the Norway national team.",
+      "bio_es": "Martin Ødegaard es un futbolista noruego que juega de centrocampista en el Arsenal F. C. de la Premier League."
     },
     "Alexander Sørloth": {
       "team": "NOR",
@@ -1504,7 +1715,9 @@
         "def": 44,
         "phy": 88
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Alexander_Sorloth_Morocco_v_Norway_7_June_2026-58_%28cropped%29.jpg/330px-Alexander_Sorloth_Morocco_v_Norway_7_June_2026-58_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Alexander_Sorloth_Morocco_v_Norway_7_June_2026-58_%28cropped%29.jpg/330px-Alexander_Sorloth_Morocco_v_Norway_7_June_2026-58_%28cropped%29.jpg",
+      "bio_en": "Alexander Sørloth is a Norwegian professional footballer who plays as a striker for La Liga club Atlético Madrid and the Norway national team.",
+      "bio_es": "Alexander Sørloth es un futbolista noruego. Juega como delantero en el Atlético de Madrid de la Primera División de España."
     },
     "Lionel Messi": {
       "team": "ARG",
@@ -1518,7 +1731,9 @@
         "def": 38,
         "phy": 64
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lionel_Messi_White_House_2026_%283x4_cropped%29.jpg/330px-Lionel_Messi_White_House_2026_%283x4_cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lionel_Messi_White_House_2026_%283x4_cropped%29.jpg/330px-Lionel_Messi_White_House_2026_%283x4_cropped%29.jpg",
+      "bio_en": "Lionel Andrés \"Leo\" Messi is an Argentine professional footballer who plays as a forward for and captains both the Major League Soccer club Inter Miami and the Argentina national team.",
+      "bio_es": "Lionel Andrés Messi Cuccittini, conocido como Leo Messi, es un futbolista argentino que juega como delantero o centrocampista. Desde 2023, integra el plantel del Inter Miami de la MLS canadoestadounidense. Es también internacional con la selección de Argentina, de la que es capitán."
     },
     "Julián Álvarez": {
       "team": "ARG",
@@ -1532,7 +1747,9 @@
         "def": 52,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/0/03/Argentina_national_football_team_-_2_-_2022_%28Juli%C3%A1n_%C3%81lvarez%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/0/03/Argentina_national_football_team_-_2_-_2022_%28Juli%C3%A1n_%C3%81lvarez%29.jpg",
+      "bio_en": "Julián Alvarez is an Argentine professional footballer who plays as a forward for La Liga club Atlético Madrid and the Argentina national team.",
+      "bio_es": "Julián Alvarez(Calchín, Córdoba; 31 de enero de 2000) es un futbolista argentino que juega como delantero en el Club Atlético de Madrid de la Primera División de España."
     },
     "Lautaro Martínez": {
       "team": "ARG",
@@ -1546,7 +1763,9 @@
         "def": 46,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Lautaro_Martinez_ARGENTINA_VS_VENEZUELA_2017.jpg/330px-Lautaro_Martinez_ARGENTINA_VS_VENEZUELA_2017.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Lautaro_Martinez_ARGENTINA_VS_VENEZUELA_2017.jpg/330px-Lautaro_Martinez_ARGENTINA_VS_VENEZUELA_2017.jpg",
+      "bio_en": "Lautaro Javier Martínez is an Argentine professional footballer who plays as a centre-forward for Serie A club Inter Milan, which he captains, and the Argentina national team.",
+      "bio_es": "Lautaro Javier Martínez es un futbolista argentino que juega de delantero en el Inter de Milán de la Serie A, equipo del que es capitán. Es internacional absoluto con la Selección de Argentina."
     },
     "Riyad Mahrez": {
       "team": "ALG",
@@ -1560,7 +1779,9 @@
         "def": 44,
         "phy": 62
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Mahrez_2021.jpg/330px-Mahrez_2021.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Mahrez_2021.jpg/330px-Mahrez_2021.jpg",
+      "bio_en": "Riyad Karim Mahrez is a professional footballer who plays as a right winger for Al-Ahli. Born in France, he captains the Algeria national team. He is regarded as one of the best African players of all time.",
+      "bio_es": "Riyad Karim Mahrez es un futbolista argelino. Juega como delantero en el Al-Ahli Saudí F. C. de la Liga Profesional Saudí."
     },
     "Amine Gouiri": {
       "team": "ALG",
@@ -1574,7 +1795,9 @@
         "def": 46,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Lens_-_Stade_Rennais_%2820-08-2023%29_22.jpg/330px-Lens_-_Stade_Rennais_%2820-08-2023%29_22.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Lens_-_Stade_Rennais_%2820-08-2023%29_22.jpg/330px-Lens_-_Stade_Rennais_%2820-08-2023%29_22.jpg",
+      "bio_en": "Amine Ferid Gouiri is a professional footballer who plays as a striker or left winger for Ligue 1 club Marseille. Born in France, he plays for the Algeria national team.",
+      "bio_es": "Amine Ferid Gouiri es un futbolista argelino. Juega como delantero y su equipo es el Olympique de Marsella de la Ligue 1 de Francia."
     },
     "Houssem Aouar": {
       "team": "ALG",
@@ -1588,7 +1811,9 @@
         "def": 62,
         "phy": 70
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Houssem_Aouar_in_2024.jpg/330px-Houssem_Aouar_in_2024.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Houssem_Aouar_in_2024.jpg/330px-Houssem_Aouar_in_2024.jpg",
+      "bio_en": "Houssem-Eddine Chaâbane Aouar is a professional footballer who plays as a midfielder for Saudi Pro League club Al-Ittihad. Born in France, he plays for the Algeria national team.",
+      "bio_es": "Houssem Aouar es un futbolista franco-argelino que juega en la demarcación de centrocampista para el Al-Ittihad Club de la Liga Profesional Saudí."
     },
     "David Alaba": {
       "team": "AUT",
@@ -1602,7 +1827,9 @@
         "def": 84,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/20180610_FIFA_Friendly_Match_Austria_vs._Brazil_David_Alaba_850_1632.jpg/330px-20180610_FIFA_Friendly_Match_Austria_vs._Brazil_David_Alaba_850_1632.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/20180610_FIFA_Friendly_Match_Austria_vs._Brazil_David_Alaba_850_1632.jpg/330px-20180610_FIFA_Friendly_Match_Austria_vs._Brazil_David_Alaba_850_1632.jpg",
+      "bio_en": "David Alaba is an Austrian professional footballer who plays as a centre-back for La Liga club Real Madrid and captains the Austria national team. He was previously primarily a left-back, and was considered one of the best in the world at this position.",
+      "bio_es": "David Olatukunbo Alaba es un futbolista austríaco que juega como defensa en el Real Madrid C. F. de la Primera División de España y en la selección de Austria."
     },
     "Marcel Sabitzer": {
       "team": "AUT",
@@ -1616,7 +1843,9 @@
         "def": 74,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Marcel_Sabitzer_2020_%28cropped%29.jpg/330px-Marcel_Sabitzer_2020_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Marcel_Sabitzer_2020_%28cropped%29.jpg/330px-Marcel_Sabitzer_2020_%28cropped%29.jpg",
+      "bio_en": "Marcel Sabitzer is an Austrian professional footballer who plays as a midfielder for Bundesliga club Borussia Dortmund and the Austria national team. Predominantly a central midfielder, Sabitzer can play in a multitude of roles, including attacking midfielder, defensive midfielder, winger and second striker.",
+      "bio_es": "Marcel Sabitzer es un futbolista austriaco que juega como centrocampista en el Borussia Dortmund de la Bundesliga."
     },
     "Christoph Baumgartner": {
       "team": "AUT",
@@ -1630,7 +1859,9 @@
         "def": 60,
         "phy": 72
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Austria_national_under-21_football_team_-_Teamcamp_October_2019_%2861%29_%28cropped%29.jpg/330px-Austria_national_under-21_football_team_-_Teamcamp_October_2019_%2861%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Austria_national_under-21_football_team_-_Teamcamp_October_2019_%2861%29_%28cropped%29.jpg/330px-Austria_national_under-21_football_team_-_Teamcamp_October_2019_%2861%29_%28cropped%29.jpg",
+      "bio_en": "Christoph Baumgartner is an Austrian professional footballer who plays as an attacking midfielder and forward for Bundesliga club RB Leipzig and the Austria national team. He was selected Austrian Footballer of the Year in 2024.",
+      "bio_es": "Christoph Baumgartner es un futbolista austriaco que juega en la demarcación de centrocampista para el R. B. Leipzig de la 1. Bundesliga de Alemania."
     },
     "Mousa Al-Taamari": {
       "team": "JOR",
@@ -1644,7 +1875,9 @@
         "def": 46,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Al_taamari_asse_mhsc_2425.png/330px-Al_taamari_asse_mhsc_2425.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Al_taamari_asse_mhsc_2425.png/330px-Al_taamari_asse_mhsc_2425.png",
+      "bio_en": "Musa Mohammad Sulaiman Al-Taamari, also spelled as Mousa Al-Tamari, is a Jordanian professional footballer who plays as a right winger for Ligue 1 club Rennes and the Jordan national team.",
+      "bio_es": "Mousa Al-Tamari es un futbolista jordano que juega de delantero en el Stade Rennes F. C. de la Ligue 1. Es internacional con la selección de Jordania."
     },
     "Yazan Al-Naimat": {
       "team": "JOR",
@@ -1658,7 +1891,9 @@
         "def": 44,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Yazan_Al-Naimat_2.jpg/330px-Yazan_Al-Naimat_2.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Yazan_Al-Naimat_2.jpg/330px-Yazan_Al-Naimat_2.jpg",
+      "bio_en": "Yazan Abdallah Ayed Al-Naimat, is a Jordanian professional footballer who plays as a forward for Qatar Stars League club Al-Arabi and the Jordan national team.",
+      "bio_es": "Yazan Al-Naimat es un futbolista jordano que juega en la demarcación de delantero para el Al-Arabi S. C. de la Liga de fútbol de Catar."
     },
     "Ali Olwan": {
       "team": "JOR",
@@ -1672,7 +1907,9 @@
         "def": 42,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Ali_Olwan.png/330px-Ali_Olwan.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Ali_Olwan.png/330px-Ali_Olwan.png",
+      "bio_en": "Ali Iyad Ali Olwan is a Jordanian professional footballer who plays as a forward for Qatar Stars League club Al-Sailiya and the Jordan national team.",
+      "bio_es": "Ali Olwan es un futbolista jordano que juega en la demarcación de delantero para el Al-Sailiya SC de la Liga de fútbol de Catar."
     },
     "Cristiano Ronaldo": {
       "team": "POR",
@@ -1686,7 +1923,9 @@
         "def": 40,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/President_Donald_Trump_meets_with_Cristiano_Ronaldo_in_the_Oval_Office_%2854933344262%29_%28cropped_and_rotated%29.jpg/330px-President_Donald_Trump_meets_with_Cristiano_Ronaldo_in_the_Oval_Office_%2854933344262%29_%28cropped_and_rotated%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/President_Donald_Trump_meets_with_Cristiano_Ronaldo_in_the_Oval_Office_%2854933344262%29_%28cropped_and_rotated%29.jpg/330px-President_Donald_Trump_meets_with_Cristiano_Ronaldo_in_the_Oval_Office_%2854933344262%29_%28cropped_and_rotated%29.jpg",
+      "bio_en": "Cristiano Ronaldo dos Santos Aveiro, nicknamed CR7, is a Portuguese professional footballer who plays as a forward for and captains both Saudi Pro League club Al-Nassr and the Portugal national team.",
+      "bio_es": "Cristiano Ronaldo dos Santos Aveiro es un futbolista y empresario portugués. Juega de delantero y su equipo actual es el Al-Nassr F. C. de la Liga Profesional Saudí. Es internacional absoluto con la selección de Portugal, de la cual es capitán y máximo goleador histórico."
     },
     "Bruno Fernandes": {
       "team": "POR",
@@ -1700,7 +1939,9 @@
         "def": 66,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Bruno_Fernandes_USMNT_v_Portugal_Mar_31_2026-27_%28cropped%29.jpg/330px-Bruno_Fernandes_USMNT_v_Portugal_Mar_31_2026-27_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Bruno_Fernandes_USMNT_v_Portugal_Mar_31_2026-27_%28cropped%29.jpg/330px-Bruno_Fernandes_USMNT_v_Portugal_Mar_31_2026-27_%28cropped%29.jpg",
+      "bio_en": "Bruno Miguel Borges Fernandes is a Portuguese professional footballer who plays as an attacking midfielder for Premier League club Manchester United, which he captains, and the Portugal national team. He is regarded as one of the best attacking midfielders in the world.",
+      "bio_es": "Bruno Miguel Borges Fernandes es un futbolista portugués que juega de centrocampista en el Manchester United F. C. de la Premier League de Inglaterra."
     },
     "Vitinha": {
       "team": "POR",
@@ -1714,7 +1955,9 @@
         "def": 68,
         "phy": 66
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Vitinha_USMNT_v_Portugal_Mar_31_2026-50_%28cropped%29.jpg/330px-Vitinha_USMNT_v_Portugal_Mar_31_2026-50_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Vitinha_USMNT_v_Portugal_Mar_31_2026-50_%28cropped%29.jpg/330px-Vitinha_USMNT_v_Portugal_Mar_31_2026-50_%28cropped%29.jpg",
+      "bio_en": "Vítor Machado Ferreira, known as Vitinha, is a Portuguese professional footballer who plays as a defensive midfielder for Ligue 1 club Paris Saint-Germain and the Portugal national team. Considered one of the best midfielders in the world, he is known for his ball control, work rate and playmaking abilities.",
+      "bio_es": "Vítor Machado Ferreira, conocido deportivamente como Vitinha, es un futbolista portugués. Juega de centrocampista y su equipo es el Paris Saint-Germain F. C. de la Ligue 1 de Francia."
     },
     "Cédric Bakambu": {
       "team": "COD",
@@ -1728,7 +1971,9 @@
         "def": 40,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/C%C3%A9dric_Bakambu_2016_%28cropped%29.jpg/330px-C%C3%A9dric_Bakambu_2016_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/C%C3%A9dric_Bakambu_2016_%28cropped%29.jpg/330px-C%C3%A9dric_Bakambu_2016_%28cropped%29.jpg",
+      "bio_en": "Cédric Bakambu is a professional footballer who plays as a forward or a winger for La Liga club Real Betis and the DR Congo national team.",
+      "bio_es": "Cédric Bakambu es un futbolista franco-congoleño que juega como delantero en el Real Betis Balompié de la Primera División de España. Es internacional con la selección de la República Democrática del Congo."
     },
     "Yoane Wissa": {
       "team": "COD",
@@ -1742,7 +1987,9 @@
         "def": 44,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/CAN_2023RD_Congo_2-1_Guin%C3%A9e_9939_%28cropped%29.jpg/330px-CAN_2023RD_Congo_2-1_Guin%C3%A9e_9939_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/CAN_2023RD_Congo_2-1_Guin%C3%A9e_9939_%28cropped%29.jpg/330px-CAN_2023RD_Congo_2-1_Guin%C3%A9e_9939_%28cropped%29.jpg",
+      "bio_en": "Yoane Wissa is a professional footballer who plays as a forward or left winger for Premier League club Newcastle United. Born in France, he plays for the DR Congo national team.",
+      "bio_es": "Yoane Wissa es un futbolista congoleño. Juega de delantero y su equipo es el Newcastle United F. C. de la Premier League. Es internacional absoluto por la selección de la República Democrática del Congo desde 2020."
     },
     "Chancel Mbemba": {
       "team": "COD",
@@ -1756,7 +2003,9 @@
         "def": 84,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/24BBRW_-_53535940590_%28cropped%29.jpg/330px-24BBRW_-_53535940590_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/24BBRW_-_53535940590_%28cropped%29.jpg/330px-24BBRW_-_53535940590_%28cropped%29.jpg",
+      "bio_en": "Chancel Mangulu Mbemba is a Congolese professional footballer who plays as a centre-back for Ligue 1 club Lille and the DR Congo national team, of which he is the captain.",
+      "bio_es": "Chancel Mbemba Mangulu es un futbolista congoleño que juega como defensa en el Lille O. S. C. de la Ligue 1."
     },
     "Abdukodir Khusanov": {
       "team": "UZB",
@@ -1770,7 +2019,9 @@
         "def": 82,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/5/53/Abdukodir_Khusanov_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/5/53/Abdukodir_Khusanov_%28cropped%29.jpg",
+      "bio_en": "Abdukodir Khikmatjon ugli Khusanov is an Uzbek professional footballer who plays as a centre-back and right-back for Premier League club Manchester City and the Uzbekistan national team.",
+      "bio_es": "Abduqodir Hikmatjon oʻgʻli Husanov es un futbolista uzbeko que juega de defensa en el Manchester City F. C. de la Premier League."
     },
     "Eldor Shomurodov": {
       "team": "UZB",
@@ -1784,7 +2035,9 @@
         "def": 44,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Eldor_Shomurodov_14_%C4%B0stanbul_Ba%C5%9Fak%C5%9Fehir_FK_20250731_%2810%29_%28cropped%29.jpg/330px-Eldor_Shomurodov_14_%C4%B0stanbul_Ba%C5%9Fak%C5%9Fehir_FK_20250731_%2810%29_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Eldor_Shomurodov_14_%C4%B0stanbul_Ba%C5%9Fak%C5%9Fehir_FK_20250731_%2810%29_%28cropped%29.jpg/330px-Eldor_Shomurodov_14_%C4%B0stanbul_Ba%C5%9Fak%C5%9Fehir_FK_20250731_%2810%29_%28cropped%29.jpg",
+      "bio_en": "Eldor Azamat oʻgʻli Shomurodov is an Uzbek professional footballer who plays as a forward for Süper Lig club İstanbul Başakşehir and captains the Uzbekistan national team.",
+      "bio_es": "Eldor Shomurodov es un futbolista uzbeko que juega en la posición de delantero para el Estambul Başakşehir F. K. de la Superliga de Turquía"
     },
     "Otabek Shukurov": {
       "team": "UZB",
@@ -1798,7 +2051,9 @@
         "def": 74,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Otabek_Shukurov.webp/330px-Otabek_Shukurov.webp.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Otabek_Shukurov.webp/330px-Otabek_Shukurov.webp.png",
+      "bio_en": "Otabek Shukurov is an Uzbek professional footballer who plays as a midfielder for Baniyas and the Uzbekistan national team.",
+      "bio_es": "Otabek Shukurov es un centrocampista de fútbol uzbeko que juega para el Baniyas Club de la UAE Pro League y en la selección de Uzbekistán."
     },
     "James Rodríguez": {
       "team": "COL",
@@ -1812,7 +2067,9 @@
         "def": 52,
         "phy": 64
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/James_Rodriguez_2018.jpg/330px-James_Rodriguez_2018.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/James_Rodriguez_2018.jpg/330px-James_Rodriguez_2018.jpg",
+      "bio_en": "James David Rodríguez Rubio is a Colombian professional footballer who plays as an attacking midfielder or winger and captains the Colombia national team. Regarded as one of the best Colombian players of all time, he has been praised for his technique, vision, and playmaking skills.",
+      "bio_es": "James David Rodríguez Rubio es un futbolista colombiano que juega como volante ofensivo para el Minnesota United F. C. de la Major League Soccer."
     },
     "Luis Díaz": {
       "team": "COL",
@@ -1826,7 +2083,9 @@
         "def": 46,
         "phy": 76
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_40_%28Luiz_D%C3%ADaz%29.jpg/330px-FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_40_%28Luiz_D%C3%ADaz%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_40_%28Luiz_D%C3%ADaz%29.jpg/330px-FC_RB_Salzburg_gegen_FC_Bayern_M%C3%BCnchen_%282026-01-06_Testspiel%29_40_%28Luiz_D%C3%ADaz%29.jpg",
+      "bio_en": "Luis Fernando Díaz Marulanda is a Colombian professional footballer who plays as a midfielder for Bundesliga club Bayern Munich and the Colombia national team. Regarded as one of the best wingers in the world, he is known for his pace, dribbling, and pressing ability.",
+      "bio_es": "Luis Fernando Díaz Marulanda es un futbolista colombiano que juega de delantero en el Bayern de Múnich de la Bundesliga de Alemania. Es también internacional absoluto con la selección de Colombia, debutando en 2018."
     },
     "Daniel Muñoz": {
       "team": "COL",
@@ -1839,7 +2098,9 @@
         "dri": 74,
         "def": 80,
         "phy": 84
-      }
+      },
+      "bio_en": "Daniel Muñoz Mejía is a Colombian professional footballer who plays as a right-back or right wing-back for Premier League club Crystal Palace and the Colombia national team.",
+      "bio_es": "Daniel Muñoz Mejía es un futbolista colombiano que ocupa la banda como carrilero derecho. Su equipo actual es Crystal Palace de la Premier League. Es Internacional absoluto con la selección Colombia."
     },
     "Harry Kane": {
       "team": "ENG",
@@ -1853,7 +2114,9 @@
         "def": 48,
         "phy": 82
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Harry_Kane_on_October_10%2C_2023.jpg/330px-Harry_Kane_on_October_10%2C_2023.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Harry_Kane_on_October_10%2C_2023.jpg/330px-Harry_Kane_on_October_10%2C_2023.jpg",
+      "bio_en": "Harry Edward Kane is an English professional footballer who plays as a striker for Bundesliga club Bayern Munich and captains the England national team.",
+      "bio_es": "Harry Edward Kane es un futbolista británico que juega de delantero en el Bayern de Múnich de la 1. Bundesliga alemana. Es también internacional con la selección de Inglaterra, de la que es capitán y máximo goleador histórico."
     },
     "Jude Bellingham": {
       "team": "ENG",
@@ -1867,7 +2130,9 @@
         "def": 76,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Jude_Bellingham_-_240422_190551-2_%28cropped%29.jpg/330px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Jude_Bellingham_-_240422_190551-2_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Jude_Bellingham_-_240422_190551-2_%28cropped%29.jpg/330px-25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Jude_Bellingham_-_240422_190551-2_%28cropped%29.jpg",
+      "bio_en": "Jude Victor William Bellingham is an English professional footballer who plays as a midfielder for La Liga club Real Madrid and the England national team. He is regarded as one of the best players in the world.",
+      "bio_es": "Jude Victor William Bellingham es un futbolista británico que juega de centrocampista en el Real Madrid C. F. de la Primera División de España. Es internacional absoluto con la selección de Inglaterra."
     },
     "Bukayo Saka": {
       "team": "ENG",
@@ -1881,7 +2146,9 @@
         "def": 52,
         "phy": 72
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/4/44/Bukayo_Saka_2022-11-21_1.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/4/44/Bukayo_Saka_2022-11-21_1.jpg",
+      "bio_en": "Bukayo Ayoyinka Temidayo Moses Saka is an English professional footballer who plays as a right winger for Premier League club Arsenal and the England national team.",
+      "bio_es": "Bukayo Saka es un futbolista británico que juega de delantero en el Arsenal F. C. de la Premier League de Inglaterra."
     },
     "Luka Modrić": {
       "team": "CRO",
@@ -1895,7 +2162,9 @@
         "def": 72,
         "phy": 68
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Ofrenda_de_la_Liga_y_la_Champions-57-L.Mill%C3%A1n_%2852109310843%29_%28Luka_Modri%C4%87%29.jpg/330px-Ofrenda_de_la_Liga_y_la_Champions-57-L.Mill%C3%A1n_%2852109310843%29_%28Luka_Modri%C4%87%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Ofrenda_de_la_Liga_y_la_Champions-57-L.Mill%C3%A1n_%2852109310843%29_%28Luka_Modri%C4%87%29.jpg/330px-Ofrenda_de_la_Liga_y_la_Champions-57-L.Mill%C3%A1n_%2852109310843%29_%28Luka_Modri%C4%87%29.jpg",
+      "bio_en": "Luka Modrić is a Croatian professional footballer who plays as a central midfielder for Serie A club AC Milan and captains the Croatia national team. Widely regarded as one of the greatest midfielders of all time, Modrić is considered the greatest Croatian footballer in history.",
+      "bio_es": "Luka Modrić es un futbolista croata que juega como centrocampista en el A. C. Milan de la Serie A de Italia."
     },
     "Joško Gvardiol": {
       "team": "CRO",
@@ -1909,7 +2178,9 @@
         "def": 86,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2611_%28Jo%C5%A1ko_Gvardiol%29.jpg/330px-2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2611_%28Jo%C5%A1ko_Gvardiol%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2611_%28Jo%C5%A1ko_Gvardiol%29.jpg/330px-2023-10-04_Fu%C3%9Fball%2C_M%C3%A4nner%2C_UEFA_Champions_League%2C_RB_Leipzig_-_Manchester_City_FC_1DX_2611_%28Jo%C5%A1ko_Gvardiol%29.jpg",
+      "bio_en": "Joško Gvardiol is a Croatian professional footballer who plays as a centre-back or left-back for Premier League club Manchester City and the Croatia national team.",
+      "bio_es": "Joško Gvardiol es un futbolista croata. Juega de defensa y su equipo es el Manchester City F. C. de la Premier League."
     },
     "Mateo Kovačić": {
       "team": "CRO",
@@ -1923,7 +2194,9 @@
         "def": 74,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Chelsea_vs._Arsenal%2C_29_May_2019_18_Kovacic.jpg/330px-Chelsea_vs._Arsenal%2C_29_May_2019_18_Kovacic.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Chelsea_vs._Arsenal%2C_29_May_2019_18_Kovacic.jpg/330px-Chelsea_vs._Arsenal%2C_29_May_2019_18_Kovacic.jpg",
+      "bio_en": "Mateo Kovačić is a professional footballer who plays as a central midfielder for Premier League club Manchester City and the Croatia national team.",
+      "bio_es": "Mateo Kovačić es un futbolista croata que juega de centrocampista en el Manchester City F. C. de la Premier League."
     },
     "Mohammed Kudus": {
       "team": "GHA",
@@ -1937,7 +2210,9 @@
         "def": 52,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Mohammed_Kudus_of_West_Ham_United.jpeg/330px-Mohammed_Kudus_of_West_Ham_United.jpeg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Mohammed_Kudus_of_West_Ham_United.jpeg/330px-Mohammed_Kudus_of_West_Ham_United.jpeg",
+      "bio_en": "Mohammed Kudus is a Ghanaian professional footballer who plays as an attacking midfielder or winger for Premier League club Tottenham Hotspur and the Ghana national team.",
+      "bio_es": "Mohammed Kudus es un futbolista ghanés que juega de centrocampista en el Tottenham Hotspur F. C. de la Premier League."
     },
     "Antoine Semenyo": {
       "team": "GHA",
@@ -1951,7 +2226,9 @@
         "def": 48,
         "phy": 84
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Antoine_Semenyo_2026.png/330px-Antoine_Semenyo_2026.png"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Antoine_Semenyo_2026.png/330px-Antoine_Semenyo_2026.png",
+      "bio_en": "Antoine Selorm Semenyo is a professional footballer who plays as a winger or wide midfielder for Premier League club Manchester City. Born in England, he plays for the Ghana national team.",
+      "bio_es": "Antoine Semenyo es un futbolista ghanés. Juega de delantero y su equipo es el Manchester City F. C. de la Premier League."
     },
     "Jordan Ayew": {
       "team": "GHA",
@@ -1965,7 +2242,9 @@
         "def": 52,
         "phy": 78
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Jordan_Ayew_24082024_%282%29.jpg/330px-Jordan_Ayew_24082024_%282%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Jordan_Ayew_24082024_%282%29.jpg/330px-Jordan_Ayew_24082024_%282%29.jpg",
+      "bio_en": "Jordan Pierre Ayew is a Ghanaian professional footballer who plays as a winger or forward for EFL League One club Leicester City. Born in France, he plays for the Ghana national team.",
+      "bio_es": "Jordan Pierre Ayew es un futbolista ghanés. Juega de delantero y su equipo es el Leicester City F. C. de la EFL Championship. Es internacional con la selección de Ghana, de la cual es capitán y jugador con más presencias dentro de la misma."
     },
     "Adalberto Carrasquilla": {
       "team": "PAN",
@@ -1979,7 +2258,9 @@
         "def": 72,
         "phy": 74
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Inter_Miami_CF_3-1_UNAM_%286_August_2025%29_27_%28cropped%29.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Inter_Miami_CF_3-1_UNAM_%286_August_2025%29_27_%28cropped%29.jpg",
+      "bio_en": "Adalberto Eliécer Carrasquilla Alcázar, commonly known as Coco Carrasquilla is a Panamanian professional footballer who plays as a midfielder for Liga MX club Pumas UNAM and the Panama national team.",
+      "bio_es": "Adalberto Eliécer Carrasquilla Alcázar, también conocido como Coco Carrasquilla es un futbolista panameño. Juega de centrocampista y su equipo es el Club Universidad Nacional de la Primera División de México."
     },
     "Michael Amir Murillo": {
       "team": "PAN",
@@ -1993,7 +2274,9 @@
         "def": 78,
         "phy": 80
       },
-      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Michael_Amir_Murillo_vs_Cincinnati%2C_May_2019.jpg/330px-Michael_Amir_Murillo_vs_Cincinnati%2C_May_2019.jpg"
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Michael_Amir_Murillo_vs_Cincinnati%2C_May_2019.jpg/330px-Michael_Amir_Murillo_vs_Cincinnati%2C_May_2019.jpg",
+      "bio_en": "Michael Amir Murillo Bermúdez is a Panamanian professional footballer who plays as a right-back for Süper Lig club Beşiktaş and the Panama national team.",
+      "bio_es": "Michael Amir Murillo Bermúdez es un futbolista profesional panameño. Juega como defensa en el Beşiktaş Jimnastik Kulübü de la Superliga de Turquía. Es internacional con la selección de Panamá."
     },
     "José Fajardo": {
       "team": "PAN",
@@ -2006,7 +2289,9 @@
         "dri": 74,
         "def": 42,
         "phy": 78
-      }
+      },
+      "bio_en": "José Fajardo Nelson is a Panamanian footballer who plays as a forward for Universidad Catolica del Ecuador on loan from CAI and the Panama national team.",
+      "bio_es": "José Fajardo Nelson es un futbolista panameño. Juega como delantero y su equipo actual es Universidad Católica de la Serie A de Ecuador. Es internacional con la selección panameña."
     }
   }
 }

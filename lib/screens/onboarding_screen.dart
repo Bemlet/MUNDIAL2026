@@ -64,6 +64,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         body: l.onbStatsBody,
       ),
       _SlideData(
+        icon: Icons.badge,
+        gradient: Wc.heroGradient,
+        title: l.onbPlayersTitle,
+        body: l.onbPlayersBody,
+      ),
+      _SlideData(
         icon: Icons.leaderboard,
         gradient: Wc.finalGradient,
         title: l.onbPlayTitle,

@@ -147,13 +147,55 @@ void main() {
     });
 
     testWidgets('muestra la app cuando el flag es true', (tester) async {
-      final state = await loadState(tester, {'onboardingDone': true, 'tourDone': true, 'pickemNudgeShown': true});
+      final state = await loadState(tester, {
+        'onboardingDone': true,
+        'tourDone': true,
+        'pickemNudgeShown': true,
+        'playerIntroShown': true,
+      });
 
       await tester.pumpWidget(shellApp(state));
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(find.byType(OnboardingScreen), findsNothing);
       expect(find.byType(NavigationBar), findsOneWidget);
+    });
+
+    testWidgets('avisa de las cartas de jugador a usuarios que ya tenían la app',
+        (tester) async {
+      final state = await loadState(tester, {
+        'onboardingDone': true,
+        'tourDone': true,
+        'pickemNudgeShown': true,
+        // playerIntroShown ausente -> debe mostrarse una vez
+      });
+
+      await tester.pumpWidget(shellApp(state));
+      await tester.pump(); // dispara el post-frame callback
+      await tester.pump(const Duration(milliseconds: 300));
+
+      final l = const AppStrings(AppLanguage.es);
+      expect(find.text(l.playerIntroTitle), findsOneWidget);
+
+      await tester.tap(find.text(l.playerIntroLater));
+      await tester.pump(); // procesa el tap (pop del diálogo)
+      await tester.pump(const Duration(seconds: 1)); // anima el cierre
+
+      expect(state.playerIntroShown, isTrue);
+      expect(find.text(l.playerIntroTitle), findsNothing);
+    });
+  });
+
+  group('AppState.playerIntroShown', () {
+    test('completeOnboarding lo marca (los nuevos no reciben el aviso doble)',
+        () async {
+      SharedPreferences.setMockInitialValues({});
+      final s = AppState();
+      await s.load(initialSync: false);
+      expect(s.playerIntroShown, isFalse);
+      s.completeOnboarding();
+      expect(s.playerIntroShown, isTrue);
+      expect(s.shouldShowPlayerIntro, isFalse);
     });
   });
 }

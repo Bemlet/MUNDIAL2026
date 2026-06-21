@@ -16,6 +16,8 @@ class PlayerProfile {
   final String pos; // GK / DEF / MID / FWD
   final String club;
   final String? photo; // URL de foto curada (Wikimedia), si existe
+  final String? bioEs; // reseña (Wikipedia ES)
+  final String? bioEn; // reseña (Wikipedia EN)
   final Map<String, int> skills; // pac, sho, pas, dri, def, phy (0-99)
 
   const PlayerProfile({
@@ -25,22 +27,34 @@ class PlayerProfile {
     required this.club,
     required this.skills,
     this.photo,
+    this.bioEs,
+    this.bioEn,
   });
 
   factory PlayerProfile.fromJson(String name, Map<String, dynamic> j) {
     final raw = (j['skills'] as Map?) ?? const {};
-    final photo = '${j['photo'] ?? ''}';
+    String? str(String k) {
+      final v = '${j[k] ?? ''}';
+      return v.isEmpty ? null : v;
+    }
+
     return PlayerProfile(
       name: name,
       teamId: '${j['team'] ?? ''}',
       pos: '${j['pos'] ?? ''}',
       club: '${j['club'] ?? ''}',
-      photo: photo.isEmpty ? null : photo,
+      photo: str('photo'),
+      bioEs: str('bio_es'),
+      bioEn: str('bio_en'),
       skills: {
         for (final k in kSkillOrder) k: (raw[k] as num?)?.round() ?? 50,
       },
     );
   }
+
+  /// Reseña en el idioma pedido, con respaldo en el otro si falta.
+  String? bio({required bool isEn}) =>
+      isEn ? (bioEn ?? bioEs) : (bioEs ?? bioEn);
 
   int _s(String k) => skills[k] ?? 50;
 

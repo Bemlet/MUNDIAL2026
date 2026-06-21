@@ -262,10 +262,23 @@ class AppStrings {
   String get onbStatsBody => isEn
       ? 'Top scorers, assists and standout players updated in real time as goals go in.'
       : 'Goleadores, asistencias y figuras del torneo actualizados en tiempo real con cada gol.';
+  String get onbPlayersTitle => isEn ? 'Player cards' : 'Cartas de jugador';
+  String get onbPlayersBody => isEn
+      ? 'Tap any star — from the Stats tab or each team — to open their card: photo, skills and bio.'
+      : 'Tocá cualquier figura —en Stats o en cada selección— para abrir su carta: foto, habilidades y reseña.';
   String get onbPlayTitle => isEn ? 'Make your Pick\'em' : 'Hacé tu Pick\'em';
   String get onbPlayBody => isEn
       ? 'Predict every match: 6 points for the exact score, 3 for the result. Climb the global leaderboard against everyone!'
       : 'Predecí cada partido: 6 puntos por el marcador exacto, 3 por el resultado. ¡Subí en el ranking global contra todos!';
+
+  // Aviso "novedades" (usuarios que ya tenían la app).
+  String get playerIntroTitle =>
+      isEn ? 'New: player cards' : 'Nuevo: cartas de jugador';
+  String get playerIntroBody => isEn
+      ? 'Tap any standout in Stats or any star in a team to see their card: photo, a skills radar, their tournament stats and a short bio.'
+      : 'Tocá cualquier figura en Stats o cualquier estrella de una selección para ver su carta: foto, radar de habilidades, sus stats del torneo y una reseña.';
+  String get playerIntroGo => isEn ? 'See Stats' : 'Ver Stats';
+  String get playerIntroLater => isEn ? 'Got it' : 'Entendido';
 
   // ----------------------------------------------------------- estadísticas
   String get statsTab => isEn ? 'Stats' : 'Stats';
@@ -323,6 +336,7 @@ class AppStrings {
   String savesCount(int n) => isEn ? '$n saves' : '$n atajadas';
 
   // ---- Carta de jugador ----
+  String get playerAbout => isEn ? 'About' : 'Sobre el jugador';
   String get playerSkills => isEn ? 'Skills' : 'Habilidades';
   String get playerOverall => isEn ? 'OVR' : 'MEDIA';
   String get playerClub => isEn ? 'Club' : 'Club';

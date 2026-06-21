@@ -122,6 +122,7 @@ class AppState extends ChangeNotifier {
       true; // true por defecto: no molestar fuera de Android
   bool exactAlarmAsked = false; // ya mostramos el prompt una vez
   bool pickemNudgeShown = false; // ya avisamos del pick'em a este usuario
+  bool playerIntroShown = false; // ya avisamos de las cartas de jugador
   AppLanguage language = AppLanguage.es;
 
   AppStrings get l10n => AppStrings(language);
@@ -254,6 +255,7 @@ class AppState extends ChangeNotifier {
     tourDone = p.getBool('tourDone') ?? false;
     exactAlarmAsked = p.getBool('exactAlarmAsked') ?? false;
     pickemNudgeShown = p.getBool('pickemNudgeShown') ?? false;
+    playerIntroShown = p.getBool('playerIntroShown') ?? false;
     country = p.getString('country') ?? _detectCountry();
     _pruneUnresolvedKnockoutPickemPreds(notify: false);
   }
@@ -317,6 +319,9 @@ class AppState extends ChangeNotifier {
     // Los usuarios nuevos ya vieron el Pick'em en el onboarding: no repetir el aviso.
     pickemNudgeShown = true;
     _prefs?.setBool('pickemNudgeShown', true);
+    // Tampoco repetir el aviso de cartas de jugador: ya está en el onboarding.
+    playerIntroShown = true;
+    _prefs?.setBool('playerIntroShown', true);
     notifyListeners();
   }
 
@@ -333,6 +338,23 @@ class AppState extends ChangeNotifier {
     if (pickemNudgeShown) return;
     pickemNudgeShown = true;
     _prefs?.setBool('pickemNudgeShown', true);
+    notifyListeners();
+  }
+
+  /// ¿Mostrar el aviso de cartas de jugador? (una vez, para usuarios que ya
+  /// tenían la app antes de la feature). Va último, tras los otros avisos.
+  bool get shouldShowPlayerIntro =>
+      loaded &&
+      onboardingDone &&
+      tourDone &&
+      pickemNudgeShown &&
+      !playerIntroShown &&
+      (exactAlarmGranted || exactAlarmAsked);
+
+  void markPlayerIntroShown() {
+    if (playerIntroShown) return;
+    playerIntroShown = true;
+    _prefs?.setBool('playerIntroShown', true);
     notifyListeners();
   }
 

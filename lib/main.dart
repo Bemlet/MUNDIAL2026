@@ -101,6 +101,7 @@ class _ShellState extends State<Shell> {
   int index = 0;
   bool _exactAlarmPromptChecked = false;
   bool _pickemNudgeChecked = false;
+  bool _playerIntroChecked = false;
   int? _tourStep; // null = tour inactivo
   bool _tourStarted = false;
 
@@ -149,6 +150,60 @@ class _ShellState extends State<Shell> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _showPickemNudge(context, state);
     });
+  }
+
+  void _maybeShowPlayerIntro(BuildContext context, AppState state) {
+    if (_playerIntroChecked || !state.shouldShowPlayerIntro) return;
+    _playerIntroChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showPlayerIntro(context, state);
+    });
+  }
+
+  Future<void> _showPlayerIntro(BuildContext context, AppState state) {
+    final l = state.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.badge, color: Wc.gold, size: 22),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(l.playerIntroTitle, style: outfit(17, FontWeight.w900)),
+            ),
+          ],
+        ),
+        content: Text(
+          l.playerIntroBody,
+          style: outfit(14, FontWeight.w500, color: Wc.textSoft, height: 1.4),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markPlayerIntroShown();
+            },
+            child: Text(
+              l.playerIntroLater,
+              style: outfit(13, FontWeight.w700, color: Wc.textDim),
+            ),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Wc.gold,
+              foregroundColor: Wc.onGold,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markPlayerIntroShown();
+              setState(() => index = 3); // pestaña Estadísticas
+            },
+            child: Text(l.playerIntroGo, style: outfit(13, FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _showPickemNudge(BuildContext context, AppState state) {
@@ -248,6 +303,7 @@ class _ShellState extends State<Shell> {
     _maybeStartTour(state);
     _maybePromptExactAlarm(context, state);
     _maybeShowPickemNudge(context, state);
+    _maybeShowPlayerIntro(context, state);
     const pages = [
       MatchesScreen(),
       GroupsScreen(),

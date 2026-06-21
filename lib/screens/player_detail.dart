@@ -79,6 +79,20 @@ class PlayerDetailScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
               sliver: SliverList.list(
                 children: [
+                  if (profile?.bio(isEn: l.isEn)?.isNotEmpty ?? false) ...[
+                    SectionTitle(l.playerAbout),
+                    GradientCard(
+                      child: Text(
+                        profile!.bio(isEn: l.isEn)!,
+                        style: outfit(
+                          13.5,
+                          FontWeight.w500,
+                          color: Wc.textSoft,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
+                  ],
                   if (profile != null) ...[
                     SectionTitle(l.playerSkills),
                     _SkillsCard(state: state, profile: profile),
@@ -217,6 +231,8 @@ class _Avatar extends StatelessWidget {
             width: size,
             height: size,
             fit: BoxFit.cover,
+            // Sesgo hacia arriba: en fotos de cuerpo la cara queda en el tercio superior.
+            alignment: const Alignment(0, -0.35),
             headers: const {'User-Agent': 'Golazo-WC2026/1.0'},
             errorBuilder: (_, __, ___) => fallback,
             loadingBuilder: (_, child, progress) =>
