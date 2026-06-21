@@ -777,29 +777,58 @@ class _PitchView extends StatelessWidget {
     required this.awayTeam,
   });
 
-  // y por línea (fracción del alto): local abajo, visitante arriba.
-  static const _yHome = {'G': 0.95, 'D': 0.80, 'M': 0.66, 'F': 0.55};
-  static const _yAway = {'G': 0.05, 'D': 0.20, 'M': 0.34, 'F': 0.45};
+  /// Agrupa a los titulares en líneas según la formación (arquero primero).
+  /// Si la formación no se puede parsear, cae a agrupar por posición.
+  List<List<LineupPlayer>> _lines(Lineup lu) {
+    final starters = lu.starters;
+    final gk = starters.where((p) => p.goalkeeper).toList();
+    final rest = starters.where((p) => !p.goalkeeper).toList()
+      ..sort((a, b) => (a.place ?? 99).compareTo(b.place ?? 99));
+    final nums = RegExp(r'\d+')
+        .allMatches(lu.formation)
+        .map((m) => int.parse(m.group(0)!))
+        .toList();
+    if (gk.length == 1 &&
+        nums.isNotEmpty &&
+        nums.fold(0, (a, b) => a + b) == rest.length) {
+      final lines = <List<LineupPlayer>>[gk];
+      var i = 0;
+      for (final n in nums) {
+        lines.add(rest.sublist(i, i + n));
+        i += n;
+      }
+      return lines;
+    }
+    // Respaldo: por posición (G/D/M/F).
+    final byPos = <String, List<LineupPlayer>>{'G': [], 'D': [], 'M': [], 'F': []};
+    for (final p in starters) {
+      (byPos[p.pos] ?? byPos['M']!).add(p);
+    }
+    return [
+      for (final k in const ['G', 'D', 'M', 'F'])
+        if (byPos[k]!.isNotEmpty) byPos[k]!,
+    ];
+  }
 
   List<Widget> _dots(BuildContext context, Lineup? lu, Team? team, bool home) {
     if (lu == null) return const [];
-    final lines = <String, List<LineupPlayer>>{'G': [], 'D': [], 'M': [], 'F': []};
-    for (final p in lu.starters) {
-      (lines[p.pos] ?? lines['M']!).add(p);
-    }
-    for (final list in lines.values) {
-      list.sort((a, b) => (a.place ?? a.number).compareTo(b.place ?? b.number));
-    }
-    final ys = home ? _yHome : _yAway;
+    final lines = _lines(lu);
+    final k = lines.length;
+    final span = k <= 1 ? 1 : k - 1;
     final color = home ? Wc.gold : Wc.mint;
     final out = <Widget>[];
-    for (final k in const ['G', 'D', 'M', 'F']) {
-      final pls = lines[k]!;
+    for (var li = 0; li < k; li++) {
+      final pls = lines[li];
+      // local: arquero abajo (0.965) → delanteros cerca del centro (0.55).
+      // visitante: espejado en la mitad de arriba.
+      final fy = home
+          ? 0.965 - li * (0.965 - 0.55) / span
+          : 0.035 + li * (0.45 - 0.035) / span;
       for (var i = 0; i < pls.length; i++) {
         final fx = (i + 1) / (pls.length + 1);
         out.add(
           Align(
-            alignment: Alignment(fx * 2 - 1, ys[k]! * 2 - 1),
+            alignment: Alignment(fx * 2 - 1, fy * 2 - 1),
             child: _PlayerDot(player: pls[i], team: team, color: color),
           ),
         );
@@ -813,7 +842,7 @@ class _PitchView extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(14),
       child: AspectRatio(
-        aspectRatio: 0.74,
+        aspectRatio: 0.68,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -901,13 +930,13 @@ class _PlayerDot extends StatelessWidget {
         espnId: player.player.id,
       ),
       child: SizedBox(
-        width: 56,
+        width: 54,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 28,
-              height: 28,
+              width: 27,
+              height: 27,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: color,
