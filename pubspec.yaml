@@ -35,6 +35,7 @@ flutter:
   assets:
     - assets/data/
     - assets/flags/
+    - assets/branding/
 
   fonts:
     - family: Outfit

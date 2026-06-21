@@ -410,6 +410,23 @@ class _NextMatchCard extends StatelessWidget {
     final isLive = live?.isLive == true;
     final venue = state.venues[match.venue];
 
+    // En vivo: marcador grande estilo transmisión.
+    if (isLive) {
+      return Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(18),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => MatchDetailScreen(matchNo: match.no),
+            ),
+          ),
+          child: LiveScorebug(match: match, big: true),
+        ),
+      );
+    }
+
     return GradientCard(
       gradient: Wc.heroGradient,
       borderColor: isLive
@@ -544,6 +561,109 @@ class _CountdownState extends State<_Countdown> {
   }
 }
 
+/// Marcador en vivo estilo transmisión ("score bug" del Mundial 26):
+/// pill oscura con banderas + códigos de 3 letras, marcador grande, logo
+/// oficial al centro y minuto en vivo. La línea superior multicolor evoca la
+/// identidad "We Are 26".
+class LiveScorebug extends StatelessWidget {
+  final WcMatch match;
+  final bool big;
+  const LiveScorebug({super.key, required this.match, this.big = false});
+
+  static const _accent = LinearGradient(
+    colors: [
+      Color(0xFFFF6B6B),
+      Color(0xFF2DD4BF),
+      Color(0xFFA78BFA),
+      Color(0xFFA3E635),
+    ],
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l = state.l10n;
+    final live = state.liveFor(match);
+    final (home, away) = state.realTeams(match);
+    final flagSize = big ? 46.0 : 34.0;
+    final scoreSize = big ? 40.0 : 30.0;
+
+    return Container(
+      decoration: BoxDecoration(
+        gradient: Wc.heroGradient,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Wc.live.withValues(alpha: .45)),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Acento multicolor superior.
+          Container(height: 4, decoration: const BoxDecoration(gradient: _accent)),
+          Padding(
+            padding: EdgeInsets.fromLTRB(14, big ? 16 : 12, 14, big ? 16 : 12),
+            child: Row(
+              children: [
+                Expanded(child: _side(state, home, match.homeSlot, flagSize)),
+                _center(l, live, scoreSize),
+                Expanded(
+                  child: _side(state, away, match.awaySlot, flagSize, end: true),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _side(AppState state, Team? team, String slot, double flagSize,
+      {bool end = false}) {
+    final code = team?.id ?? state.l10n.slotLabel(slot);
+    final flag =
+        team != null ? FlagImg(team.flag, size: flagSize) : UnknownFlag(size: flagSize);
+    final label = Flexible(
+      child: Text(
+        code,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        textAlign: end ? TextAlign.right : TextAlign.left,
+        style: outfit(big ? 20 : 16, FontWeight.w900, spacing: .5),
+      ),
+    );
+    final children = end
+        ? [label, const SizedBox(width: 10), flag]
+        : [flag, const SizedBox(width: 10), label];
+    return Row(
+      mainAxisAlignment: end ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: children,
+    );
+  }
+
+  Widget _center(AppStrings l, LiveInfo? live, double scoreSize) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          'assets/branding/fifa_logo.png',
+          height: big ? 30 : 22,
+          fit: BoxFit.contain,
+        ),
+        const SizedBox(height: 6),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            '${live?.homeScore ?? '-'} — ${live?.awayScore ?? '-'}',
+            style: outfit(scoreSize, FontWeight.w900),
+          ),
+        ),
+        const SizedBox(height: 6),
+        LiveBadge(text: (live?.detail.isEmpty ?? true) ? l.live : live!.detail),
+      ],
+    );
+  }
+}
+
 /// Tarjeta estándar de partido (datos reales).
 class RealMatchCard extends StatelessWidget {
   final WcMatch match;
@@ -559,6 +679,26 @@ class RealMatchCard extends StatelessWidget {
     final (home, away) = state.realTeams(match);
     final isLive = live?.isLive == true;
     final finished = live?.isFinished == true;
+
+    // En vivo (lista normal): marcador estilo transmisión.
+    if (isLive && !dense) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(18),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => MatchDetailScreen(matchNo: match.no),
+              ),
+            ),
+            child: LiveScorebug(match: match),
+          ),
+        ),
+      );
+    }
 
     Widget center;
     if ((isLive || finished) && live?.homeScore != null) {
