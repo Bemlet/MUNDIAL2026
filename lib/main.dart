@@ -350,6 +350,13 @@ class _ShellState extends State<Shell> {
     _maybeShowPickemNudge(context, state);
     _maybeShowPlayerIntro(context, state);
     _maybeShowLineupsIntro(context, state);
+    // Salto de pestaña pedido por la app (p. ej. la tira de picks pendientes).
+    if (state.jumpTab case final t?) {
+      state.jumpTab = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) setState(() => index = t);
+      });
+    }
     const pages = [
       MatchesScreen(),
       GroupsScreen(),

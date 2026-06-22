@@ -126,6 +126,13 @@ class AppState extends ChangeNotifier {
   bool pickemNudgeShown = false; // ya avisamos del pick'em a este usuario
   bool playerIntroShown = false; // ya avisamos de las cartas de jugador
   bool lineupsIntroShown = false; // ya avisamos de formaciones + perfiles
+  int? jumpTab; // pedido de cambio de pestaña inferior (lo consume el Shell)
+
+  /// Pide al Shell saltar a una pestaña (p. ej. Pick'em desde la tira de picks).
+  void goToTab(int index) {
+    jumpTab = index;
+    notifyListeners();
+  }
   AppLanguage language = AppLanguage.es;
 
   AppStrings get l10n => AppStrings(language);
@@ -519,6 +526,7 @@ class AppState extends ChangeNotifier {
       }
       _pruneUnresolvedKnockoutPickemPreds(notify: false);
       await checkMatchReminders();
+      await checkPickemReminder();
       lastSync = DateTime.now();
       final p = _prefs;
       if (p != null) {
@@ -558,6 +566,43 @@ class AppState extends ChangeNotifier {
         body: '${_matchName(m)} ${l10n.startsIn(when)}',
       );
     }
+  }
+
+  /// Partidos de HOY (hora local) editables y todavía SIN pronóstico del usuario.
+  List<WcMatch> pendingPicksToday() {
+    final today = DateTime.now().toLocal();
+    bool sameDay(DateTime utc) {
+      final d = utc.toLocal();
+      return d.year == today.year && d.month == today.month && d.day == today.day;
+    }
+
+    return [
+      for (final m in matches)
+        if (preds[m.no] == null && canEditPickem(m) && sameDay(m.dateUtc)) m,
+    ];
+  }
+
+  int get pendingPicksTodayCount => pendingPicksToday().length;
+
+  /// Recordatorio (una vez por día) si faltan pronósticos de hoy y el primer
+  /// partido pendiente está a pocas horas. Se apoya en el sync/alarma existente.
+  Future<void> checkPickemReminder() async {
+    if (!loaded) return;
+    final pending = pendingPicksToday();
+    if (pending.isEmpty) return;
+    final now = DateTime.now().toUtc();
+    final firstKick = pending
+        .map((m) => m.dateUtc)
+        .reduce((a, b) => a.isBefore(b) ? a : b);
+    final until = firstKick.difference(now);
+    if (until <= Duration.zero || until > const Duration(hours: 4)) return;
+    final d = firstKick.toLocal();
+    await _notifyOnce(
+      key: 'pickem_pending_${d.year}-${d.month}-${d.day}',
+      id: 400000 + d.month * 100 + d.day,
+      title: l10n.pickemReminderTitle,
+      body: l10n.pickemReminderBody(pending.length),
+    );
   }
 
   Future<void> _processLiveNotifications(

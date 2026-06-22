@@ -33,6 +33,14 @@ class AppStrings {
       : '$exact exactos · $correct resultados';
   String get pickemNoScore => isEn ? "doesn't count" : 'no puntúa';
   String get pickemYourPick => isEn ? 'You' : 'Tú';
+  String get pickemReminderTitle =>
+      isEn ? 'Predictions pending' : 'Pronósticos pendientes';
+  String pickemReminderBody(int n) => isEn
+      ? "You have $n prediction${n == 1 ? '' : 's'} left for today's matches. Complete them before kickoff!"
+      : 'Te ${n == 1 ? 'falta' : 'faltan'} $n pronóstico${n == 1 ? '' : 's'} para los partidos de hoy. ¡Completalos antes del pitazo!';
+  String pendingPicksStrip(int n) => isEn
+      ? "$n prediction${n == 1 ? '' : 's'} left for today"
+      : 'Te ${n == 1 ? 'falta' : 'faltan'} $n pronóstico${n == 1 ? '' : 's'} para hoy';
   String get pickPredictionShort => isEn ? 'Pred' : 'Pron';
   String get pickResultLabel => isEn ? 'Result' : 'Real';
   String get participantNoPicks => isEn

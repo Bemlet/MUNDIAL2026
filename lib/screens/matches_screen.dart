@@ -201,6 +201,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
                     l.hostCountries,
                     style: outfit(13, FontWeight.w500, color: Wc.textDim),
                   ),
+                  if (state.pendingPicksTodayCount > 0) ...[
+                    const SizedBox(height: 10),
+                    _PendingPicksStrip(count: state.pendingPicksTodayCount),
+                  ],
                   if (liveNow.isNotEmpty) ...[
                     const SizedBox(height: 14),
                     _LiveNowStrip(matches: liveNow),
@@ -745,6 +749,36 @@ class _LiveNowStrip extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// Tira "te faltan picks para hoy": lleva al Pick'em (filtro Pendientes).
+class _PendingPicksStrip extends StatelessWidget {
+  final int count;
+  const _PendingPicksStrip({required this.count});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    return GradientCard(
+      gradient: Wc.finalGradient,
+      borderColor: Wc.gold.withValues(alpha: .5),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      onTap: () => state.goToTab(4), // pestaña Pick'em (abre en Pendientes)
+      child: Row(
+        children: [
+          Icon(Icons.how_to_vote, color: Wc.gold, size: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              state.l10n.pendingPicksStrip(count),
+              style: outfit(13.5, FontWeight.w800, color: Wc.goldHi),
+            ),
+          ),
+          Icon(Icons.chevron_right, color: Wc.gold, size: 18),
+        ],
+      ),
     );
   }
 }
