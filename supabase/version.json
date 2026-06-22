@@ -1,6 +1,6 @@
 {
-  "build": 6,
+  "build": 7,
   "version": "1.0.0",
   "apk_url": "https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/golazo-latest.apk",
-  "notes": "Actualizaciones que se descargan e instalan dentro de la app, transparencia del ranking y recordatorio de picks."
+  "notes": "Vinculá tu cuenta con Google para no perder tus pronósticos. Más mejoras de actualización y avisos."
 }

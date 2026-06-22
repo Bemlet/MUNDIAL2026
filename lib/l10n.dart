@@ -58,6 +58,19 @@ class AppStrings {
       isEn ? 'Link with Google' : 'Vincular con Google';
   String get accountRecover =>
       isEn ? 'I already have an account — Restore' : 'Ya tengo cuenta — Recuperar';
+  // Slide de onboarding (nuevos)
+  String get onbAccountTitle => isEn ? 'Your account' : 'Tu cuenta';
+  String get onbAccountBody => isEn
+      ? 'Link your account with Google so you never lose your predictions if you reinstall or change phones. Do it from the Pick\'em tab.'
+      : 'Vinculá tu cuenta con Google para no perder nunca tus pronósticos si reinstalás o cambiás de celular. Lo hacés desde la pestaña Pick\'em.';
+  // Aviso para usuarios que ya tenían la app
+  String get accountIntroTitle =>
+      isEn ? 'Protect your predictions' : 'Protegé tus pronósticos';
+  String get accountIntroBody => isEn
+      ? "New: link your account with Google so you don't lose your picks if you reinstall or switch phones."
+      : 'Nuevo: vinculá tu cuenta con Google para no perder tus picks si reinstalás o cambiás de celular.';
+  String get accountIntroGo => isEn ? 'Link now' : 'Vincular ahora';
+  String get accountIntroLater => isEn ? 'Later' : 'Después';
 
   String get pickemYourPick => isEn ? 'You' : 'Tú';
   String get pickemReminderTitle =>

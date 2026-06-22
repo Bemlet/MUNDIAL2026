@@ -105,6 +105,7 @@ class _ShellState extends State<Shell> {
   bool _pickemNudgeChecked = false;
   bool _playerIntroChecked = false;
   bool _lineupsIntroChecked = false;
+  bool _accountIntroChecked = false;
   bool _updateChecked = false;
   int? _tourStep; // null = tour inactivo
   bool _tourStarted = false;
@@ -218,6 +219,60 @@ class _ShellState extends State<Shell> {
               );
             },
             child: Text(l.updateNow, style: outfit(13, FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _maybeShowAccountIntro(BuildContext context, AppState state) {
+    if (_accountIntroChecked || !state.shouldShowAccountIntro) return;
+    _accountIntroChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showAccountIntro(context, state);
+    });
+  }
+
+  Future<void> _showAccountIntro(BuildContext context, AppState state) {
+    final l = state.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.shield_outlined, color: Wc.gold, size: 22),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(l.accountIntroTitle, style: outfit(17, FontWeight.w900)),
+            ),
+          ],
+        ),
+        content: Text(
+          l.accountIntroBody,
+          style: outfit(14, FontWeight.w500, color: Wc.textSoft, height: 1.4),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markAccountIntroShown();
+            },
+            child: Text(
+              l.accountIntroLater,
+              style: outfit(13, FontWeight.w700, color: Wc.textDim),
+            ),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Wc.gold,
+              foregroundColor: Wc.onGold,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markAccountIntroShown();
+              state.goToTab(4); // Pick'em → tarjeta "Vincular con Google"
+            },
+            child: Text(l.accountIntroGo, style: outfit(13, FontWeight.w800)),
           ),
         ],
       ),
@@ -414,6 +469,7 @@ class _ShellState extends State<Shell> {
     _maybeShowPickemNudge(context, state);
     _maybeShowPlayerIntro(context, state);
     _maybeShowLineupsIntro(context, state);
+    _maybeShowAccountIntro(context, state);
     // Salto de pestaña pedido por la app (p. ej. la tira de picks pendientes).
     if (state.jumpTab case final t?) {
       state.jumpTab = null;

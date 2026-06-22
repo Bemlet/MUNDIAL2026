@@ -75,6 +75,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         title: l.onbPlayTitle,
         body: l.onbPlayBody,
       ),
+      _SlideData(
+        icon: Icons.shield_outlined,
+        gradient: Wc.heroGradient,
+        title: l.onbAccountTitle,
+        body: l.onbAccountBody,
+      ),
     ];
     final isLast = _page == slides.length - 1;
 

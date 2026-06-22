@@ -127,6 +127,7 @@ class AppState extends ChangeNotifier {
   bool pickemNudgeShown = false; // ya avisamos del pick'em a este usuario
   bool playerIntroShown = false; // ya avisamos de las cartas de jugador
   bool lineupsIntroShown = false; // ya avisamos de formaciones + perfiles
+  bool accountIntroShown = false; // ya avisamos de vincular la cuenta
   int? jumpTab; // pedido de cambio de pestaña inferior (lo consume el Shell)
 
   /// Pide al Shell saltar a una pestaña (p. ej. Pick'em desde la tira de picks).
@@ -333,6 +334,7 @@ class AppState extends ChangeNotifier {
     pickemNudgeShown = p.getBool('pickemNudgeShown') ?? false;
     playerIntroShown = p.getBool('playerIntroShown') ?? false;
     lineupsIntroShown = p.getBool('lineupsIntroShown') ?? false;
+    accountIntroShown = p.getBool('accountIntroShown') ?? false;
     country = p.getString('country') ?? _detectCountry();
     _pruneUnresolvedKnockoutPickemPreds(notify: false);
   }
@@ -401,6 +403,9 @@ class AppState extends ChangeNotifier {
     _prefs?.setBool('playerIntroShown', true);
     lineupsIntroShown = true;
     _prefs?.setBool('lineupsIntroShown', true);
+    // Los nuevos ven el slide de cuenta en el onboarding: no repetir el aviso.
+    accountIntroShown = true;
+    _prefs?.setBool('accountIntroShown', true);
     notifyListeners();
   }
 
@@ -445,6 +450,24 @@ class AppState extends ChangeNotifier {
       playerIntroShown &&
       !lineupsIntroShown &&
       (exactAlarmGranted || exactAlarmAsked);
+
+  /// ¿Avisar de vincular la cuenta? (una vez, solo a usuarios anónimos que ya
+  /// tenían la app, tras los otros avisos).
+  bool get shouldShowAccountIntro =>
+      loaded &&
+      onboardingDone &&
+      tourDone &&
+      lineupsIntroShown &&
+      !accountIntroShown &&
+      !accountLinked &&
+      (exactAlarmGranted || exactAlarmAsked);
+
+  void markAccountIntroShown() {
+    if (accountIntroShown) return;
+    accountIntroShown = true;
+    _prefs?.setBool('accountIntroShown', true);
+    notifyListeners();
+  }
 
   void markLineupsIntroShown() {
     if (lineupsIntroShown) return;
