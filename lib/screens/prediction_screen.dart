@@ -188,6 +188,11 @@ class _PredictionsTabState extends State<_PredictionsTab> {
 
     return Column(
       children: [
+        if (!state.accountLinked)
+          const Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: _AccountCard(),
+          ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
           child: _PickemFilters(
@@ -848,6 +853,65 @@ class _LeaderRow extends StatelessWidget {
             Icon(Icons.chevron_right, size: 16, color: Wc.textDim),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Tarjeta para vincular/recuperar la cuenta con Google (solo si es anónima).
+class _AccountCard extends StatelessWidget {
+  const _AccountCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l = state.l10n;
+    return GradientCard(
+      gradient: Wc.finalGradient,
+      borderColor: Wc.gold.withValues(alpha: .5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.shield_outlined, color: Wc.gold, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  l.accountProtectTitle,
+                  style: outfit(14.5, FontWeight.w900),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            l.accountProtectBody,
+            style: outfit(12.5, FontWeight.w500, color: Wc.textSoft, height: 1.4),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              style: FilledButton.styleFrom(
+                backgroundColor: Wc.gold,
+                foregroundColor: Wc.onGold,
+              ),
+              onPressed: () => state.linkGoogle(),
+              icon: const Icon(Icons.link, size: 18),
+              label: Text(l.accountLinkGoogle, style: outfit(13.5, FontWeight.w800)),
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: () => state.signInWithGoogle(),
+              child: Text(
+                l.accountRecover,
+                style: outfit(12.5, FontWeight.w700, color: Wc.textDim),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

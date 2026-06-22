@@ -40,6 +40,17 @@ class AppStrings {
   String get updateNow => isEn ? 'Update' : 'Actualizar';
   String get updateLater => isEn ? 'Later' : 'Después';
 
+  // ---- Cuenta (Google) ----
+  String get accountProtectTitle =>
+      isEn ? 'Secure your account' : 'Protegé tu cuenta';
+  String get accountProtectBody => isEn
+      ? "Link Google so you don't lose your predictions if you reinstall or switch phones."
+      : 'Vinculá con Google para no perder tus pronósticos si reinstalás o cambiás de celular.';
+  String get accountLinkGoogle =>
+      isEn ? 'Link with Google' : 'Vincular con Google';
+  String get accountRecover =>
+      isEn ? 'I already have an account — Restore' : 'Ya tengo cuenta — Recuperar';
+
   String get pickemYourPick => isEn ? 'You' : 'Tú';
   String get pickemReminderTitle =>
       isEn ? 'Predictions pending' : 'Pronósticos pendientes';

@@ -31,6 +31,13 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Vuelta del login OAuth (Supabase redirectTo). -->
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="com.ever.mundial2026" android:host="login-callback"/>
+            </intent-filter>
         </activity>
         <!-- Seguimiento en vivo: foreground service que sondea goles. -->
         <service

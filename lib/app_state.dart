@@ -207,6 +207,7 @@ class AppState extends ChangeNotifier {
       unawaited(refreshExactAlarm());
       unawaited(_initLeaderboard());
       unawaited(checkForUpdate());
+      _listenAuth();
     }
   }
 
@@ -233,6 +234,37 @@ class AppState extends ChangeNotifier {
 
   Future<List<ParticipantPick>> fetchUserPredictions(String userId) =>
       SupabaseService.fetchUserPredictions(userId);
+
+  // -------------------------------------------------- cuenta (Google)
+  StreamSubscription<void>? _authSub;
+
+  /// ¿La cuenta está vinculada (Google) o sigue anónima?
+  bool get accountLinked => !SupabaseService.isAnonymous;
+  String? get userEmail => SupabaseService.userEmail;
+
+  /// Vincula la cuenta anónima actual con Google (conserva picks).
+  Future<bool> linkGoogle() => SupabaseService.linkGoogle();
+
+  /// Inicia sesión con Google (recupera la cuenta en otro dispositivo).
+  Future<bool> signInWithGoogle() => SupabaseService.signInWithGoogle();
+
+  void _listenAuth() {
+    _authSub ??= SupabaseService.sessionChanges?.listen((_) {
+      unawaited(_recoverAccount());
+    });
+  }
+
+  /// Tras vincular/recuperar: trae apodo y picks propios del servidor.
+  Future<void> _recoverAccount() async {
+    final n = await SupabaseService.fetchNickname();
+    if (n != null && n != nickname) nickname = n;
+    final mine = await SupabaseService.fetchMyPredictions();
+    for (final r in mine) {
+      preds[r.matchNo] = Pred(r.home, r.away);
+    }
+    if (mine.isNotEmpty) _savePreds();
+    notifyListeners();
+  }
 
   // ------------------------------------------------ actualización in-app
   AppUpdate? availableUpdate; // versión nueva detectada (la consume el Shell)

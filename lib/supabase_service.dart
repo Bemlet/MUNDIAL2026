@@ -69,6 +69,51 @@ class SupabaseService {
 
   static String? get userId => _client?.auth.currentUser?.id;
 
+  /// Deep link de vuelta del login OAuth (declarado en AndroidManifest).
+  static const _redirect = 'com.ever.mundial2026://login-callback';
+
+  /// ¿La sesión actual es anónima? (sin Google/email vinculado).
+  static bool get isAnonymous => _client?.auth.currentUser?.isAnonymous ?? true;
+
+  /// Email de la cuenta vinculada (Google), si hay.
+  static String? get userEmail => _client?.auth.currentUser?.email;
+
+  /// Emite cuando la sesión cambia por login/link/recuperación (para refrescar).
+  static Stream<void>? get sessionChanges => _client?.auth.onAuthStateChange
+      .where((s) =>
+          s.event == AuthChangeEvent.signedIn ||
+          s.event == AuthChangeEvent.userUpdated)
+      .map((_) {});
+
+  /// Vincula la cuenta ANÓNIMA actual con Google (retroactivo: conserva el id y
+  /// los picks). Abre el flujo OAuth; la sesión vuelve por el deep link.
+  static Future<bool> linkGoogle() async {
+    final c = _client;
+    if (c == null) return false;
+    try {
+      return await c.auth.linkIdentity(
+        OAuthProvider.google,
+        redirectTo: _redirect,
+      );
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Inicia sesión con Google (recuperación en otro dispositivo / reinstalación).
+  static Future<bool> signInWithGoogle() async {
+    final c = _client;
+    if (c == null) return false;
+    try {
+      return await c.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: _redirect,
+      );
+    } catch (_) {
+      return false;
+    }
+  }
+
   /// Asegura una sesión anónima.
   static Future<void> signInAnonymously() async {
     final c = _client;
@@ -76,6 +121,31 @@ class SupabaseService {
     try {
       if (c.auth.currentUser == null) await c.auth.signInAnonymously();
     } catch (_) {}
+  }
+
+  /// Predicciones propias (todas, incl. futuras) para repoblar tras recuperar
+  /// la cuenta en un dispositivo nuevo. La RLS permite leer las propias.
+  static Future<List<({int matchNo, int home, int away})>>
+      fetchMyPredictions() async {
+    final c = _client;
+    final uid = userId;
+    if (c == null || uid == null) return const [];
+    try {
+      final rows = await c
+          .from('predictions')
+          .select('match_no, home, away')
+          .eq('user_id', uid);
+      return [
+        for (final r in rows as List)
+          (
+            matchNo: (r['match_no'] as num).toInt(),
+            home: (r['home'] as num).toInt(),
+            away: (r['away'] as num).toInt(),
+          ),
+      ];
+    } catch (_) {
+      return const [];
+    }
   }
 
   static Future<String?> fetchNickname() async {
