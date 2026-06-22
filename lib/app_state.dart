@@ -18,6 +18,7 @@ import 'models.dart';
 import 'notification_service.dart';
 import 'players.dart';
 import 'stats.dart';
+import 'update_service.dart';
 import 'supabase_service.dart';
 import 'theme.dart';
 
@@ -205,6 +206,7 @@ class AppState extends ChangeNotifier {
       sync();
       unawaited(refreshExactAlarm());
       unawaited(_initLeaderboard());
+      unawaited(checkForUpdate());
     }
   }
 
@@ -231,6 +233,18 @@ class AppState extends ChangeNotifier {
 
   Future<List<ParticipantPick>> fetchUserPredictions(String userId) =>
       SupabaseService.fetchUserPredictions(userId);
+
+  // ------------------------------------------------ actualización in-app
+  AppUpdate? availableUpdate; // versión nueva detectada (la consume el Shell)
+
+  /// Chequea si hay una versión más nueva publicada. Tolerante a fallos.
+  Future<void> checkForUpdate() async {
+    final update = await UpdateService.checkForUpdate();
+    if (update != null) {
+      availableUpdate = update;
+      notifyListeners();
+    }
+  }
 
   void _loadPrefs() {
     final p = _prefs!;

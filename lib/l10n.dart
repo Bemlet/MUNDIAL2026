@@ -32,6 +32,14 @@ class AppStrings {
       ? '$exact exact · $correct outcomes'
       : '$exact exactos · $correct resultados';
   String get pickemNoScore => isEn ? "doesn't count" : 'no puntúa';
+  String get updateTitle =>
+      isEn ? 'Update available' : 'Actualización disponible';
+  String updateBody(String version) => isEn
+      ? 'A new version${version.isEmpty ? '' : ' ($version)'} is available. Update to get the latest.'
+      : 'Hay una nueva versión${version.isEmpty ? '' : ' ($version)'} disponible. Actualizá para tener lo último.';
+  String get updateNow => isEn ? 'Update' : 'Actualizar';
+  String get updateLater => isEn ? 'Later' : 'Después';
+
   String get pickemYourPick => isEn ? 'You' : 'Tú';
   String get pickemReminderTitle =>
       isEn ? 'Predictions pending' : 'Pronósticos pendientes';

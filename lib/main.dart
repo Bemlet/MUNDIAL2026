@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'app_state.dart';
 import 'l10n.dart';
 import 'notification_service.dart';
 import 'supabase_service.dart';
+import 'update_service.dart';
 import 'screens/bracket_screen.dart';
 import 'screens/groups_screen.dart';
 import 'screens/matches_screen.dart';
@@ -103,6 +105,7 @@ class _ShellState extends State<Shell> {
   bool _pickemNudgeChecked = false;
   bool _playerIntroChecked = false;
   bool _lineupsIntroChecked = false;
+  bool _updateChecked = false;
   int? _tourStep; // null = tour inactivo
   bool _tourStarted = false;
 
@@ -159,6 +162,65 @@ class _ShellState extends State<Shell> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _showPlayerIntro(context, state);
     });
+  }
+
+  void _maybeShowUpdate(BuildContext context, AppState state) {
+    if (_updateChecked || state.availableUpdate == null) return;
+    _updateChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showUpdateDialog(context, state, state.availableUpdate!);
+    });
+  }
+
+  Future<void> _showUpdateDialog(
+    BuildContext context,
+    AppState state,
+    AppUpdate update,
+  ) {
+    final l = state.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.system_update, color: Wc.gold, size: 22),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(l.updateTitle, style: outfit(17, FontWeight.w900)),
+            ),
+          ],
+        ),
+        content: Text(
+          update.notes != null && update.notes!.isNotEmpty
+              ? '${l.updateBody(update.version)}\n\n${update.notes}'
+              : l.updateBody(update.version),
+          style: outfit(14, FontWeight.w500, color: Wc.textSoft, height: 1.4),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(
+              l.updateLater,
+              style: outfit(13, FontWeight.w700, color: Wc.textDim),
+            ),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Wc.gold,
+              foregroundColor: Wc.onGold,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              launchUrl(
+                Uri.parse(update.url),
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            child: Text(l.updateNow, style: outfit(13, FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
   }
 
   void _maybeShowLineupsIntro(BuildContext context, AppState state) {
@@ -345,6 +407,7 @@ class _ShellState extends State<Shell> {
     if (!state.onboardingDone) {
       return const OnboardingScreen();
     }
+    _maybeShowUpdate(context, state);
     _maybeStartTour(state);
     _maybePromptExactAlarm(context, state);
     _maybeShowPickemNudge(context, state);
