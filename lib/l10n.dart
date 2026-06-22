@@ -39,6 +39,14 @@ class AppStrings {
       : 'Hay una nueva versión${version.isEmpty ? '' : ' ($version)'} disponible. Actualizá para tener lo último.';
   String get updateNow => isEn ? 'Update' : 'Actualizar';
   String get updateLater => isEn ? 'Later' : 'Después';
+  String updateDownloading(int pct) =>
+      isEn ? 'Downloading… $pct%' : 'Descargando… $pct%';
+  String get updateInstalling => isEn ? 'Installing…' : 'Instalando…';
+  String get updateError => isEn
+      ? "Couldn't download the update. Try again or open it in the browser."
+      : 'No se pudo descargar la actualización. Reintentá o abrila en el navegador.';
+  String get updateRetry => isEn ? 'Retry' : 'Reintentar';
+  String get updateOpenBrowser => isEn ? 'Open in browser' : 'Abrir en navegador';
 
   // ---- Cuenta (Google) ----
   String get accountProtectTitle =>

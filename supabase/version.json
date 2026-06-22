@@ -1,6 +1,6 @@
 {
-  "build": 3,
+  "build": 5,
   "version": "1.0.0",
   "apk_url": "https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/golazo-latest.apk",
-  "notes": "Recordatorio de picks pendientes, transparencia del ranking y actualizaciones in-app."
+  "notes": "Actualizaciones que se descargan e instalan dentro de la app, transparencia del ranking y recordatorio de picks."
 }

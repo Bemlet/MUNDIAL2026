@@ -4,9 +4,12 @@
 library;
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:open_filex/open_filex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'supabase_config.dart';
 
@@ -58,5 +61,32 @@ class UpdateService {
     } catch (_) {
       return null;
     }
+  }
+
+  /// Descarga el APK DENTRO de la app emitiendo el progreso (0..1) y, al
+  /// terminar, abre el instalador del sistema. Lanza si falla la descarga.
+  static Stream<double> downloadAndInstall(String url) async* {
+    final dir =
+        await getExternalStorageDirectory() ?? await getTemporaryDirectory();
+    final file = File('${dir.path}/golazo-update.apk');
+
+    final res = await http.Client().send(http.Request('GET', Uri.parse(url)));
+    if (res.statusCode != 200) {
+      throw Exception('HTTP ${res.statusCode}');
+    }
+    final total = res.contentLength ?? 0;
+    var received = 0;
+    final sink = file.openWrite();
+    try {
+      await for (final chunk in res.stream) {
+        sink.add(chunk);
+        received += chunk.length;
+        if (total > 0) yield received / total;
+      }
+    } finally {
+      await sink.close();
+    }
+    yield 1.0;
+    await OpenFilex.open(file.path);
   }
 }

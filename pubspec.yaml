@@ -2,7 +2,7 @@ name: mundial2026
 description: "Fixture y simulador del Mundial 2026 — calendario real, resultados en vivo y predicciones."
 publish_to: 'none'
 
-version: 1.0.0+3
+version: 1.0.0+5
 
 environment:
   sdk: ^3.8.1
@@ -16,6 +16,8 @@ dependencies:
   supabase_flutter: ^2.8.0
   package_info_plus: ^8.0.0
   url_launcher: ^6.3.0
+  open_filex: ^4.5.0
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:

@@ -211,9 +211,10 @@ class _ShellState extends State<Shell> {
             ),
             onPressed: () {
               Navigator.of(ctx).pop();
-              launchUrl(
-                Uri.parse(update.url),
-                mode: LaunchMode.externalApplication,
+              showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => _UpdateProgressDialog(update: update),
               );
             },
             child: Text(l.updateNow, style: outfit(13, FontWeight.w800)),
@@ -496,6 +497,109 @@ class _ShellState extends State<Shell> {
           onSkip: _tourFinish,
         ),
       ],
+    );
+  }
+}
+
+/// Diálogo de progreso de la actualización: descarga el APK dentro de la app
+/// (barra de progreso) y lanza el instalador. Si falla, ofrece abrir el link.
+class _UpdateProgressDialog extends StatefulWidget {
+  final AppUpdate update;
+  const _UpdateProgressDialog({required this.update});
+
+  @override
+  State<_UpdateProgressDialog> createState() => _UpdateProgressDialogState();
+}
+
+class _UpdateProgressDialogState extends State<_UpdateProgressDialog> {
+  double? _progress; // 0..1 mientras descarga
+  bool _installing = false;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _start();
+  }
+
+  void _start() {
+    setState(() {
+      _error = null;
+      _progress = 0;
+      _installing = false;
+    });
+    UpdateService.downloadAndInstall(widget.update.url).listen(
+      (p) {
+        if (!mounted) return;
+        setState(() => _progress = p);
+      },
+      onError: (_) {
+        if (mounted) setState(() => _error = 'error');
+      },
+      onDone: () {
+        // Descarga lista: el instalador del sistema ya se abrió.
+        if (!mounted) return;
+        setState(() => _installing = true);
+        Future.delayed(const Duration(seconds: 1), () {
+          if (mounted) Navigator.of(context).maybePop();
+        });
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppScope.of(context).l10n;
+    return AlertDialog(
+      content: _error != null
+          ? Text(
+              l.updateError,
+              style: outfit(14, FontWeight.w600, color: Wc.textSoft),
+            )
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _installing
+                      ? l.updateInstalling
+                      : l.updateDownloading((_progress ?? 0) * 100 ~/ 1),
+                  style: outfit(14, FontWeight.w700),
+                ),
+                const SizedBox(height: 12),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: _installing ? null : _progress,
+                    minHeight: 8,
+                    backgroundColor: Wc.line,
+                    valueColor: AlwaysStoppedAnimation(Wc.gold),
+                  ),
+                ),
+              ],
+            ),
+      actions: _error == null
+          ? null
+          : [
+              TextButton(
+                onPressed: () => launchUrl(
+                  Uri.parse(widget.update.url),
+                  mode: LaunchMode.externalApplication,
+                ),
+                child: Text(
+                  l.updateOpenBrowser,
+                  style: outfit(13, FontWeight.w700, color: Wc.textDim),
+                ),
+              ),
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: Wc.gold,
+                  foregroundColor: Wc.onGold,
+                ),
+                onPressed: _start,
+                child: Text(l.updateRetry, style: outfit(13, FontWeight.w800)),
+              ),
+            ],
     );
   }
 }
