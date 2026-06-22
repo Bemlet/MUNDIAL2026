@@ -17,13 +17,21 @@ Las URLs públicas quedan así (ya cableadas en la app):
 - `https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/version.json`
 - `https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/golazo-latest.apk`
 
+## ⚠️ Límite de 50 MB (plan free de Supabase)
+
+El APK universal pesa ~52 MB y NO entra en el free tier (máx 50 MB/archivo).
+Por eso se sube el APK **por arquitectura** (`--split-per-abi`): el de
+`arm64-v8a` pesa ~20 MB (lo usan casi todos los celulares modernos). Para algún
+cel viejo de 32 bits está el `armeabi-v7a` (~17 MB).
+
 ## Publicar una actualización (cada vez)
 
 1. Subir `version` en `pubspec.yaml` (el número después del `+`, p. ej. `1.0.0+4`).
    Ese número es la `build`. **Tiene que subir siempre.**
-2. `flutter build apk --release`.
-3. En Supabase Storage, **reemplazar** `golazo-latest.apk` por el nuevo
-   (Upload → sobrescribir).
+2. `flutter build apk --release --split-per-abi`.
+   - Sale en `build/app/outputs/flutter-apk/app-arm64-v8a-release.apk`.
+3. En Supabase Storage, **reemplazar** `golazo-latest.apk` por el
+   `app-arm64-v8a-release.apk` nuevo (Upload → sobrescribir, con ese nombre).
 4. Editar `version.json` (campo `build` = el nuevo número, y `notes` con las
    novedades) y **reemplazarlo** en el bucket.
 
