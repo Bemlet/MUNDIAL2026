@@ -22,6 +22,31 @@ class LeaderEntry {
   });
 }
 
+/// Predicción de un participante para un partido ya bloqueado (kickoff pasado),
+/// con el resultado real y los puntos que sumó. Por transparencia solo se
+/// exponen partidos que ya empezaron.
+class ParticipantPick {
+  final int matchNo;
+  final int home;
+  final int away;
+  final int? resultHome;
+  final int? resultAway;
+  final bool finished;
+  final int points;
+
+  const ParticipantPick({
+    required this.matchNo,
+    required this.home,
+    required this.away,
+    required this.resultHome,
+    required this.resultAway,
+    required this.finished,
+    required this.points,
+  });
+
+  bool get hasResult => resultHome != null && resultAway != null;
+}
+
 class SupabaseService {
   static bool _ready = false;
   static bool get ready => _ready;
@@ -133,6 +158,38 @@ class SupabaseService {
             exactCount: (r['exact_count'] as num?)?.toInt() ?? 0,
           ),
       ]);
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  /// Predicciones de un participante para partidos ya bloqueados (transparencia).
+  /// Lee la vista `locked_predictions` (solo expone kickoff <= ahora).
+  static Future<List<ParticipantPick>> fetchUserPredictions(
+    String userId,
+  ) async {
+    final c = _client;
+    if (c == null || userId.isEmpty) return const [];
+    try {
+      final rows = await c
+          .from('locked_predictions')
+          .select(
+            'match_no, home, away, result_home, result_away, finished, points',
+          )
+          .eq('user_id', userId)
+          .order('match_no', ascending: false);
+      return [
+        for (final r in rows as List)
+          ParticipantPick(
+            matchNo: (r['match_no'] as num).toInt(),
+            home: (r['home'] as num?)?.toInt() ?? 0,
+            away: (r['away'] as num?)?.toInt() ?? 0,
+            resultHome: (r['result_home'] as num?)?.toInt(),
+            resultAway: (r['result_away'] as num?)?.toInt(),
+            finished: r['finished'] == true,
+            points: (r['points'] as num?)?.toInt() ?? 0,
+          ),
+      ];
     } catch (_) {
       return const [];
     }

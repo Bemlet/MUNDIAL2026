@@ -4,6 +4,7 @@ library;
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../l10n.dart';
 import '../main.dart';
 import '../models.dart';
 import '../supabase_service.dart';
@@ -804,6 +805,11 @@ class _LeaderRow extends StatelessWidget {
       child: GradientCard(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         borderColor: isMe ? Wc.gold.withValues(alpha: .55) : null,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ParticipantPicksScreen(entry: entry, isMe: isMe),
+          ),
+        ),
         child: Row(
           children: [
             SizedBox(
@@ -838,9 +844,180 @@ class _LeaderRow extends StatelessWidget {
             ),
             const SizedBox(width: 3),
             Text(l.pts, style: outfit(11, FontWeight.w700, color: Wc.textDim)),
+            const SizedBox(width: 4),
+            Icon(Icons.chevron_right, size: 16, color: Wc.textDim),
           ],
         ),
       ),
     );
+  }
+}
+
+/// Predicciones de un participante en partidos ya jugados/empezados, con su
+/// resultado real y cuánto sumó (transparencia).
+class ParticipantPicksScreen extends StatefulWidget {
+  final LeaderEntry entry;
+  final bool isMe;
+  const ParticipantPicksScreen({
+    super.key,
+    required this.entry,
+    required this.isMe,
+  });
+
+  @override
+  State<ParticipantPicksScreen> createState() => _ParticipantPicksScreenState();
+}
+
+class _ParticipantPicksScreenState extends State<ParticipantPicksScreen> {
+  Future<List<ParticipantPick>>? _future;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _future ??= AppScope.of(context).fetchUserPredictions(widget.entry.userId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final l = state.l10n;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.entry.nickname, style: outfit(18, FontWeight.w800)),
+      ),
+      body: SafeArea(
+        top: false,
+        child: FutureBuilder<List<ParticipantPick>>(
+          future: _future,
+          builder: (_, snap) {
+            if (snap.connectionState != ConnectionState.done) {
+              return Center(child: CircularProgressIndicator(color: Wc.gold));
+            }
+            final picks = snap.data ?? const <ParticipantPick>[];
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
+              children: [
+                GradientCard(
+                  gradient: Wc.heroGradient,
+                  child: Row(
+                    children: [
+                      Icon(Icons.leaderboard, color: Wc.gold, size: 22),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          l.exactShort(widget.entry.exactCount),
+                          style: outfit(13, FontWeight.w700, color: Wc.textSoft),
+                        ),
+                      ),
+                      Text(
+                        '${widget.entry.points}',
+                        style: outfit(24, FontWeight.w900, color: Wc.gold),
+                      ),
+                      const SizedBox(width: 3),
+                      Text(l.pts,
+                          style: outfit(12, FontWeight.w700, color: Wc.textDim)),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                if (picks.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 28),
+                    child: Text(
+                      l.participantNoPicks,
+                      textAlign: TextAlign.center,
+                      style: outfit(13, FontWeight.w600, color: Wc.textDim),
+                    ),
+                  )
+                else
+                  for (final p in picks) _PickRow(pick: p, state: state),
+                const SizedBox(height: 12),
+                Text(
+                  l.participantPicksNote,
+                  textAlign: TextAlign.center,
+                  style: outfit(11, FontWeight.w500, color: Wc.textDim),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _PickRow extends StatelessWidget {
+  final ParticipantPick pick;
+  final AppState state;
+  const _PickRow({required this.pick, required this.state});
+
+  static final _cutoff = DateTime.utc(2026, 6, 17);
+
+  @override
+  Widget build(BuildContext context) {
+    final l = state.l10n;
+    final m = state.byNo[pick.matchNo];
+    final (home, away) = m == null ? (null, null) : state.realTeams(m);
+    final homeName =
+        home != null ? l.teamName(home) : (m != null ? l.slotLabel(m.homeSlot) : '?');
+    final awayName =
+        away != null ? l.teamName(away) : (m != null ? l.slotLabel(m.awaySlot) : '?');
+
+    final scores = pick.hasResult
+        ? '${l.pickPredictionShort}: ${pick.home}-${pick.away}  ·  ${l.pickResultLabel}: ${pick.resultHome}-${pick.resultAway}'
+        : '${l.pickPredictionShort}: ${pick.home}-${pick.away}';
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: GradientCard(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        child: Row(
+          children: [
+            if (home != null) FlagImg(home.flag, size: 22) else const UnknownFlag(size: 22),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '$homeName – $awayName',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: outfit(13.5, FontWeight.w800),
+                  ),
+                  Text(
+                    scores,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: outfit(11.5, FontWeight.w600, color: Wc.textDim),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 6),
+            if (away != null) FlagImg(away.flag, size: 22) else const UnknownFlag(size: 22),
+            const SizedBox(width: 8),
+            _pill(l, m),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _pill(AppStrings l, WcMatch? m) {
+    // Antes del cutoff (17 jun): no puntúa.
+    if (m != null && m.dateUtc.isBefore(_cutoff)) {
+      return Pill(l.pickemNoScore, color: Wc.textDim);
+    }
+    if (!pick.finished) {
+      return Pill(l.live, color: Wc.live);
+    }
+    final (text, c) = switch (pick.points) {
+      6 => ('+6', Wc.mint),
+      3 => ('+3', Wc.goldHi),
+      _ => ('+0', Wc.textDim),
+    };
+    return Pill(text, color: c);
   }
 }

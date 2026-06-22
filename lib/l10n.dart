@@ -33,6 +33,14 @@ class AppStrings {
       : '$exact exactos · $correct resultados';
   String get pickemNoScore => isEn ? "doesn't count" : 'no puntúa';
   String get pickemYourPick => isEn ? 'You' : 'Tú';
+  String get pickPredictionShort => isEn ? 'Pred' : 'Pron';
+  String get pickResultLabel => isEn ? 'Result' : 'Real';
+  String get participantNoPicks => isEn
+      ? 'No predictions on started matches yet.'
+      : 'Todavía no tiene pronósticos en partidos ya jugados.';
+  String get participantPicksNote => isEn
+      ? 'Only matches that already kicked off are shown.'
+      : 'Solo se muestran partidos que ya empezaron.';
   String get pickemClosed => isEn ? 'Closed' : 'Cerrado';
   String get pickemUnavailable => isEn
       ? 'Unlocks when teams are confirmed'

@@ -222,6 +222,9 @@ class AppState extends ChangeNotifier {
   Future<List<LeaderEntry>> fetchLeaderboard() =>
       SupabaseService.fetchLeaderboard();
 
+  Future<List<ParticipantPick>> fetchUserPredictions(String userId) =>
+      SupabaseService.fetchUserPredictions(userId);
+
   void _loadPrefs() {
     final p = _prefs!;
     final predsRaw = p.getString('preds');
