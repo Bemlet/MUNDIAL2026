@@ -862,6 +862,16 @@ class _LeaderRow extends StatelessWidget {
 class _AccountCard extends StatelessWidget {
   const _AccountCard();
 
+  void _showErr(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg, style: outfit(12.5, FontWeight.w600)),
+        backgroundColor: Wc.surfaceHi,
+        duration: const Duration(seconds: 8),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
@@ -897,14 +907,20 @@ class _AccountCard extends StatelessWidget {
                 backgroundColor: Wc.gold,
                 foregroundColor: Wc.onGold,
               ),
-              onPressed: () => state.linkGoogle(),
+              onPressed: () async {
+                final err = await state.linkGoogle();
+                if (err != null && context.mounted) _showErr(context, err);
+              },
               icon: const Icon(Icons.link, size: 18),
               label: Text(l.accountLinkGoogle, style: outfit(13.5, FontWeight.w800)),
             ),
           ),
           Center(
             child: TextButton(
-              onPressed: () => state.signInWithGoogle(),
+              onPressed: () async {
+                final err = await state.signInWithGoogle();
+                if (err != null && context.mounted) _showErr(context, err);
+              },
               child: Text(
                 l.accountRecover,
                 style: outfit(12.5, FontWeight.w700, color: Wc.textDim),

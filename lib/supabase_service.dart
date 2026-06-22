@@ -86,31 +86,27 @@ class SupabaseService {
       .map((_) {});
 
   /// Vincula la cuenta ANÓNIMA actual con Google (retroactivo: conserva el id y
-  /// los picks). Abre el flujo OAuth; la sesión vuelve por el deep link.
-  static Future<bool> linkGoogle() async {
+  /// los picks). Devuelve null si OK, o el mensaje de error si falla.
+  static Future<String?> linkGoogle() async {
     final c = _client;
-    if (c == null) return false;
+    if (c == null) return 'Sin conexión a Supabase';
     try {
-      return await c.auth.linkIdentity(
-        OAuthProvider.google,
-        redirectTo: _redirect,
-      );
-    } catch (_) {
-      return false;
+      await c.auth.linkIdentity(OAuthProvider.google, redirectTo: _redirect);
+      return null;
+    } catch (e) {
+      return e.toString();
     }
   }
 
-  /// Inicia sesión con Google (recuperación en otro dispositivo / reinstalación).
-  static Future<bool> signInWithGoogle() async {
+  /// Inicia sesión con Google (recuperación). Devuelve null si OK, o el error.
+  static Future<String?> signInWithGoogle() async {
     final c = _client;
-    if (c == null) return false;
+    if (c == null) return 'Sin conexión a Supabase';
     try {
-      return await c.auth.signInWithOAuth(
-        OAuthProvider.google,
-        redirectTo: _redirect,
-      );
-    } catch (_) {
-      return false;
+      await c.auth.signInWithOAuth(OAuthProvider.google, redirectTo: _redirect);
+      return null;
+    } catch (e) {
+      return e.toString();
     }
   }
 

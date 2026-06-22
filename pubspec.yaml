@@ -2,7 +2,7 @@ name: mundial2026
 description: "Fixture y simulador del Mundial 2026 — calendario real, resultados en vivo y predicciones."
 publish_to: 'none'
 
-version: 1.0.0+5
+version: 1.0.0+6
 
 environment:
   sdk: ^3.8.1

@@ -242,11 +242,12 @@ class AppState extends ChangeNotifier {
   bool get accountLinked => !SupabaseService.isAnonymous;
   String? get userEmail => SupabaseService.userEmail;
 
-  /// Vincula la cuenta anónima actual con Google (conserva picks).
-  Future<bool> linkGoogle() => SupabaseService.linkGoogle();
+  /// Vincula la cuenta anónima actual con Google (conserva picks). Devuelve el
+  /// error o null si arrancó OK.
+  Future<String?> linkGoogle() => SupabaseService.linkGoogle();
 
-  /// Inicia sesión con Google (recupera la cuenta en otro dispositivo).
-  Future<bool> signInWithGoogle() => SupabaseService.signInWithGoogle();
+  /// Inicia sesión con Google (recupera la cuenta). Devuelve el error o null.
+  Future<String?> signInWithGoogle() => SupabaseService.signInWithGoogle();
 
   void _listenAuth() {
     _authSub ??= SupabaseService.sessionChanges?.listen((_) {
