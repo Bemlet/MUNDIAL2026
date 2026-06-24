@@ -48,3 +48,13 @@ app.*.map.json
 
 # Claude Code local/personal settings
 .claude/settings.local.json
+
+# Variables de entorno y credenciales (nunca versionar)
+*.env
+.env*
+*.pem
+*.key
+*.p12
+*.keystore
+*.jks
+key.properties
