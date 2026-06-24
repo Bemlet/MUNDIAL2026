@@ -40,6 +40,14 @@ para seguir el torneo como para competir con amigos prediciendo los resultados.
 
     Pronosticá marcadores antes del kickoff y sumá puntos.
 
+-   :material-eye-check: __Ranking transparente__
+
+    Cuando el partido empieza, ves los picks de todos; los futuros siguen privados.
+
+-   :material-google: __Tus picks, a salvo__
+
+    Vinculá la cuenta con Google y recuperalos en cualquier dispositivo.
+
 -   :material-shield-lock: __Seguro por diseño__
 
     Row Level Security en Supabase en todas las tablas.
