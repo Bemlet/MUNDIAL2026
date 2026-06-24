@@ -2,12 +2,12 @@
 
 ## Proyecto
 
-App Flutter de fixture y simulador del Mundial 2026. Calendario real, resultados en vivo y predicciones.
+App Flutter de fixture y simulador del Mundial 2026 con backend Supabase. Calendario real, resultados en vivo, predicciones (Pick'em) y leaderboard.
 
-- **Stack**: Flutter 3.x / Dart, Material Design 3
-- **Datos**: JSON estático en `assets/data/`, banderas en `assets/flags/`
+- **Stack**: Flutter 3.x / Dart, Material Design 3, Supabase (PostgreSQL + RLS + Edge Function)
+- **Datos**: JSON estático en `assets/data/` (`teams.json`, `matches.json`, `players.json`), banderas en `assets/flags/`; datos en vivo y predicciones desde Supabase
 - **Estado**: `AppState` (ChangeNotifier) en `lib/app_state.dart`
-- **Pantallas**: groups, matches, bracket, prediction, teams
+- **Pantallas**: groups, matches, match_detail, bracket, prediction, stats, teams, team_detail, player_detail, onboarding
 - **Font**: Outfit Variable
 
 ## Ecosistema de desarrollo
@@ -109,10 +109,14 @@ PR listo para review
 
 ## Contexto técnico importante
 
-- El proyecto NO tiene backend — todos los datos son estáticos o calculados en cliente
-- `NotificationService` maneja notificaciones locales de partidos
-- `logic.dart` contiene el motor de simulación del torneo
-- Los datos del fixture están en `assets/data/` (actualizados por `tools/build_data.py`)
+- Backend en **Supabase**: PostgreSQL con RLS en todas las tablas, una Edge Function (`ingest-results`) que sincroniza resultados desde la API de ESPN con `service_role`, y vistas (`leaderboard`, `locked_predictions`). El cliente usa solo la `anon key` (pública por diseño); el `service_role` nunca se expone
+- El **fixture y los equipos** sí son estáticos (`assets/data/*.json`, generados por `tools/build_data.py`); los **resultados en vivo, predicciones y leaderboard** vienen de Supabase
+- **Auth** (`supabase_service.dart`): sesión anónima por defecto, con vinculación opcional a Google (OAuth) para recuperar picks entre dispositivos
+- **Privacidad del Pick'em**: predicciones privadas hasta el kickoff (RLS); públicas después vía la vista `locked_predictions` (transparencia del ranking)
+- **Actualizaciones in-app** (`update_service.dart`): chequea `version.json` en Supabase Storage y descarga/instala el APK split arm64
+- `NotificationService` maneja notificaciones locales de partidos y el recordatorio de picks pendientes del día
+- `logic.dart` contiene el motor de simulación del torneo; `stats.dart`, las estadísticas
+- `players.dart` + `assets/data/players.json`: cartas de jugadores (atributos curados) con foto/bio de Wikipedia on-demand
 - Arquitectura: ChangeNotifier → screens escuchan con Consumer/Provider pattern
 
 ## Privacidad / Seguridad
