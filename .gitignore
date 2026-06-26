@@ -58,3 +58,7 @@ app.*.map.json
 *.keystore
 *.jks
 key.properties
+
+# Runbooks locales con credenciales (nunca versionar)
+*.local.md
+/docs/METABASE_LOCAL.md
