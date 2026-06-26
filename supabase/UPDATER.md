@@ -30,12 +30,28 @@ cel viejo de 32 bits está el `armeabi-v7a` (~17 MB).
    Ese número es la `build`. **Tiene que subir siempre.**
 2. `flutter build apk --release --split-per-abi`.
    - Sale en `build/app/outputs/flutter-apk/app-arm64-v8a-release.apk`.
-3. En Supabase Storage, **reemplazar** `golazo-latest.apk` por el
-   `app-arm64-v8a-release.apk` nuevo (Upload → sobrescribir, con ese nombre).
+3. En Supabase Storage, subir ese APK. **⚠️ El nombre del archivo en el bucket
+   TIENE que coincidir EXACTO con el `apk_url` del `version.json`.** Dos opciones:
+   - **Recomendado:** renombrá el APK a `golazo-latest.apk` antes de subirlo
+     (o sobrescribí el existente con ese nombre). Así nunca tocás `version.json`.
+   - Alternativa: subilo con cualquier nombre, pero entonces **el `apk_url` del
+     `version.json` debe apuntar a ESE nombre exacto**.
 4. Editar `version.json` (campo `build` = el nuevo número, y `notes` con las
    novedades) y **reemplazarlo** en el bucket.
 
 Listo: a todos les aparece el aviso "Actualización disponible" al abrir la app.
+
+## ⚠️ Error "No se pudo descargar la actualización"
+
+Casi siempre es **un desajuste de nombre**: el `apk_url` del `version.json`
+apunta a un archivo que en el bucket tiene OTRO nombre (404 al descargar).
+
+- Revisá que el nombre del `.apk` en Storage sea **idéntico** al final del
+  `apk_url` en `version.json`.
+- Ej. del incidente del 26/jun/2026: el APK se subió como
+  `app-arm64-v8a-release.apk` pero el `apk_url` decía `golazo-latest.apk`.
+  Se arregló dejando el `apk_url` apuntando a `app-arm64-v8a-release.apk`.
+- También verificá que el bucket `app` siga **público** (si es privado, da 400/403).
 
 ## Notas
 

@@ -1,6 +1,6 @@
 {
-  "build": 7,
-  "version": "1.0.0",
-  "apk_url": "https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/golazo-latest.apk",
-  "notes": "Vinculá tu cuenta con Google para no perder tus pronósticos. Más mejoras de actualización y avisos."
+  "build": 9,
+  "version": "1.0.1",
+  "apk_url": "https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/app-arm64-v8a-release.apk",
+  "notes": "Arreglamos los partidos en vivo que aparecían duplicados en la lista. Además la app ahora mide su uso de forma anónima para seguir mejorándola — podés desactivarlo desde Ajustes."
 }
