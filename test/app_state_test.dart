@@ -8,6 +8,8 @@ import 'package:mundial2026/models.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  setUp(() => AnalyticsService.resetForTest());
+
   test('dataset embebido: 48 equipos, 104 partidos, llaves válidas', () async {
     SharedPreferences.setMockInitialValues({});
     final s = AppState();

@@ -118,7 +118,6 @@ class _ShellState extends State<Shell> {
   @override
   void initState() {
     super.initState();
-    AnalyticsService.logScreen(_tabScreens[index]);
   }
 
   void _maybeStartTour(AppState state) {

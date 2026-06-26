@@ -212,6 +212,7 @@ class AppState extends ChangeNotifier {
     try {
       await AnalyticsService.initialize(enabled: analyticsEnabled);
       AnalyticsService.logEvent('app_open');
+      AnalyticsService.logScreen('matches'); // pantalla inicial (Shell arranca en la tab Partidos)
     } catch (_) {
       // La analítica nunca debe impedir el arranque de la app.
     }

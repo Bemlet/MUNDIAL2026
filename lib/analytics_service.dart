@@ -30,6 +30,7 @@ class AnalyticsService {
 
   static Future<void> initialize({required bool enabled}) async {
     _enabled = enabled;
+    if (!enabled) _queue.clear();
     _sessionId ??= _uuidV4();
     _platform ??= _detectPlatform();
     try {
@@ -65,10 +66,10 @@ class AnalyticsService {
   static void logScreen(String screen) =>
       logEvent('screen_view', props: {'screen': screen});
 
-  static void logError(String context, String message) => logEvent(
-        'app_error',
-        props: {'context': context, 'message': message},
-      );
+  static void logError(String context, String message) {
+    final m = message.length > 200 ? message.substring(0, 200) : message;
+    logEvent('app_error', props: {'context': context, 'message': m});
+  }
 
   static Future<void> flush() async {
     if (_flushing || _queue.isEmpty) return;
@@ -79,7 +80,8 @@ class AnalyticsService {
       final batch = List<Map<String, dynamic>>.from(_queue);
       final rows = batch.map((e) => {...e, 'user_id': uid}).toList(growable: false);
       await SupabaseService.insertEvents(rows);
-      _queue.removeRange(0, batch.length);
+      final sent = Set<Map<String, dynamic>>.identity()..addAll(batch);
+      _queue.removeWhere(sent.contains);
     } catch (_) {
       // Falla silenciosa: se reintenta en el próximo flush.
     } finally {
