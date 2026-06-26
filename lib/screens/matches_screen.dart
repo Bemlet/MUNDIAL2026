@@ -56,9 +56,18 @@ class _MatchesScreenState extends State<MatchesScreen> {
       return _teamMatches(home, query) || _teamMatches(away, query);
     }
 
+    // Partidos en vivo ahora: se muestran arriba en la tira "EN VIVO" y se
+    // excluyen de la lista de abajo para no duplicarlos en la misma pantalla.
+    final liveNow = [
+      for (final m in state.matches)
+        if (state.liveFor(m)?.isLive == true) m,
+    ];
+    final liveNos = {for (final m in liveNow) m.no};
+
     final visible = [
       for (final m in state.matches)
-        if (switch (filter) {
+        if (!liveNos.contains(m.no) &&
+            switch (filter) {
               MatchFilter.all => true,
               MatchFilter.today => sameLocalDay(m.dateUtc, now),
               MatchFilter.groups => m.stage == Stage.group,
@@ -75,10 +84,6 @@ class _MatchesScreenState extends State<MatchesScreen> {
     }
 
     final next = state.nextMatch;
-    final liveNow = [
-      for (final m in state.matches)
-        if (state.liveFor(m)?.isLive == true) m,
-    ];
 
     // Día a anclar al abrir: el del partido actual/próximo (o el último jugado).
     final anchorMatch = next ?? (state.matches.isEmpty ? null : state.matches.last);
