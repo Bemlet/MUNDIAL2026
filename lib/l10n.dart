@@ -546,6 +546,15 @@ class AppStrings {
       isEn ? '${_ordinalEn(pos)} in group' : '$pos.º EN SU GRUPO';
 
   String rankingPosition(int pos) => isEn ? _ordinalEn(pos) : '$pos.º';
+
+  // ---- Ajustes / Settings ----
+  String get settingsTitle => isEn ? 'Settings' : 'Ajustes';
+  String get settingsPrivacySection => isEn ? 'Privacy' : 'Privacidad';
+  String get analyticsToggleTitle =>
+      isEn ? 'Share anonymous usage data' : 'Compartir datos de uso anónimos';
+  String get analyticsToggleSubtitle => isEn
+      ? 'Helps improve the app. No personal data is collected; you can turn this off anytime.'
+      : 'Ayuda a mejorar la app. No se recopilan datos personales; podés desactivarlo cuando quieras.';
 }
 
 String _ordinalEn(int n) {

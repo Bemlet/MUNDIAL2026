@@ -12,6 +12,7 @@ import '../models.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'match_detail.dart';
+import 'settings_screen.dart';
 
 enum MatchFilter { all, today, groups, knockout }
 
@@ -166,6 +167,13 @@ class _MatchesScreenState extends State<MatchesScreen> {
                       ),
                     ),
                 ],
+              ),
+              IconButton(
+                icon: const Icon(Icons.settings_outlined),
+                tooltip: state.l10n.settingsTitle,
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                ),
               ),
               if (state.syncing)
                 Padding(
