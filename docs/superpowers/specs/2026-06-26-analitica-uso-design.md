@@ -79,13 +79,13 @@ Chica y clara; se amplía después.
 |---|---|---|
 | `app_open` | — | al abrir la app / nueva sesión |
 | `screen_view` | `{screen}` | navegación a una pantalla (automático) |
-| `prediction_created` | `{match_id}` | usuario crea un pick |
-| `prediction_updated` | `{match_id}` | usuario edita un pick |
+| `prediction_created` | `{match_no}` | usuario crea un pick |
+| `prediction_updated` | `{match_no}` | usuario edita un pick |
 | `account_linked` | `{provider}` | vincula cuenta (Google) |
 | `app_error` | `{context, message}` | error manejado en Dart |
 
 **Regla de privacidad de datos:** `props` nunca contiene datos personales (sin nombre,
-sin email). Solo identificadores de dominio (match_id, screen, etc.).
+sin email). Solo identificadores de dominio (match_no, screen, etc.).
 
 ## 3. Privacidad / consentimiento
 

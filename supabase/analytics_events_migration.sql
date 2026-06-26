@@ -91,3 +91,11 @@ create or replace view analytics.v_errors as
   from public.analytics_events
   where event_name = 'app_error'
   group by 1,2,3 order by 3 desc, 4 desc;
+
+-- 6. Defensa en profundidad: revocar todo acceso de los roles del cliente al
+--    schema analytics. Aunque PostgREST no lo expone, esto evita una fuga si
+--    alguna vez se agrega `analytics` a los schemas expuestos. Solo conexiones
+--    directas (Metabase con su rol read-only) deben leer estas vistas.
+revoke all on all tables in schema analytics from anon, authenticated;
+revoke all on schema analytics from anon, authenticated;
+alter default privileges in schema analytics revoke all on tables from anon, authenticated;
