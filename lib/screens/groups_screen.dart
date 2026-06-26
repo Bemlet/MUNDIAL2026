@@ -28,6 +28,13 @@ class GroupsScreen extends StatelessWidget {
           floating: true,
           title: Text(l.groupStage, style: outfit(22, FontWeight.w900)),
         ),
+        if (thirds.isNotEmpty)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+              child: ThirdsCard(thirds: thirds, real: true),
+            ),
+          ),
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
           sliver: SliverList.builder(
@@ -38,13 +45,6 @@ class GroupsScreen extends StatelessWidget {
             ),
           ),
         ),
-        if (thirds.isNotEmpty)
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-              child: ThirdsCard(thirds: thirds, real: true),
-            ),
-          ),
         const SliverToBoxAdapter(child: SizedBox(height: 24)),
       ],
     );
