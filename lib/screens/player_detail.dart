@@ -6,6 +6,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../analytics_service.dart';
 import '../app_state.dart';
 import '../l10n.dart';
 import '../main.dart';
@@ -54,6 +55,12 @@ class PlayerDetailScreen extends StatefulWidget {
 
 class _PlayerDetailScreenState extends State<PlayerDetailScreen> {
   Future<PlayerEnrichment?>? _enrich;
+
+  @override
+  void initState() {
+    super.initState();
+    AnalyticsService.logScreen('player_detail');
+  }
 
   @override
   void didChangeDependencies() {

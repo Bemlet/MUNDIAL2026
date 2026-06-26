@@ -3,6 +3,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import '../analytics_service.dart';
 import '../main.dart';
 import '../models.dart';
 import '../theme.dart';
@@ -16,6 +17,9 @@ class TeamDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => AnalyticsService.logScreen('team_detail'),
+    );
     final state = AppScope.of(context);
     final l = state.l10n;
     final t = state.teams[teamId]!;

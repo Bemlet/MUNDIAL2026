@@ -4,6 +4,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../analytics_service.dart';
 import '../l10n.dart';
 import '../main.dart';
 import '../models.dart';
@@ -20,6 +21,9 @@ class MatchDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => AnalyticsService.logScreen('match_detail'),
+    );
     final state = AppScope.of(context);
     final l10n = state.l10n;
     final m = state.byNo[matchNo]!;

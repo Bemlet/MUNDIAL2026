@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'analytics_service.dart';
 import 'app_state.dart';
 import 'l10n.dart';
 import 'notification_service.dart';
@@ -100,6 +101,10 @@ class Shell extends StatefulWidget {
 }
 
 class _ShellState extends State<Shell> {
+  static const _tabScreens = [
+    'matches', 'groups', 'bracket', 'stats', 'pickem', 'teams',
+  ];
+
   int index = 0;
   bool _exactAlarmPromptChecked = false;
   bool _pickemNudgeChecked = false;
@@ -109,6 +114,12 @@ class _ShellState extends State<Shell> {
   bool _updateChecked = false;
   int? _tourStep; // null = tour inactivo
   bool _tourStarted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    AnalyticsService.logScreen(_tabScreens[index]);
+  }
 
   void _maybeStartTour(AppState state) {
     if (_tourStarted || !state.shouldRunTour) return;
@@ -500,7 +511,10 @@ class _ShellState extends State<Shell> {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: shown,
-        onDestinationSelected: (i) => setState(() => index = i),
+        onDestinationSelected: (i) {
+          AnalyticsService.logScreen(_tabScreens[i]);
+          setState(() => index = i);
+        },
         destinations: [
           NavigationDestination(
             icon: Icon(Icons.sports_soccer_outlined),
