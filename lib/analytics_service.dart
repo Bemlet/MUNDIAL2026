@@ -15,6 +15,7 @@ class AnalyticsService {
   static String? _platform;
   static final List<Map<String, dynamic>> _queue = [];
   static Timer? _flushTimer;
+  static bool _flushing = false;
 
   static const Duration _flushInterval = Duration(seconds: 30);
   static const int _maxQueue = 200; // tope duro; al pasarse, se descarta lo más viejo
@@ -25,7 +26,7 @@ class AnalyticsService {
 
   // Solo para tests.
   static Map<String, dynamic>? get lastEventForTest =>
-      _queue.isEmpty ? null : _queue.last;
+      _queue.isEmpty ? null : Map.of(_queue.last);
 
   static Future<void> initialize({required bool enabled}) async {
     _enabled = enabled;
@@ -70,18 +71,19 @@ class AnalyticsService {
       );
 
   static Future<void> flush() async {
-    if (_queue.isEmpty) return;
+    if (_flushing || _queue.isEmpty) return;
     final uid = SupabaseService.userId;
     if (uid == null) return; // sin sesión: se conservan para el próximo flush
-    final batch = List<Map<String, dynamic>>.from(_queue);
-    final rows = batch
-        .map((e) => {...e, 'user_id': uid})
-        .toList(growable: false);
+    _flushing = true;
     try {
+      final batch = List<Map<String, dynamic>>.from(_queue);
+      final rows = batch.map((e) => {...e, 'user_id': uid}).toList(growable: false);
       await SupabaseService.insertEvents(rows);
-      _queue.removeRange(0, batch.length); // saca solo lo que se envió
+      _queue.removeRange(0, batch.length);
     } catch (_) {
       // Falla silenciosa: se reintenta en el próximo flush.
+    } finally {
+      _flushing = false;
     }
   }
 
@@ -114,5 +116,6 @@ class AnalyticsService {
     _queue.clear();
     _flushTimer?.cancel();
     _flushTimer = null;
+    _flushing = false;
   }
 }
