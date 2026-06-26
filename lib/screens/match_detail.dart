@@ -15,18 +15,26 @@ import 'groups_screen.dart' show GroupTableCard;
 import 'player_detail.dart';
 import 'team_detail.dart';
 
-class MatchDetailScreen extends StatelessWidget {
+class MatchDetailScreen extends StatefulWidget {
   final int matchNo;
   const MatchDetailScreen({super.key, required this.matchNo});
 
   @override
+  State<MatchDetailScreen> createState() => _MatchDetailScreenState();
+}
+
+class _MatchDetailScreenState extends State<MatchDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    AnalyticsService.logScreen('match_detail');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => AnalyticsService.logScreen('match_detail'),
-    );
     final state = AppScope.of(context);
     final l10n = state.l10n;
-    final m = state.byNo[matchNo]!;
+    final m = state.byNo[widget.matchNo]!;
     final l = state.liveFor(m);
     final (home, away) = state.realTeams(m);
     final venue = state.venues[m.venue];

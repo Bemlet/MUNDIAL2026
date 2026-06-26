@@ -11,21 +11,29 @@ import '../widgets.dart';
 import 'matches_screen.dart' show RealMatchCard;
 import 'player_detail.dart';
 
-class TeamDetailScreen extends StatelessWidget {
+class TeamDetailScreen extends StatefulWidget {
   final String teamId;
   const TeamDetailScreen({super.key, required this.teamId});
 
   @override
+  State<TeamDetailScreen> createState() => _TeamDetailScreenState();
+}
+
+class _TeamDetailScreenState extends State<TeamDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    AnalyticsService.logScreen('team_detail');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => AnalyticsService.logScreen('team_detail'),
-    );
     final state = AppScope.of(context);
     final l = state.l10n;
-    final t = state.teams[teamId]!;
-    final matches = state.matchesOfTeam(teamId);
+    final t = state.teams[widget.teamId]!;
+    final matches = state.matchesOfTeam(widget.teamId);
     final table = state.realTable(t.group);
-    final pos = table.indexWhere((r) => r.teamId == teamId) + 1;
+    final pos = table.indexWhere((r) => r.teamId == widget.teamId) + 1;
 
     return Scaffold(
       body: SafeArea(
