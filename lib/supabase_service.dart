@@ -261,6 +261,14 @@ class SupabaseService {
     }
   }
 
+  /// Inserta eventos de analítica. No-op si no hay cliente/sesión.
+  /// El RLS exige que cada fila tenga user_id == auth.uid().
+  static Future<void> insertEvents(List<Map<String, dynamic>> rows) async {
+    final c = _client;
+    if (c == null || rows.isEmpty) return;
+    await c.from('analytics_events').insert(rows);
+  }
+
   static List<LeaderEntry> sortLeaderboardForDisplay(
     Iterable<LeaderEntry> entries,
   ) {
