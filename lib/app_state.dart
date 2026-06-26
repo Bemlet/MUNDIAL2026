@@ -209,8 +209,12 @@ class AppState extends ChangeNotifier {
 
     _prefs = await SharedPreferences.getInstance();
     _loadPrefs();
-    await AnalyticsService.initialize(enabled: analyticsEnabled);
-    AnalyticsService.logEvent('app_open');
+    try {
+      await AnalyticsService.initialize(enabled: analyticsEnabled);
+      AnalyticsService.logEvent('app_open');
+    } catch (_) {
+      // La analítica nunca debe impedir el arranque de la app.
+    }
     await NotificationService.setLanguage(language.code);
     loaded = true;
     notifyListeners();
