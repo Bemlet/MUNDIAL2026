@@ -12,6 +12,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'analytics_service.dart';
 import 'l10n.dart';
 import 'logic.dart';
 import 'models.dart';
@@ -119,6 +120,7 @@ class AppState extends ChangeNotifier {
   bool syncFailed = false;
   bool loaded = false;
   bool darkMode = true;
+  bool analyticsEnabled = true; // opt-out: activado por defecto
   bool onboardingDone = false;
   bool tourDone = false; // ya corrió el tour guiado
   bool exactAlarmGranted =
@@ -143,6 +145,13 @@ class AppState extends ChangeNotifier {
     darkMode = !darkMode;
     Wc.dark = darkMode;
     _prefs?.setBool('darkMode', darkMode);
+    notifyListeners();
+  }
+
+  void setAnalyticsEnabled(bool value) {
+    analyticsEnabled = value;
+    _prefs?.setBool('analyticsEnabled', value);
+    AnalyticsService.setEnabled(value);
     notifyListeners();
   }
 
@@ -200,6 +209,8 @@ class AppState extends ChangeNotifier {
 
     _prefs = await SharedPreferences.getInstance();
     _loadPrefs();
+    await AnalyticsService.initialize(enabled: analyticsEnabled);
+    AnalyticsService.logEvent('app_open');
     await NotificationService.setLanguage(language.code);
     loaded = true;
     notifyListeners();
@@ -245,7 +256,13 @@ class AppState extends ChangeNotifier {
 
   /// Vincula la cuenta anónima actual con Google (conserva picks). Devuelve el
   /// error o null si arrancó OK.
-  Future<String?> linkGoogle() => SupabaseService.linkGoogle();
+  Future<String?> linkGoogle() async {
+    final err = await SupabaseService.linkGoogle();
+    if (err == null) {
+      AnalyticsService.logEvent('account_linked', props: {'provider': 'google'});
+    }
+    return err;
+  }
 
   /// Inicia sesión con Google (recupera la cuenta). Devuelve el error o null.
   Future<String?> signInWithGoogle() => SupabaseService.signInWithGoogle();
@@ -328,6 +345,7 @@ class AppState extends ChangeNotifier {
     };
     darkMode = p.getBool('darkMode') ?? true;
     Wc.dark = darkMode;
+    analyticsEnabled = p.getBool('analyticsEnabled') ?? true;
     onboardingDone = p.getBool('onboardingDone') ?? false;
     tourDone = p.getBool('tourDone') ?? false;
     exactAlarmAsked = p.getBool('exactAlarmAsked') ?? false;
@@ -607,8 +625,9 @@ class AppState extends ChangeNotifier {
         await p.setInt('lastSync', lastSync!.millisecondsSinceEpoch);
       }
       unawaited(syncPlayerDetails());
-    } catch (_) {
+    } catch (e) {
       syncFailed = true;
+      AnalyticsService.logError('sync', e.toString());
     } finally {
       syncing = false;
       notifyListeners();
@@ -764,6 +783,7 @@ class AppState extends ChangeNotifier {
   void setPred(int matchNo, Pred? pred, {DateTime? now}) {
     final match = byNo[matchNo];
     if (match == null || !canEditPickem(match, now)) return;
+    final existed = preds.containsKey(matchNo);
     if (pred == null) {
       preds.remove(matchNo);
     } else {
@@ -776,6 +796,10 @@ class AppState extends ChangeNotifier {
     if (pred == null) {
       unawaited(SupabaseService.deletePrediction(matchNo));
     } else {
+      AnalyticsService.logEvent(
+        existed ? 'prediction_updated' : 'prediction_created',
+        props: {'match_no': matchNo},
+      );
       unawaited(
         SupabaseService.upsertPrediction(matchNo, pred.home, pred.away),
       );
@@ -1303,12 +1327,12 @@ class AppState extends ChangeNotifier {
     return done ? realTable(g) : null;
   }
 
-  /// Terceros reales ordenados (solo de grupos terminados).
+  /// Terceros reales ordenados (los 12 grupos, según resultados actuales;
+  /// provisional mientras un grupo no haya terminado).
   List<TableRow> realThirdsRanked() {
     final thirds = <TableRow>[];
     for (final g in groupMatches.keys) {
-      final t = realTableIfComplete(g);
-      if (t != null) thirds.add(t[2]);
+      thirds.add(realTable(g)[2]);
     }
     return rankThirds(thirds, _rankOf);
   }

@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mundial2026/analytics_service.dart';
 import 'package:mundial2026/app_state.dart';
 import 'package:mundial2026/models.dart';
 
@@ -242,6 +243,23 @@ void main() {
       expect(s.preds[20], isNotNull);
     },
   );
+
+  test('analyticsEnabled: default true, persiste y propaga a AnalyticsService',
+      () async {
+    SharedPreferences.setMockInitialValues({});
+    AnalyticsService.resetForTest();
+    final s = AppState();
+    await s.load(initialSync: false);
+
+    expect(s.analyticsEnabled, isTrue);
+
+    s.setAnalyticsEnabled(false);
+    expect(s.analyticsEnabled, isFalse);
+    expect(AnalyticsService.enabled, isFalse);
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getBool('analyticsEnabled'), isFalse);
+  });
 
   test('cambiar la fase de grupos invalida penales huérfanos', () async {
     SharedPreferences.setMockInitialValues({});
