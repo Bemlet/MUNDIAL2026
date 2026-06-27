@@ -1,6 +1,6 @@
 {
-  "build": 9,
+  "build": 10,
   "version": "1.0.1",
   "apk_url": "https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/app-arm64-v8a-release.apk",
-  "notes": "Arreglamos los partidos en vivo que aparecían duplicados en la lista. Además la app ahora mide su uso de forma anónima para seguir mejorándola — podés desactivarlo desde Ajustes."
+  "notes": "¡Llega la Fase Final del Pick'em! Borrón y cuenta nueva: todos arrancan en 0 desde 16vos y los puntos valen más en cada ronda. Hay campeón de Grupos y campeón del torneo. Además, mejor manejo de los partidos que se definen en tiempo extra y por penales."
 }
