@@ -36,10 +36,10 @@ object NotificationHelper {
 
     fun language(context: Context): String = prefs(context).getString(LANGUAGE, "es") ?: "es"
 
-    fun notifyOnce(context: Context, key: String, id: Int, title: String, body: String): Boolean {
+    fun notifyOnce(context: Context, key: String, id: Int, title: String, body: String, route: String?): Boolean {
         if (key.isNotBlank() && wasSent(context, key)) return false
         if (!canPostNotifications(context)) return false
-        showNotification(context, id, title, body)
+        showNotification(context, id, title, body, route)
         if (key.isNotBlank()) markSent(context, key)
         return true
     }
@@ -99,10 +99,11 @@ object NotificationHelper {
             .build()
     }
 
-    private fun showNotification(context: Context, id: Int, title: String, body: String) {
+    private fun showNotification(context: Context, id: Int, title: String, body: String, route: String?) {
         createNotificationChannel(context)
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            if (!route.isNullOrBlank()) putExtra("route", route)
         }
         val flags = PendingIntent.FLAG_UPDATE_CURRENT or
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0

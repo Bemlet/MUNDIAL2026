@@ -12,10 +12,16 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private val notificationsChannel = "mundial2026/notifications"
+    private var channel: MethodChannel? = null
+    private var pendingRoute: String? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, notificationsChannel).setMethodCallHandler { call, result ->
+        // Ruta de lanzamiento (la app se abrió tocando una notificación).
+        intent?.getStringExtra("route")?.let { pendingRoute = it }
+        val ch = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, notificationsChannel)
+        channel = ch
+        ch.setMethodCallHandler { call, result ->
             when (call.method) {
                 "initialize" -> {
                     NotificationHelper.createNotificationChannel(this)
@@ -56,10 +62,25 @@ class MainActivity : FlutterActivity() {
                     val id = call.argument<Int>("id") ?: 0
                     val title = call.argument<String>("title") ?: "Mundial 2026"
                     val body = call.argument<String>("body") ?: ""
-                    result.success(NotificationHelper.notifyOnce(this, key, id, title, body))
+                    val route = call.argument<String>("route")
+                    result.success(NotificationHelper.notifyOnce(this, key, id, title, body, route))
+                }
+                "consumeRoute" -> {
+                    val r = pendingRoute
+                    pendingRoute = null
+                    result.success(r)
                 }
                 else -> result.notImplemented()
             }
+        }
+    }
+
+    // App ya abierta y se toca una notificación con ruta: navegar directo.
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        intent.getStringExtra("route")?.let { route ->
+            channel?.invokeMethod("navigate", route)
         }
     }
 }
