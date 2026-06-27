@@ -879,20 +879,68 @@ class AppState extends ChangeNotifier {
     return scorePick(pred, real);
   }
 
-  /// Puntaje total acumulado del pick'em.
-  int get pickemTotal {
-    var total = 0;
-    for (final m in matches) {
-      total += pickemPoints(m);
-    }
-    return total;
+  /// Puntos del pick'em de GRUPOS (base, solo fase de grupos, respeta cutoff).
+  int pickemPointsGroups(WcMatch m) {
+    if (m.stage != Stage.group || !pickemCounts(m)) return 0;
+    final pred = preds[m.no];
+    final real = realPredFor(m);
+    if (pred == null || real == null) return 0;
+    return scorePick(pred, real);
   }
 
-  /// (exactos, resultados) que puntuaron.
+  /// Puntos del pick'em de FASE FINAL (knockout, con multiplicador por ronda).
+  int pickemPointsFinal(WcMatch m) {
+    if (!m.isKnockout) return 0;
+    final pred = preds[m.no];
+    final real = realPredFor(m);
+    if (pred == null || real == null) return 0;
+    return scorePick(pred, real) * roundMultiplier(m.stage);
+  }
+
+  int get pickemTotalGroups {
+    var t = 0;
+    for (final m in matches) t += pickemPointsGroups(m);
+    return t;
+  }
+
+  int get pickemTotalFinal {
+    var t = 0;
+    for (final m in matches) t += pickemPointsFinal(m);
+    return t;
+  }
+
+  /// La fase final está activa cuando ya empezó el primer partido de knockout.
+  bool get finalPhaseActive {
+    final firstKo = matches
+        .where((m) => m.isKnockout)
+        .map((m) => m.dateUtc)
+        .fold<DateTime?>(null, (a, b) => a == null || b.isBefore(a) ? b : a);
+    return firstKo != null && !DateTime.now().toUtc().isBefore(firstKo);
+  }
+
+  /// La fase de grupos concluyó (se congela el ranking de grupos) cuando arranca
+  /// el knockout. Se usa para coronar al Campeón de Grupos.
+  bool get groupsConcluded => finalPhaseActive;
+
+  /// El torneo terminó cuando el partido final (Stage.finalMatch) está finalizado.
+  /// Se usa para coronar al Campeón del torneo (ranking de fase final).
+  bool get tournamentOver {
+    final fin = matches.where((m) => m.stage == Stage.finalMatch);
+    if (fin.isEmpty) return false;
+    final m = fin.first;
+    return realPredFor(m) != null; // realPredFor != null ⇒ partido finalizado
+  }
+
+  /// Puntaje total acumulado del pick'em (fase activa).
+  int get pickemTotal => finalPhaseActive ? pickemTotalFinal : pickemTotalGroups;
+
+  /// (exactos, resultados) que puntuaron en la fase activa.
   (int, int) get pickemBreakdown {
     var exact = 0, correct = 0;
     for (final m in matches) {
-      switch (pickemPoints(m)) {
+      final pts =
+          finalPhaseActive ? pickemPointsFinal(m) : pickemPointsGroups(m);
+      switch (pts) {
         case 6:
           exact++;
         case 3:

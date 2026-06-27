@@ -4,6 +4,16 @@ library;
 
 import 'models.dart';
 
+/// Multiplicador de puntos por ronda en la fase final (el 6/3 base se duplica
+/// cada ronda). Grupos y 3er puesto = ×1.
+int roundMultiplier(Stage stage) => switch (stage) {
+  Stage.r16 => 2,
+  Stage.qf => 4,
+  Stage.sf => 8,
+  Stage.finalMatch => 16,
+  _ => 1, // group, r32, third
+};
+
 /// Puntaje del pick'em comparando un pronóstico contra el resultado real:
 /// 6 si el marcador es exacto, 3 si acierta el resultado (gana/empata/pierde),
 /// 0 si no.

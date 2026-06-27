@@ -285,4 +285,41 @@ void main() {
       }
     }
   });
+
+  test('fase final: puntaje se multiplica por ronda', () async {
+    SharedPreferences.setMockInitialValues({});
+    final s = AppState();
+    await s.load(initialSync: false);
+
+    // Partido de r16 (octavos, ×2): marcador exacto = 6*2 = 12
+    final r16 = s.matches.firstWhere((m) => m.stage == Stage.r16);
+    s.live[r16.espnId] = LiveInfo(
+      espnId: r16.espnId,
+      status: 'STATUS_FULL_TIME',
+      detail: 'FT',
+      homeScore: 2,
+      awayScore: 1,
+      homeEspn: 'TeamA',
+      awayEspn: 'TeamB',
+    );
+    s.preds[r16.no] = Pred(2, 1);
+    expect(s.pickemPointsFinal(r16), 12);
+
+    // 3er puesto (×1): marcador exacto = 6*1 = 6
+    final third = s.matches.firstWhere((m) => m.stage == Stage.third);
+    s.live[third.espnId] = LiveInfo(
+      espnId: third.espnId,
+      status: 'STATUS_FULL_TIME',
+      detail: 'FT',
+      homeScore: 1,
+      awayScore: 0,
+      homeEspn: 'TeamC',
+      awayEspn: 'TeamD',
+    );
+    s.preds[third.no] = Pred(1, 0);
+    expect(s.pickemPointsFinal(third), 6);
+
+    // Grupos NO entran en el total final
+    expect(s.pickemTotalFinal >= 12 + 6, isTrue);
+  });
 }
