@@ -30,6 +30,9 @@ competencias distintas y escala los puntos por ronda.
 | Sistema de puntaje | El **6/3 actual se duplica por ronda** (ver tabla). |
 | Partido por el 3er puesto | Puntaje **base 6/3** (no escala; es de consolación). |
 | Reenganche | Push al iniciar los 16vos. |
+| Prominencia (UI) | Cuando arrancan las eliminatorias, la **Fase Final es el ranking destacado** (pestaña por defecto / visualmente principal). Grupos pasa a secundario/histórico. |
+| Separación estricta de puntos | El leaderboard de **Grupos cuenta SOLO partidos de grupos**. Los puntos de eliminatorias **NUNCA** se suman al de Grupos — van solo al de Fase Final. |
+| Puntos del perfil | El perfil muestra ambos totales **por separado y bien etiquetados** (Grupos / Fase Final). No se combinan en un único número ni se duplican. |
 
 ## Puntaje de la Fase Final
 
@@ -67,18 +70,35 @@ cuenta nueva".
   (con multiplicador, solo knockout).
 
 ### 2. Backend (Supabase)
-- La vista/cálculo del leaderboard debe producir **dos rankings**: puntos de
-  grupos y puntos de fase final (con el multiplicador por ronda aplicado).
+- La vista/cálculo del leaderboard debe producir **dos rankings independientes**:
+  - **Grupos**: suma **solo** partidos de fase de grupos. **CRÍTICO:** la vista
+    `leaderboard` actual hoy probablemente suma todos los partidos con resultado;
+    hay que **filtrarla a `stage` de grupo** para que, cuando lleguen resultados
+    de eliminatorias, NO se sumen al ranking de Grupos.
+  - **Fase Final**: suma solo partidos de knockout (r32+), con el **multiplicador
+    por ronda** aplicado.
+- Los dos totales son **independientes**: ningún punto de eliminatorias entra al
+  de Grupos, y viceversa.
 - Mantener la privacidad/transparencia ya existente (predicciones privadas hasta
   el kickoff, públicas después).
 
 ### 3. UI
-- En la pantalla de Pick'em / leaderboard, mostrar **dos pestañas/rankings**:
-  **"Grupos"** y **"Fase Final"** (nombre a confirmar; alternativa
-  "Eliminatorias").
+- En la pantalla de Pick'em / leaderboard, mostrar **dos rankings**: **"Grupos"**
+  y **"Fase Final"** (nombre a confirmar; alternativa "Eliminatorias").
+- **Prominencia:** durante las eliminatorias, la **Fase Final es la pestaña
+  destacada y por defecto**; Grupos queda como secundaria/histórica (palmarés del
+  campeón de grupos).
 - Mostrar claramente el **campeón** (o líder) de cada uno.
 - El puntaje por ronda debe reflejarse en la lógica local de la app (para los
   puntos que se muestran junto a cada pick).
+
+### 4b. Puntos acumulados en el Perfil (evitar confusión)
+- El perfil hoy muestra "puntos acumulados". Con dos competencias, debe mostrar
+  **ambos por separado y etiquetados**: p. ej. "Grupos: X" y "Fase Final: Y".
+- **No** combinar en un solo total (evita que el usuario crea que perdió/ganó
+  puntos), y **no** seguir sumando knockout al total histórico de grupos.
+- Verificar en el plan de dónde sale ese número del perfil (vista `leaderboard`
+  o cálculo local) para que quede consistente con la separación de fases.
 
 ### 4. Notificación de reenganche
 - Push al iniciar los 16vos (vía `NotificationService`), una sola vez.
