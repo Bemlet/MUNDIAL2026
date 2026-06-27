@@ -249,6 +249,9 @@ class AppState extends ChangeNotifier {
   Future<List<LeaderEntry>> fetchLeaderboard() =>
       SupabaseService.fetchLeaderboard();
 
+  Future<List<LeaderEntry>> fetchLeaderboardFinal() =>
+      SupabaseService.fetchLeaderboardFinal();
+
   Future<List<ParticipantPick>> fetchUserPredictions(String userId) =>
       SupabaseService.fetchUserPredictions(userId);
 

@@ -229,6 +229,31 @@ class SupabaseService {
     }
   }
 
+  static Future<List<LeaderEntry>> fetchLeaderboardFinal() async {
+    final c = _client;
+    if (c == null) return const [];
+    try {
+      final rows = await c
+          .from('leaderboard_final')
+          .select('user_id, nickname, points, exact_count')
+          .order('points', ascending: false)
+          .order('exact_count', ascending: false)
+          .order('nickname', ascending: true)
+          .limit(100);
+      return sortLeaderboardForDisplay([
+        for (final r in rows as List)
+          LeaderEntry(
+            userId: '${r['user_id'] ?? ''}',
+            nickname: '${r['nickname'] ?? '—'}',
+            points: (r['points'] as num?)?.toInt() ?? 0,
+            exactCount: (r['exact_count'] as num?)?.toInt() ?? 0,
+          ),
+      ]);
+    } catch (_) {
+      return const [];
+    }
+  }
+
   /// Predicciones de un participante para partidos ya bloqueados (transparencia).
   /// Lee la vista `locked_predictions` (solo expone kickoff <= ahora).
   static Future<List<ParticipantPick>> fetchUserPredictions(
