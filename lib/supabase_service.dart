@@ -67,6 +67,9 @@ class SupabaseService {
   static SupabaseClient? get _client =>
       _ready ? Supabase.instance.client : null;
 
+  /// Cliente Supabase para usos que lo necesitan directo (ej. Realtime/presencia).
+  static SupabaseClient? get client => _client;
+
   static String? get userId => _client?.auth.currentUser?.id;
 
   /// Deep link de vuelta del login OAuth (declarado en AndroidManifest).
