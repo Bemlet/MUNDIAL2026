@@ -330,8 +330,8 @@ void main() {
       final s = AppState();
       await s.load(initialSync: false);
 
-      // Solo tiene sentido con fase final activa; se omite si aún no arrancó.
-      if (!s.finalPhaseActive) return;
+      // Pin clock to after first knockout so finalPhaseActive is deterministically true.
+      s.clockOverride = DateTime.utc(2026, 7, 1);
 
       // Partido r16 con resultado decisivo (2-1) para evitar empate y penales.
       final r16 = s.matches.firstWhere((m) => m.stage == Stage.r16);

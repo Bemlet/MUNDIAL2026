@@ -33,6 +33,10 @@ class AppState extends ChangeNotifier {
   late final Map<String, Team> teamsByEspn; // displayName ESPN -> equipo
   PlayerDb players = PlayerDb.empty; // perfiles curados de figuras
   late final Map<String, Venue> venues;
+
+  /// Override del "ahora" para tests deterministas (null en producción).
+  @visibleForTesting
+  DateTime? clockOverride;
   late final Map<String, CountryBroadcast> broadcasters; // ISO-2 -> canales
   final Map<String, List<String>> liveBroadcasts =
       {}; // espnId -> canales (ESPN)
@@ -918,7 +922,8 @@ class AppState extends ChangeNotifier {
         .where((m) => m.isKnockout)
         .map((m) => m.dateUtc)
         .fold<DateTime?>(null, (a, b) => a == null || b.isBefore(a) ? b : a);
-    return firstKo != null && !DateTime.now().toUtc().isBefore(firstKo);
+    final now = (clockOverride ?? DateTime.now()).toUtc();
+    return firstKo != null && !now.isBefore(firstKo);
   }
 
   /// La fase de grupos concluyó (se congela el ranking de grupos) cuando arranca

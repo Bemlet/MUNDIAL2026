@@ -662,7 +662,7 @@ class _LeaderboardTabState extends State<_LeaderboardTab> {
   void _reload() {
     final state = AppScope.of(context);
     setState(() {
-      _future = (_isFinalTab ?? state.finalPhaseActive)
+      _future = _isFinalTab!
           ? state.fetchLeaderboardFinal()
           : state.fetchLeaderboard();
     });
@@ -672,7 +672,7 @@ class _LeaderboardTabState extends State<_LeaderboardTab> {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final l = state.l10n;
-    final isFinal = _isFinalTab ?? state.finalPhaseActive;
+    final isFinal = _isFinalTab!;
 
     if (state.nickname == null) {
       return _NicknameForm(onSaved: _reload);
@@ -753,7 +753,7 @@ class _LeaderboardTabState extends State<_LeaderboardTab> {
                       isFinalTab: isFinal,
                       state: state,
                     ),
-                    for (int i = 0; i < entries.length; i++)
+                    for (int i = 1; i < entries.length; i++)
                       _LeaderRow(
                         rank: i + 1,
                         entry: entries[i],

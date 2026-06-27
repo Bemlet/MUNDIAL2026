@@ -74,6 +74,9 @@ void main() {
       await state.load(initialSync: false);
     });
 
+    // Pin clock to before knockout so finalPhaseActive is deterministically false.
+    state.clockOverride = DateTime.utc(2026, 6, 1);
+
     await tester.pumpWidget(
       AppScope(
         state: state,
