@@ -1,6 +1,6 @@
 {
-  "build": 10,
+  "build": 11,
   "version": "1.0.1",
   "apk_url": "https://vbpvhcawzztcngvotsjt.supabase.co/storage/v1/object/public/app/app-arm64-v8a-release.apk",
-  "notes": "¡Llega la Fase Final del Pick'em! Borrón y cuenta nueva: todos arrancan en 0 desde 16vos y los puntos valen más en cada ronda. Hay campeón de Grupos y campeón del torneo. Además, mejor manejo de los partidos que se definen en tiempo extra y por penales."
+  "notes": "La Fase Final ahora es protagonista: ranking destacado y campeón del torneo. El bracket tiene líneas de conexión y salta al partido en vivo. Sumamos recordatorios de la fase final, una pantalla de novedades y un indicador de quién está conectado. Más ajustes."
 }
