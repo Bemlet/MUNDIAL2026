@@ -280,6 +280,11 @@ class AppStrings {
       : 'Predecí cada partido y sumá puntos (6 exacto, 3 resultado). ¡Competí en el ranking global!';
   String get pickemNudgeGo => isEn ? "Go to Pick'em" : 'Ir al Pick\'em';
   String get pickemNudgeLater => isEn ? 'Later' : 'Después';
+  String get finalPhaseNudgeTitle =>
+      isEn ? 'Clean slate 🏆' : 'Borrón y cuenta nueva 🏆';
+  String get finalPhaseNudgeBody => isEn
+      ? 'The knockouts are here — everyone starts at 0. Make your final-phase picks!'
+      : 'Empiezan las eliminatorias — todos arrancan en 0. ¡Hacé tus picks de la fase final!';
 
   // ----------------------------------------------------------- tour guiado
   String get tourSkip => isEn ? 'Skip' : 'Saltar';

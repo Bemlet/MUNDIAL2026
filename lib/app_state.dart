@@ -627,6 +627,14 @@ class AppState extends ChangeNotifier {
       _pruneUnresolvedKnockoutPickemPreds(notify: false);
       await checkMatchReminders();
       await checkPickemReminder();
+      if (finalPhaseActive) {
+        await _notifyOnce(
+          key: 'fase_final_nudge',
+          id: 500001,
+          title: l10n.finalPhaseNudgeTitle,
+          body: l10n.finalPhaseNudgeBody,
+        );
+      }
       lastSync = DateTime.now();
       final p = _prefs;
       if (p != null) {
