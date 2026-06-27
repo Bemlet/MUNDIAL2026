@@ -82,7 +82,7 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(find.text('Tu puntaje'), findsOneWidget); // header de puntaje
+    expect(find.text('Tu puntaje · Grupos'), findsOneWidget); // header de puntaje (fase grupos activa)
     expect(find.text('Pronósticos'), findsOneWidget);
     expect(find.text('Ranking'), findsWidgets);
     expect(find.text('Mejores terceros'), findsNothing);

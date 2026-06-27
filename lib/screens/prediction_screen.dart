@@ -46,7 +46,9 @@ class PredictionScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              l.pickemScore,
+                              state.finalPhaseActive
+                                  ? l.yourScoreFinal
+                                  : l.yourScoreGroups,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: outfit(
@@ -637,66 +639,196 @@ class _LeaderboardTab extends StatefulWidget {
 }
 
 class _LeaderboardTabState extends State<_LeaderboardTab> {
+  bool? _isFinalTab;
   Future<List<LeaderEntry>>? _future;
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Set default sub-tab once (Fase Final prominent when knockouts active).
+    _isFinalTab ??= AppScope.of(context).finalPhaseActive;
+  }
+
+  void _switchTab(bool isFinal) {
+    final state = AppScope.of(context);
+    setState(() {
+      _isFinalTab = isFinal;
+      _future = isFinal
+          ? state.fetchLeaderboardFinal()
+          : state.fetchLeaderboard();
+    });
+  }
+
   void _reload() {
-    setState(() => _future = AppScope.of(context).fetchLeaderboard());
+    final state = AppScope.of(context);
+    setState(() {
+      _future = (_isFinalTab ?? state.finalPhaseActive)
+          ? state.fetchLeaderboardFinal()
+          : state.fetchLeaderboard();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final l = state.l10n;
+    final isFinal = _isFinalTab ?? state.finalPhaseActive;
 
     if (state.nickname == null) {
       return _NicknameForm(onSaved: _reload);
     }
 
-    _future ??= state.fetchLeaderboard();
+    _future ??= isFinal
+        ? state.fetchLeaderboardFinal()
+        : state.fetchLeaderboard();
     final me = SupabaseService.userId;
 
-    return RefreshIndicator(
-      color: Wc.gold,
-      backgroundColor: Wc.surface,
-      onRefresh: () async {
-        _reload();
-        await _future;
-      },
-      child: FutureBuilder<List<LeaderEntry>>(
-        future: _future,
-        builder: (context, snap) {
-          if (snap.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(color: Wc.gold));
-          }
-          final entries = snap.data ?? const <LeaderEntry>[];
-          if (entries.isEmpty) {
-            return ListView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(28, 60, 28, 28),
-                  child: Text(
-                    SupabaseService.ready
-                        ? l.leaderboardEmpty
-                        : l.leaderboardOffline,
-                    textAlign: TextAlign.center,
-                    style: outfit(14, FontWeight.w600, color: Wc.textDim),
-                  ),
-                ),
-              ],
-            );
-          }
-          return ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-            itemCount: entries.length,
-            itemBuilder: (_, i) => _LeaderRow(
-              rank: i + 1,
-              entry: entries[i],
-              isMe: entries[i].userId == me,
+    return Column(
+      children: [
+        // Sub-selector: Grupos / Fase Final
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+          child: SegmentedButton<bool>(
+            style: SegmentedButton.styleFrom(
+              selectedBackgroundColor: Wc.gold.withValues(alpha: .18),
+              selectedForegroundColor: Wc.goldHi,
+              foregroundColor: Wc.textDim,
+              textStyle: outfit(13, FontWeight.w700),
             ),
-          );
-        },
+            segments: [
+              ButtonSegment<bool>(
+                value: false,
+                label: Text(l.groupsRankingTab),
+              ),
+              ButtonSegment<bool>(
+                value: true,
+                icon: const Icon(Icons.emoji_events, size: 15),
+                label: Text(l.finalRankingTab),
+              ),
+            ],
+            selected: {isFinal},
+            onSelectionChanged: (s) => _switchTab(s.first),
+          ),
+        ),
+        Expanded(
+          child: RefreshIndicator(
+            color: Wc.gold,
+            backgroundColor: Wc.surface,
+            onRefresh: () async {
+              _reload();
+              await _future;
+            },
+            child: FutureBuilder<List<LeaderEntry>>(
+              future: _future,
+              builder: (context, snap) {
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(color: Wc.gold),
+                  );
+                }
+                final entries = snap.data ?? const <LeaderEntry>[];
+                if (entries.isEmpty) {
+                  return ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(28, 60, 28, 28),
+                        child: Text(
+                          SupabaseService.ready
+                              ? l.leaderboardEmpty
+                              : l.leaderboardOffline,
+                          textAlign: TextAlign.center,
+                          style: outfit(14, FontWeight.w600, color: Wc.textDim),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                  children: [
+                    _ChampionBanner(
+                      entry: entries.first,
+                      isFinalTab: isFinal,
+                      state: state,
+                    ),
+                    for (int i = 0; i < entries.length; i++)
+                      _LeaderRow(
+                        rank: i + 1,
+                        entry: entries[i],
+                        isMe: entries[i].userId == me,
+                      ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ChampionBanner extends StatelessWidget {
+  final LeaderEntry entry;
+  final bool isFinalTab;
+  final AppState state;
+
+  const _ChampionBanner({
+    required this.entry,
+    required this.isFinalTab,
+    required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l = state.l10n;
+    final isChampion =
+        isFinalTab ? state.tournamentOver : state.groupsConcluded;
+    final label = isFinalTab
+        ? (state.tournamentOver ? l.tournamentChampionLabel : l.leaderLabel)
+        : (state.groupsConcluded ? l.groupsChampionLabel : l.leaderLabel);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: GradientCard(
+        gradient: Wc.finalGradient,
+        borderColor: Wc.gold.withValues(alpha: .5),
+        child: Row(
+          children: [
+            Icon(
+              isChampion ? Icons.emoji_events : Icons.leaderboard,
+              color: Wc.gold,
+              size: 22,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    label,
+                    style: outfit(11, FontWeight.w700, color: Wc.textDim),
+                  ),
+                  Text(
+                    entry.nickname,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: outfit(15, FontWeight.w900),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              '${entry.points}',
+              style: outfit(22, FontWeight.w900, color: Wc.gold),
+            ),
+            const SizedBox(width: 3),
+            Text(l.pts, style: outfit(11, FontWeight.w700, color: Wc.textDim)),
+          ],
+        ),
       ),
     );
   }

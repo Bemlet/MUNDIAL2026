@@ -21,6 +21,13 @@ class AppStrings {
   String get bracketTab => isEn ? 'Bracket' : 'Bracket';
   String get simulatorTab => "Pick'em";
   String get pickemScore => isEn ? 'Your score' : 'Tu puntaje';
+  String get groupsRankingTab => isEn ? 'Groups' : 'Grupos';
+  String get finalRankingTab => isEn ? 'Final phase' : 'Fase Final';
+  String get yourScoreFinal => isEn ? 'Your score · Final phase' : 'Tu puntaje · Fase Final';
+  String get yourScoreGroups => isEn ? 'Your score · Groups' : 'Tu puntaje · Grupos';
+  String get leaderLabel => isEn ? 'Leader' : 'Líder';
+  String get groupsChampionLabel => isEn ? 'Groups champion' : 'Campeón de Grupos';
+  String get tournamentChampionLabel => isEn ? 'Tournament champion' : 'Campeón del torneo';
   String get pickemBreakdown2 => isEn ? 'exact' : 'exactos';
   String get pickemOutcomeWord => isEn ? 'outcomes' : 'resultados';
   String get pickemPredictionsTab => isEn ? 'Predictions' : 'Pronósticos';
