@@ -811,6 +811,14 @@ class _ChampionBanner extends StatelessWidget {
       child: GradientCard(
         gradient: Wc.finalGradient,
         borderColor: Wc.gold.withValues(alpha: .5),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ParticipantPicksScreen(
+              entry: entry,
+              isMe: entry.userId == SupabaseService.userId,
+            ),
+          ),
+        ),
         child: Row(
           children: [
             Icon(
@@ -833,18 +841,6 @@ class _ChampionBanner extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: outfit(15, FontWeight.w900),
-                  ),
-                  const SizedBox(height: 2),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.lock_outline, size: 11, color: Wc.textDim),
-                      const SizedBox(width: 3),
-                      Text(
-                        l.leaderPicksHidden,
-                        style: outfit(10, FontWeight.w600, color: Wc.textDim),
-                      ),
-                    ],
                   ),
                 ],
               ),

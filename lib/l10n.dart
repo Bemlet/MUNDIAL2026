@@ -30,8 +30,6 @@ class AppStrings {
       : 'Todos arrancan en 0 — vale más cada ronda';
   String get groupsRankingSubtitle =>
       isEn ? 'Group stage standings' : 'Tabla de la fase de grupos';
-  String get leaderPicksHidden =>
-      isEn ? 'Picks hidden' : 'Picks ocultos';
   String get yourScoreFinal => isEn ? 'Your score · Final phase' : 'Tu puntaje · Fase Final';
   String get yourScoreGroups => isEn ? 'Your score · Groups' : 'Tu puntaje · Grupos';
   String get leaderLabel => isEn ? 'Leader' : 'Líder';
