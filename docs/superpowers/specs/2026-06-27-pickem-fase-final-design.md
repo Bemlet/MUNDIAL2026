@@ -29,6 +29,7 @@ competencias distintas y escala los puntos por ronda.
 | Inicio de la Fase Final | Desde **16vos** (Round of 32, `stage == r32`). |
 | Sistema de puntaje | El **6/3 actual se duplica por ronda** (ver tabla). |
 | Partido por el 3er puesto | Puntaje **base 6/3** (no escala; es de consolación). |
+| Penales | Un partido definido por penales **cuenta por su marcador** (el empate, ej. 1-1). Los penales no suman ni restan. **Sin** bonus por clasificado (se descartó por complejidad: prioridad = que los participantes lo entiendan fácil). |
 | Reenganche | Push al iniciar los 16vos. |
 | Prominencia (UI) | Cuando arrancan las eliminatorias, la **Fase Final es el ranking destacado** (pestaña por defecto / visualmente principal). Grupos pasa a secundario/histórico. |
 | Separación estricta de puntos | El leaderboard de **Grupos cuenta SOLO partidos de grupos**. Los puntos de eliminatorias **NUNCA** se suman al de Grupos — van solo al de Fase Final. |
