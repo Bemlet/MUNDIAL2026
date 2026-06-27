@@ -424,6 +424,7 @@ class _LockedPredictionCard extends StatelessWidget {
     final counts = state.pickemCounts(match);
     final real = state.realPredFor(match);
     final pts = state.pickemPoints(match);
+    final ptsDisplay = state.pickemPointsDisplay(match);
     final realScore = live?.homeScore != null && live?.awayScore != null
         ? '${live!.homeScore} – ${live.awayScore}'
         : 'VS';
@@ -432,7 +433,7 @@ class _LockedPredictionCard extends StatelessWidget {
         : live?.isLive == true
         ? (l.live, Wc.live)
         : real != null
-        ? ('+$pts', pts == 6 ? Wc.mint : (pts == 3 ? Wc.goldHi : Wc.textDim))
+        ? ('+$ptsDisplay', pts == 6 ? Wc.mint : (pts == 3 ? Wc.goldHi : Wc.textDim))
         : (l.pickemClosed, Wc.textDim);
 
     return GradientCard(

@@ -912,6 +912,10 @@ class AppState extends ChangeNotifier {
     return scorePick(pred, real) * roundMultiplier(m.stage);
   }
 
+  /// Puntos a mostrar en el chip: multiplicados para knockout, base para grupos.
+  int pickemPointsDisplay(WcMatch m) =>
+      m.isKnockout ? pickemPointsFinal(m) : pickemPoints(m);
+
   int get pickemTotalGroups {
     var t = 0;
     for (final m in matches) {
