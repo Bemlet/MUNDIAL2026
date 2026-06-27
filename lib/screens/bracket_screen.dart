@@ -1,9 +1,11 @@
 /// Pestaña Bracket: cuadro de eliminatorias real (16avos a final) con líneas
-/// de conexión entre rondas.
+/// de conexión entre rondas. Al abrir, hace scroll al partido en vivo (o al
+/// próximo).
 library;
 
 import 'package:flutter/material.dart';
 
+import '../app_state.dart';
 import '../main.dart';
 import '../models.dart';
 import '../theme.dart';
@@ -46,8 +48,9 @@ class BracketScreen extends StatelessWidget {
 
 /// Vista de bracket reutilizable (real o pronosticada). Dibuja las rondas como
 /// un árbol: cada partido se ubica centrado entre sus dos alimentadores, con
-/// líneas (codos) que los conectan.
-class BracketView extends StatelessWidget {
+/// líneas (codos) que los conectan. Al montarse hace scroll al partido en vivo
+/// (o al próximo).
+class BracketView extends StatefulWidget {
   final (Team?, Team?) Function(WcMatch) teamsOf;
   final (int, int, bool)? Function(WcMatch) scoreOf; // (h, a, enVivo)
   final void Function(WcMatch) onTap;
@@ -63,6 +66,11 @@ class BracketView extends StatelessWidget {
     this.winnerOf,
   });
 
+  @override
+  State<BracketView> createState() => _BracketViewState();
+}
+
+class _BracketViewState extends State<BracketView> {
   // Dimensiones del cuadro.
   static const double _cardW = 232;
   static const double _cardH = 112;
@@ -70,6 +78,17 @@ class BracketView extends StatelessWidget {
   static const double _hGap = 56;
   static const double _titleH = 30;
   static const double _rowUnit = _cardH + _vGap;
+
+  final _hCtrl = ScrollController();
+  final _vCtrl = ScrollController();
+  bool _scrolled = false;
+
+  @override
+  void dispose() {
+    _hCtrl.dispose();
+    _vCtrl.dispose();
+    super.dispose();
+  }
 
   int? _feeder(String slot) {
     final m = RegExp(r'^M(\d+)$').firstMatch(slot);
@@ -83,6 +102,21 @@ class BracketView extends StatelessWidget {
     Stage.sf => 3,
     _ => 4, // final y tercer puesto
   };
+
+  /// Partido a enfocar al abrir: el que está en vivo; si no, el próximo a
+  /// jugarse; si no (torneo terminado), la final.
+  WcMatch? _focusMatch(AppState state) {
+    final ko = state.matches.where((m) => m.isKnockout).toList();
+    if (ko.isEmpty) return null;
+    for (final m in ko) {
+      if (state.liveFor(m)?.isLive == true) return m;
+    }
+    final now = DateTime.now().toUtc();
+    final upcoming = ko.where((m) => m.dateUtc.isAfter(now)).toList()
+      ..sort((a, b) => a.dateUtc.compareTo(b.dateUtc));
+    if (upcoming.isNotEmpty) return upcoming.first;
+    return ko.last;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +192,33 @@ class BracketView extends StatelessWidget {
     final totalW = 5 * _cardW + 4 * _hGap;
     final totalH = _titleH + (yOf[thirdM.no] ?? 0) + _cardH + 16;
 
+    // Scroll automático (una vez) al partido en vivo / próximo.
+    if (!_scrolled) {
+      final focus = _focusMatch(state);
+      if (focus != null) {
+        _scrolled = true;
+        final fp = posOf(focus);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted || !_hCtrl.hasClients || !_vCtrl.hasClients) return;
+          final hx = (fp.dx - (_hCtrl.position.viewportDimension - _cardW) / 2)
+              .clamp(0.0, _hCtrl.position.maxScrollExtent);
+          final vy =
+              (fp.dy + _cardH / 2 - _vCtrl.position.viewportDimension / 2)
+                  .clamp(0.0, _vCtrl.position.maxScrollExtent);
+          _hCtrl.animateTo(
+            hx,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOutCubic,
+          );
+          _vCtrl.animateTo(
+            vy,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOutCubic,
+          );
+        });
+      }
+    }
+
     final titles = <String>[
       state.l10n.roundOf32,
       state.l10n.roundOf16,
@@ -167,8 +228,10 @@ class BracketView extends StatelessWidget {
     ];
 
     return SingleChildScrollView(
+      controller: _hCtrl,
       scrollDirection: Axis.horizontal,
       child: SingleChildScrollView(
+        controller: _vCtrl,
         padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
         child: SizedBox(
           width: totalW,
@@ -203,10 +266,10 @@ class BracketView extends StatelessWidget {
                   height: _cardH,
                   child: KoMatchCard(
                     match: m,
-                    teams: teamsOf(m),
-                    score: scoreOf(m),
-                    winner: winnerOf?.call(m),
-                    onTap: () => onTap(m),
+                    teams: widget.teamsOf(m),
+                    score: widget.scoreOf(m),
+                    winner: widget.winnerOf?.call(m),
+                    onTap: () => widget.onTap(m),
                   ),
                 ),
             ],

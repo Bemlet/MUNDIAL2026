@@ -834,6 +834,18 @@ class _ChampionBanner extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: outfit(15, FontWeight.w900),
                   ),
+                  const SizedBox(height: 2),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.lock_outline, size: 11, color: Wc.textDim),
+                      const SizedBox(width: 3),
+                      Text(
+                        l.leaderPicksHidden,
+                        style: outfit(10, FontWeight.w600, color: Wc.textDim),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
