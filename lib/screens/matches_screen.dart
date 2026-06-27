@@ -851,7 +851,7 @@ class RealMatchCard extends StatelessWidget {
             LiveBadge(text: live.detail.isEmpty ? strings.live : live.detail)
           else
             Text(
-              strings.finalLabel,
+              live.hasPens ? strings.penaltiesLabel : strings.finalLabel,
               style: outfit(10.5, FontWeight.w800, color: Wc.mint),
             ),
         ],

@@ -774,7 +774,8 @@ class AppState extends ChangeNotifier {
       return '$homeName vs $awayName';
     }
     final detail = info.detail.isEmpty ? '' : ' · ${info.detail}';
-    return '$homeName ${info.homeScore} - ${info.awayScore} $awayName$detail';
+    final pens = info.hasPens ? ' ${info.penText(l10n.penaltyMark)}' : '';
+    return '$homeName ${info.homeScore} - ${info.awayScore} $awayName$pens$detail';
   }
 
   String _resolvedTeamName(Team? team, String espnName, String slot) {

@@ -399,6 +399,7 @@ class AppStrings {
   String get goalsAbbr => isEn ? 'G' : 'G';
   String get assistsAbbr => isEn ? 'A' : 'A';
   String get penaltyMark => isEn ? 'pen' : 'pen';
+  String get penaltiesLabel => isEn ? 'PENALTIES' : 'PENALES';
   String get perMatch => isEn ? '/match' : '/partido';
   String goalsCount(int n) => isEn
       ? '$n ${n == 1 ? 'goal' : 'goals'}'

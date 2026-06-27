@@ -36,7 +36,16 @@ Deno.serve(async () => {
     if (!no) continue;
     const comp = e.competitions?.[0];
     const type = comp?.status?.type ?? e.status?.type ?? {};
-    const finished = type.completed === true || type.state === "post";
+    // Defensa: nunca marcar `finished` mientras el partido siga en juego
+    // (state "in") ni en alargue/penales, aunque ESPN reporte "post"/"completed"
+    // por error en el hueco entre los 90' y el inicio del tiempo extra.
+    const name = String(type.name ?? "");
+    const stillPlaying =
+      type.state === "in" ||
+      name.includes("EXTRA_TIME") ||
+      name.includes("SHOOTOUT");
+    const finished =
+      (type.completed === true || type.state === "post") && !stillPlaying;
     let home: number | null = null;
     let away: number | null = null;
     for (const c of comp?.competitors ?? []) {
