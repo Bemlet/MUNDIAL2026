@@ -36,7 +36,7 @@ object NotificationHelper {
 
     fun language(context: Context): String = prefs(context).getString(LANGUAGE, "es") ?: "es"
 
-    fun notifyOnce(context: Context, key: String, id: Int, title: String, body: String, route: String?): Boolean {
+    fun notifyOnce(context: Context, key: String, id: Int, title: String, body: String, route: String? = null): Boolean {
         if (key.isNotBlank() && wasSent(context, key)) return false
         if (!canPostNotifications(context)) return false
         showNotification(context, id, title, body, route)
