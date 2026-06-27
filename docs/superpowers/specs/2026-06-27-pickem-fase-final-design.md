@@ -32,7 +32,7 @@ competencias distintas y escala los puntos por ronda.
 | Reenganche | Push al iniciar los 16vos. |
 | Prominencia (UI) | Cuando arrancan las eliminatorias, la **Fase Final es el ranking destacado** (pestaña por defecto / visualmente principal). Grupos pasa a secundario/histórico. |
 | Separación estricta de puntos | El leaderboard de **Grupos cuenta SOLO partidos de grupos**. Los puntos de eliminatorias **NUNCA** se suman al de Grupos — van solo al de Fase Final. |
-| Puntos del perfil | El perfil muestra ambos totales **por separado y bien etiquetados** (Grupos / Fase Final). No se combinan en un único número ni se duplican. |
+| Puntos del perfil | El perfil muestra el acumulado de **la fase activa**: Grupos mientras corren los grupos; Fase Final cuando arrancan las eliminatorias. **No muestra ambos** ni los combina. |
 
 ## Puntaje de la Fase Final
 
@@ -92,13 +92,16 @@ cuenta nueva".
 - El puntaje por ronda debe reflejarse en la lógica local de la app (para los
   puntos que se muestran junto a cada pick).
 
-### 4b. Puntos acumulados en el Perfil (evitar confusión)
-- El perfil hoy muestra "puntos acumulados". Con dos competencias, debe mostrar
-  **ambos por separado y etiquetados**: p. ej. "Grupos: X" y "Fase Final: Y".
-- **No** combinar en un solo total (evita que el usuario crea que perdió/ganó
-  puntos), y **no** seguir sumando knockout al total histórico de grupos.
-- Verificar en el plan de dónde sale ese número del perfil (vista `leaderboard`
-  o cálculo local) para que quede consistente con la separación de fases.
+### 4b. Puntos acumulados en el Perfil (fase activa)
+- El perfil muestra el acumulado de **la fase activa**, uno solo a la vez:
+  - Mientras corre la **fase de grupos** → puntos de Grupos.
+  - Cuando arrancan las **eliminatorias** → puntos de la Fase Final.
+- **No** muestra ambos ni los combina en un total.
+- Requiere una noción de **"fase activa"** (trigger a definir en el plan):
+  propuesta → la fase activa pasa a Fase Final cuando comienza el knockout
+  (p. ej. grupos completos / primer kickoff de 16vos). Antes de eso, Grupos.
+- Verificar en el plan de dónde sale ese número (vista `leaderboard` o cálculo
+  local) para aplicar el filtro de fase activa de forma consistente.
 
 ### 4. Notificación de reenganche
 - Push al iniciar los 16vos (vía `NotificationService`), una sola vez.
