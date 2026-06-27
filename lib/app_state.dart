@@ -906,13 +906,17 @@ class AppState extends ChangeNotifier {
 
   int get pickemTotalGroups {
     var t = 0;
-    for (final m in matches) t += pickemPointsGroups(m);
+    for (final m in matches) {
+      t += pickemPointsGroups(m);
+    }
     return t;
   }
 
   int get pickemTotalFinal {
     var t = 0;
-    for (final m in matches) t += pickemPointsFinal(m);
+    for (final m in matches) {
+      t += pickemPointsFinal(m);
+    }
     return t;
   }
 
