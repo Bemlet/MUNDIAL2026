@@ -233,7 +233,21 @@ bool get finalPhaseActive {
       .fold<DateTime?>(null, (a, b) => a == null || b.isBefore(a) ? b : a);
   return firstKo != null && !DateTime.now().toUtc().isBefore(firstKo);
 }
+
+/// La fase de grupos concluyó (se congela el ranking de grupos) cuando arranca
+/// el knockout. Se usa para coronar al Campeón de Grupos.
+bool get groupsConcluded => finalPhaseActive;
+
+/// El torneo terminó cuando el partido final (Stage.finalMatch) está finalizado.
+/// Se usa para coronar al Campeón del torneo (ranking de fase final).
+bool get tournamentOver {
+  final fin = matches.where((m) => m.stage == Stage.finalMatch);
+  if (fin.isEmpty) return false;
+  final m = fin.first;
+  return realPredFor(m) != null; // realPredFor != null ⇒ partido finalizado
+}
 ```
+> `realPredFor` ya devuelve no-null solo si el partido terminó (ver su definición). Si hay una vía más directa de "partido finalizado" (`liveFor(m)?.isFinished`), usar esa.
 
 Y `pickemTotal` (existente) pasa a:
 ```dart
@@ -291,6 +305,9 @@ String get groupsRankingTab => isEn ? 'Groups' : 'Grupos';
 String get finalRankingTab => isEn ? 'Final phase' : 'Fase Final';
 String get yourScoreFinal => isEn ? 'Your score · Final phase' : 'Tu puntaje · Fase Final';
 String get yourScoreGroups => isEn ? 'Your score · Groups' : 'Tu puntaje · Grupos';
+String get leaderLabel => isEn ? 'Leader' : 'Líder';
+String get groupsChampionLabel => isEn ? 'Groups champion' : 'Campeón de Grupos';
+String get tournamentChampionLabel => isEn ? 'Tournament champion' : 'Campeón del torneo';
 ```
 
 - [ ] **Step 2: Dos rankings en `_LeaderboardTab`**
@@ -301,7 +318,22 @@ Dentro de la tab "Ranking", agregar un sub-selector (sub-`TabBar` o `SegmentedBu
 - **Prominencia:** si `state.finalPhaseActive`, el sub-tab por defecto = **Fase Final**; si no, Grupos. La de Fase Final puede destacarse (ej. ícono 🏆 / color de acento).
 - Reusar `_LeaderRow` / orden existente para ambos.
 
-- [ ] **Step 3: Header "Tu puntaje" según fase activa**
+- [ ] **Step 3: Banner de Campeón / Líder en cada ranking**
+
+Arriba de cada ranking, mostrar al **#1** (primer `LeaderEntry` ya ordenado) en un banner destacado:
+- **Grupos:** etiqueta `l.groupsChampionLabel` (🏆) si `state.groupsConcluded`; si no, `l.leaderLabel`.
+- **Fase Final:** etiqueta `l.tournamentChampionLabel` (🏆) si `state.tournamentOver`; si no, `l.leaderLabel`.
+- Si la lista está vacía, no mostrar banner.
+
+```dart
+final isChampion = isFinalTab ? state.tournamentOver : state.groupsConcluded;
+final label = isFinalTab
+    ? (state.tournamentOver ? l.tournamentChampionLabel : l.leaderLabel)
+    : (state.groupsConcluded ? l.groupsChampionLabel : l.leaderLabel);
+// banner con trophy si isChampion, mostrando entries.first.nickname y points
+```
+
+- [ ] **Step 4: Header "Tu puntaje" según fase activa**
 
 Donde hoy se muestra `state.pickemTotal` con el label "Tu puntaje" (prediction_screen.dart ~líneas 20-22), usar el label según fase:
 ```dart
@@ -309,14 +341,14 @@ final scoreLabel = state.finalPhaseActive ? l.yourScoreFinal : l.yourScoreGroups
 ```
 `state.pickemTotal` ya devuelve el total de la fase activa (Task 2).
 
-- [ ] **Step 4: analyze + test**
+- [ ] **Step 5: analyze + test**
 
 `flutter analyze` limpio; `flutter test` verde. Los tests de `leaderboard_test.dart` que buscan 'Ranking'/'Tu puntaje' deben seguir pasando (si el texto exacto "Tu puntaje" cambió, actualizar el test o mantener el prefijo).
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 ```bash
 git add lib/screens/prediction_screen.dart lib/l10n.dart
-git commit -m "feat: UI rankings Grupos/Fase Final con prominencia + perfil por fase activa"
+git commit -m "feat: UI rankings Grupos/Fase Final + campeón/líder + perfil por fase activa"
 ```
 
 ---

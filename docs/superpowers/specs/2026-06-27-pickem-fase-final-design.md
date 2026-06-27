@@ -33,6 +33,7 @@ competencias distintas y escala los puntos por ronda.
 | Prominencia (UI) | Cuando arrancan las eliminatorias, la **Fase Final es el ranking destacado** (pestaña por defecto / visualmente principal). Grupos pasa a secundario/histórico. |
 | Separación estricta de puntos | El leaderboard de **Grupos cuenta SOLO partidos de grupos**. Los puntos de eliminatorias **NUNCA** se suman al de Grupos — van solo al de Fase Final. |
 | Puntos del perfil | El perfil muestra el acumulado de **la fase activa**: Grupos mientras corren los grupos; Fase Final cuando arrancan las eliminatorias. **No muestra ambos** ni los combina. |
+| Campeón por ranking | Cada ranking **corona a su #1 cuando esa fase concluye**: Campeón de Grupos al iniciar el knockout (grupos congelados); Campeón del torneo cuando termina la final. Mientras la fase está en curso se muestra como **"Líder"** (aún no campeón). |
 
 ## Puntaje de la Fase Final
 
