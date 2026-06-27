@@ -489,7 +489,11 @@ class AppState extends ChangeNotifier {
   /// ¿Mostrar las novedades de la v11? (una vez, solo para usuarios que ya
   /// tenían la app; los nuevos lo saltean en completeOnboarding).
   bool get shouldShowWhatsNew =>
-      loaded && onboardingDone && tourDone && !whatsNewV11Shown;
+      loaded &&
+      onboardingDone &&
+      tourDone &&
+      !whatsNewV11Shown &&
+      (exactAlarmGranted || exactAlarmAsked);
 
   void markWhatsNewShown() {
     if (whatsNewV11Shown) return;

@@ -735,7 +735,7 @@ class _LeaderboardTabState extends State<_LeaderboardTab> {
 
     return Column(
       children: [
-        if (state.onlineCount > 0)
+        if (state.onlineCount > 1)
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 10, 0, 0),
             child: Align(
