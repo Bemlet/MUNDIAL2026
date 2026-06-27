@@ -1,4 +1,5 @@
-/// Pestaña Bracket: cuadro de eliminatorias real (16avos a final).
+/// Pestaña Bracket: cuadro de eliminatorias real (16avos a final) con líneas
+/// de conexión entre rondas.
 library;
 
 import 'package:flutter/material.dart';
@@ -43,7 +44,9 @@ class BracketScreen extends StatelessWidget {
   }
 }
 
-/// Vista de bracket reutilizable (real o pronosticada).
+/// Vista de bracket reutilizable (real o pronosticada). Dibuja las rondas como
+/// un árbol: cada partido se ubica centrado entre sus dos alimentadores, con
+/// líneas (codos) que los conectan.
 class BracketView extends StatelessWidget {
   final (Team?, Team?) Function(WcMatch) teamsOf;
   final (int, int, bool)? Function(WcMatch) scoreOf; // (h, a, enVivo)
@@ -60,68 +63,184 @@ class BracketView extends StatelessWidget {
     this.winnerOf,
   });
 
+  // Dimensiones del cuadro.
+  static const double _cardW = 232;
+  static const double _cardH = 112;
+  static const double _vGap = 16;
+  static const double _hGap = 56;
+  static const double _titleH = 30;
+  static const double _rowUnit = _cardH + _vGap;
+
+  int? _feeder(String slot) {
+    final m = RegExp(r'^M(\d+)$').firstMatch(slot);
+    return m == null ? null : int.parse(m.group(1)!);
+  }
+
+  int _roundOf(Stage s) => switch (s) {
+    Stage.r32 => 0,
+    Stage.r16 => 1,
+    Stage.qf => 2,
+    Stage.sf => 3,
+    _ => 4, // final y tercer puesto
+  };
+
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    List<WcMatch> of(bool Function(WcMatch) test) =>
-        state.matches.where(test).toList()..sort((a, b) => a.no - b.no);
-    final rounds = <(String, List<WcMatch>)>[
-      (state.l10n.roundOf32, of((m) => m.stage == Stage.r32)),
-      (state.l10n.roundOf16, of((m) => m.stage == Stage.r16)),
-      (state.l10n.quarterfinals, of((m) => m.stage == Stage.qf)),
-      (state.l10n.semifinals, of((m) => m.stage == Stage.sf)),
-      (
-        state.l10n.finalLabel,
-        of((m) => m.stage == Stage.third || m.stage == Stage.finalMatch),
-      ),
+    final byNo = state.byNo;
+
+    final finalM = state.matches.firstWhere((m) => m.stage == Stage.finalMatch);
+
+    // Orden vertical de los 16avos: DFS desde la final siguiendo los slots
+    // (homeSlot/awaySlot tipo "M73"), así cada subárbol queda contiguo y las
+    // líneas no se cruzan.
+    final leafOrder = <int>[];
+    void dfs(WcMatch m) {
+      final hf = _feeder(m.homeSlot);
+      final af = _feeder(m.awaySlot);
+      if (hf == null && af == null) {
+        leafOrder.add(m.no);
+        return;
+      }
+      if (hf != null && byNo[hf] != null) dfs(byNo[hf]!);
+      if (af != null && byNo[af] != null) dfs(byNo[af]!);
+    }
+
+    dfs(finalM);
+
+    // Posición vertical: hojas (16avos) por su orden; internos = promedio de
+    // sus alimentadores.
+    final yOf = <int, double>{};
+    for (var i = 0; i < leafOrder.length; i++) {
+      yOf[leafOrder[i]] = i * _rowUnit;
+    }
+    double computeY(WcMatch m) {
+      final cached = yOf[m.no];
+      if (cached != null) return cached;
+      final ys = <double>[];
+      for (final fn in [_feeder(m.homeSlot), _feeder(m.awaySlot)]) {
+        if (fn != null && byNo[fn] != null) ys.add(computeY(byNo[fn]!));
+      }
+      final v = ys.isEmpty ? 0.0 : ys.reduce((a, b) => a + b) / ys.length;
+      yOf[m.no] = v;
+      return v;
+    }
+
+    final champ = state.matches
+        .where((m) => m.isKnockout && m.stage != Stage.third)
+        .toList();
+    for (final m in champ) {
+      computeY(m);
+    }
+
+    // 3er puesto: debajo de todo, en la columna de la final.
+    final thirdM = state.matches.firstWhere((m) => m.stage == Stage.third);
+    final maxY = yOf.values.fold(0.0, (a, b) => b > a ? b : a);
+    yOf[thirdM.no] = maxY + _rowUnit;
+
+    Offset posOf(WcMatch m) =>
+        Offset(_roundOf(m.stage) * (_cardW + _hGap), _titleH + (yOf[m.no] ?? 0));
+
+    // Conectores (codos) alimentador -> partido siguiente.
+    final connectors = <(Offset, Offset)>[];
+    for (final m in champ) {
+      for (final fn in [_feeder(m.homeSlot), _feeder(m.awaySlot)]) {
+        if (fn == null || byNo[fn] == null) continue;
+        final fp = posOf(byNo[fn]!);
+        final tp = posOf(m);
+        connectors.add((
+          Offset(fp.dx + _cardW, fp.dy + _cardH / 2),
+          Offset(tp.dx, tp.dy + _cardH / 2),
+        ));
+      }
+    }
+
+    final totalW = 5 * _cardW + 4 * _hGap;
+    final totalH = _titleH + (yOf[thirdM.no] ?? 0) + _cardH + 16;
+
+    final titles = <String>[
+      state.l10n.roundOf32,
+      state.l10n.roundOf16,
+      state.l10n.quarterfinals,
+      state.l10n.semifinals,
+      state.l10n.finalLabel,
     ];
 
-    return ListView(
+    return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
-      children: [
-        for (final (title, ms) in rounds)
-          Container(
-            width: 280,
-            margin: const EdgeInsets.only(right: 12),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    title.toUpperCase(),
-                    style: outfit(
-                      13,
-                      FontWeight.w900,
-                      color: Wc.goldHi,
-                      spacing: 1.5,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
+        child: SizedBox(
+          width: totalW,
+          height: totalH,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: CustomPaint(painter: _BracketPainter(connectors)),
+              ),
+              for (var r = 0; r < titles.length; r++)
+                Positioned(
+                  left: r * (_cardW + _hGap),
+                  top: 0,
+                  width: _cardW,
+                  child: Center(
+                    child: Text(
+                      titles[r].toUpperCase(),
+                      style: outfit(
+                        13,
+                        FontWeight.w900,
+                        color: Wc.goldHi,
+                        spacing: 1.5,
+                      ),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    children: [
-                      for (final m in ms)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: KoMatchCard(
-                            match: m,
-                            teams: teamsOf(m),
-                            score: scoreOf(m),
-                            winner: winnerOf?.call(m),
-                            onTap: () => onTap(m),
-                          ),
-                        ),
-                    ],
+              for (final m in state.matches.where((m) => m.isKnockout))
+                Positioned(
+                  left: posOf(m).dx,
+                  top: posOf(m).dy,
+                  width: _cardW,
+                  height: _cardH,
+                  child: KoMatchCard(
+                    match: m,
+                    teams: teamsOf(m),
+                    score: scoreOf(m),
+                    winner: winnerOf?.call(m),
+                    onTap: () => onTap(m),
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
-      ],
+        ),
+      ),
     );
   }
+}
+
+/// Pinta los codos de conexión entre rondas del bracket.
+class _BracketPainter extends CustomPainter {
+  final List<(Offset, Offset)> connectors;
+  const _BracketPainter(this.connectors);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Wc.textDim.withValues(alpha: .5)
+      ..strokeWidth = 1.6
+      ..style = PaintingStyle.stroke;
+    for (final (from, to) in connectors) {
+      final midX = (from.dx + to.dx) / 2;
+      final path = Path()
+        ..moveTo(from.dx, from.dy)
+        ..lineTo(midX, from.dy)
+        ..lineTo(midX, to.dy)
+        ..lineTo(to.dx, to.dy);
+      canvas.drawPath(path, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_BracketPainter old) => old.connectors != connectors;
 }
 
 /// Tarjeta compacta de partido de eliminatorias.
@@ -204,6 +323,7 @@ class KoMatchCard extends StatelessWidget {
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             children: [
