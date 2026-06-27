@@ -686,29 +686,44 @@ class _LeaderboardTabState extends State<_LeaderboardTab> {
 
     return Column(
       children: [
-        // Sub-selector: Grupos / Fase Final
+        // Encabezado prominente de la fase activa + acceso discreto a la otra.
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
-          child: SegmentedButton<bool>(
-            style: SegmentedButton.styleFrom(
-              selectedBackgroundColor: Wc.gold.withValues(alpha: .18),
-              selectedForegroundColor: Wc.goldHi,
-              foregroundColor: Wc.textDim,
-              textStyle: outfit(13, FontWeight.w700),
-            ),
-            segments: [
-              ButtonSegment<bool>(
-                value: false,
-                label: Text(l.groupsRankingTab),
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (isFinal) ...[
+                Icon(Icons.emoji_events, color: Wc.goldHi, size: 26),
+                const SizedBox(width: 8),
+              ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isFinal ? l.finalRankingTab : l.groupsRankingTab,
+                      style: outfit(
+                        isFinal ? 24 : 21,
+                        FontWeight.w900,
+                        color: isFinal ? Wc.goldHi : Wc.text,
+                      ),
+                    ),
+                    Text(
+                      isFinal ? l.finalRankingSubtitle : l.groupsRankingSubtitle,
+                      style: outfit(11.5, FontWeight.w600, color: Wc.textDim),
+                    ),
+                  ],
+                ),
               ),
-              ButtonSegment<bool>(
-                value: true,
-                icon: const Icon(Icons.emoji_events, size: 15),
-                label: Text(l.finalRankingTab),
+              TextButton(
+                onPressed: () => _switchTab(!isFinal),
+                style: TextButton.styleFrom(foregroundColor: Wc.textDim),
+                child: Text(
+                  isFinal ? l.seeGroupsRanking : l.seeFinalRanking,
+                  style: outfit(12, FontWeight.w700),
+                ),
               ),
             ],
-            selected: {isFinal},
-            onSelectionChanged: (s) => _switchTab(s.first),
           ),
         ),
         Expanded(

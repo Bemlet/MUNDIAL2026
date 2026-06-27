@@ -23,6 +23,13 @@ class AppStrings {
   String get pickemScore => isEn ? 'Your score' : 'Tu puntaje';
   String get groupsRankingTab => isEn ? 'Groups' : 'Grupos';
   String get finalRankingTab => isEn ? 'Final phase' : 'Fase Final';
+  String get seeGroupsRanking => isEn ? 'See Groups' : 'Ver Grupos';
+  String get seeFinalRanking => isEn ? 'See Final phase' : 'Ver Fase Final';
+  String get finalRankingSubtitle => isEn
+      ? 'Everyone starts at 0 — points worth more each round'
+      : 'Todos arrancan en 0 — vale más cada ronda';
+  String get groupsRankingSubtitle =>
+      isEn ? 'Group stage standings' : 'Tabla de la fase de grupos';
   String get yourScoreFinal => isEn ? 'Your score · Final phase' : 'Tu puntaje · Fase Final';
   String get yourScoreGroups => isEn ? 'Your score · Groups' : 'Tu puntaje · Grupos';
   String get leaderLabel => isEn ? 'Leader' : 'Líder';
