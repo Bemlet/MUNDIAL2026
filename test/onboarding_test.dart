@@ -44,7 +44,7 @@ void main() {
     });
 
     test('respeta un flag previo en true', () async {
-      SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'pickemNudgeShown': true});
+      SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'whatsNewV11Shown': true, 'pickemNudgeShown': true});
       final s = AppState();
       await s.load(initialSync: false);
       expect(s.onboardingDone, isTrue);
@@ -62,7 +62,7 @@ void main() {
       // Existente (onboarding+tour ya hechos, nunca vio el pick'em) -> aviso.
       SharedPreferences.setMockInitialValues({
         'onboardingDone': true,
-        'tourDone': true,
+        'tourDone': true, 'whatsNewV11Shown': true,
       });
       final existente = AppState();
       await existente.load(initialSync: false);
@@ -149,7 +149,7 @@ void main() {
     testWidgets('muestra la app cuando el flag es true', (tester) async {
       final state = await loadState(tester, {
         'onboardingDone': true,
-        'tourDone': true,
+        'tourDone': true, 'whatsNewV11Shown': true,
         'pickemNudgeShown': true,
         'playerIntroShown': true,
         'lineupsIntroShown': true,
@@ -167,7 +167,7 @@ void main() {
         (tester) async {
       final state = await loadState(tester, {
         'onboardingDone': true,
-        'tourDone': true,
+        'tourDone': true, 'whatsNewV11Shown': true,
         'pickemNudgeShown': true,
         'lineupsIntroShown': true,
         'accountIntroShown': true,

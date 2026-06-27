@@ -54,14 +54,32 @@ class Mundial26App extends StatefulWidget {
   State<Mundial26App> createState() => _Mundial26AppState();
 }
 
-class _Mundial26AppState extends State<Mundial26App> {
+class _Mundial26AppState extends State<Mundial26App>
+    with WidgetsBindingObserver {
   final AppState state = AppState();
   Timer? _liveSyncTimer;
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState lifecycle) {
+    if (lifecycle == AppLifecycleState.resumed) {
+      if (state.loaded) state.joinPresence();
+    } else {
+      state.leavePresence();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
-    state.load();
+    WidgetsBinding.instance.addObserver(this);
+    // Deep-link: tocar una notificación con ruta abre el Pick'em (fase final).
+    NotificationService.setNavigateHandler((route) {
+      if (route == 'fase_final' || route == 'pickem') state.goToTab(4);
+    });
+    state.load().then((_) async {
+      final route = await NotificationService.consumeLaunchRoute();
+      if (route == 'fase_final' || route == 'pickem') state.goToTab(4);
+    });
     _liveSyncTimer = Timer.periodic(const Duration(minutes: 1), (_) {
       if (state.loaded) state.sync();
       if (state.loaded) state.checkMatchReminders();
@@ -70,6 +88,8 @@ class _Mundial26AppState extends State<Mundial26App> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    state.leavePresence();
     _liveSyncTimer?.cancel();
     state.dispose();
     super.dispose();
@@ -107,6 +127,7 @@ class _ShellState extends State<Shell> {
 
   int index = 0;
   bool _exactAlarmPromptChecked = false;
+  bool _whatsNewChecked = false;
   bool _pickemNudgeChecked = false;
   bool _playerIntroChecked = false;
   bool _lineupsIntroChecked = false;
@@ -156,6 +177,14 @@ class _ShellState extends State<Shell> {
     _exactAlarmPromptChecked = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _showExactAlarmDialog(context, state);
+    });
+  }
+
+  void _maybeShowWhatsNew(BuildContext context, AppState state) {
+    if (_whatsNewChecked || !state.shouldShowWhatsNew) return;
+    _whatsNewChecked = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showWhatsNew(context, state);
     });
   }
 
@@ -379,6 +408,52 @@ class _ShellState extends State<Shell> {
     );
   }
 
+  Future<void> _showWhatsNew(BuildContext context, AppState state) {
+    final l = state.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.auto_awesome, color: Wc.gold, size: 22),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(l.whatsNewTitle, style: outfit(17, FontWeight.w900)),
+            ),
+          ],
+        ),
+        content: Text(
+          l.whatsNewBody,
+          style: outfit(13.5, FontWeight.w500, color: Wc.textSoft, height: 1.45),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markWhatsNewShown();
+            },
+            child: Text(
+              l.whatsNewClose,
+              style: outfit(13, FontWeight.w700, color: Wc.textDim),
+            ),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Wc.gold,
+              foregroundColor: Wc.onGold,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              state.markWhatsNewShown();
+              setState(() => index = 4); // pestaña Pick'em
+            },
+            child: Text(l.whatsNewGo, style: outfit(13, FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _showPickemNudge(BuildContext context, AppState state) {
     final l = state.l10n;
     return showDialog<void>(
@@ -476,6 +551,7 @@ class _ShellState extends State<Shell> {
     _maybeShowUpdate(context, state);
     _maybeStartTour(state);
     _maybePromptExactAlarm(context, state);
+    _maybeShowWhatsNew(context, state);
     _maybeShowPickemNudge(context, state);
     _maybeShowPlayerIntro(context, state);
     _maybeShowLineupsIntro(context, state);

@@ -22,7 +22,7 @@ void main() {
   });
 
   test('shouldPromptExactAlarm: solo si falta permiso, hay onboarding y no se pidió', () async {
-    SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'pickemNudgeShown': true});
+    SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'whatsNewV11Shown': true, 'pickemNudgeShown': true});
     final s = AppState();
     await s.load(initialSync: false);
 
@@ -51,7 +51,7 @@ void main() {
   testWidgets('el Shell muestra el prompt y "Ahora no" lo descarta', (tester) async {
     late AppState state;
     await tester.runAsync(() async {
-      SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'pickemNudgeShown': true});
+      SharedPreferences.setMockInitialValues({'onboardingDone': true, 'tourDone': true, 'whatsNewV11Shown': true, 'pickemNudgeShown': true});
       state = AppState();
       await state.load(initialSync: false);
     });

@@ -292,6 +292,22 @@ class AppStrings {
   String get finalPhaseNudgeBody => isEn
       ? 'The knockouts are here — everyone starts at 0. Make your final-phase picks!'
       : 'Empiezan las eliminatorias — todos arrancan en 0. ¡Hacé tus picks de la fase final!';
+  String get finalPhaseSoonTitle =>
+      isEn ? 'The Final Phase is coming 🏆' : 'Se viene la Fase Final 🏆';
+  String get finalPhaseSoonBody => isEn
+      ? 'The knockouts start soon — a brand new tournament from 0. Get your picks ready!'
+      : 'Ya casi arrancan las eliminatorias — un torneo nuevo desde 0. ¡Andá preparando tus picks!';
+  // Onboarding "novedades" (qué hay de nuevo).
+  String get whatsNewTitle => isEn ? "What's new" : 'Novedades';
+  String get whatsNewBody => isEn
+      ? '• New Final Phase Pick\'em: when the knockouts begin, everyone starts at 0 and points double each round.\n• There\'s a Groups champion and a tournament champion.\n• The bracket now shows connection lines and jumps to the live match.'
+      : '• Nuevo Pick\'em de Fase Final: al empezar las eliminatorias, todos arrancan en 0 y los puntos valen más cada ronda.\n• Hay un campeón de Grupos y un campeón del torneo.\n• El bracket ahora tiene líneas de conexión y salta al partido en vivo.';
+  String get whatsNewGo => isEn ? 'Go to Pick\'em' : 'Ir al Pick\'em';
+  String get whatsNewClose => isEn ? 'Got it' : 'Entendido';
+  // Presencia en vivo.
+  String get anonymousLabel => isEn ? '(anonymous)' : '(anónimo)';
+  String onlineNow(int n) => isEn ? '$n online' : '$n en línea';
+  String get onlineNowTitle => isEn ? 'Online now' : 'En línea ahora';
 
   // ----------------------------------------------------------- tour guiado
   String get tourSkip => isEn ? 'Skip' : 'Saltar';

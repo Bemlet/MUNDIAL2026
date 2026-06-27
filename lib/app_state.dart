@@ -18,6 +18,7 @@ import 'logic.dart';
 import 'models.dart';
 import 'notification_service.dart';
 import 'players.dart';
+import 'presence_service.dart';
 import 'stats.dart';
 import 'update_service.dart';
 import 'supabase_service.dart';
@@ -134,6 +135,7 @@ class AppState extends ChangeNotifier {
   bool playerIntroShown = false; // ya avisamos de las cartas de jugador
   bool lineupsIntroShown = false; // ya avisamos de formaciones + perfiles
   bool accountIntroShown = false; // ya avisamos de vincular la cuenta
+  bool whatsNewV11Shown = false; // ya mostramos las novedades de la v11
   int? jumpTab; // pedido de cambio de pestaña inferior (lo consume el Shell)
 
   /// Pide al Shell saltar a una pestaña (p. ej. Pick'em desde la tira de picks).
@@ -241,7 +243,32 @@ class AppState extends ChangeNotifier {
       nickname = n;
       notifyListeners();
     }
+    PresenceService.setOnChange(_onPresenceChange);
+    await joinPresence();
   }
+
+  // ----------------------------------------------------------- presencia
+  int onlineCount = 0;
+  List<String> onlineNicknames = const [];
+
+  void _onPresenceChange() {
+    onlineCount = PresenceService.count;
+    onlineNicknames = PresenceService.nicknames;
+    notifyListeners();
+  }
+
+  /// Publica presencia (app en primer plano). No-op si no hay sesión.
+  Future<void> joinPresence() async {
+    final uid = SupabaseService.userId;
+    if (uid == null) return;
+    await PresenceService.join(
+      userId: uid,
+      nickname: nickname ?? l10n.anonymousLabel,
+    );
+  }
+
+  /// Deja la presencia (app en segundo plano).
+  Future<void> leavePresence() => PresenceService.leave();
 
   /// Define/actualiza el apodo del usuario en el leaderboard.
   Future<void> setNickname(String name) async {
@@ -365,6 +392,7 @@ class AppState extends ChangeNotifier {
     playerIntroShown = p.getBool('playerIntroShown') ?? false;
     lineupsIntroShown = p.getBool('lineupsIntroShown') ?? false;
     accountIntroShown = p.getBool('accountIntroShown') ?? false;
+    whatsNewV11Shown = p.getBool('whatsNewV11Shown') ?? false;
     country = p.getString('country') ?? _detectCountry();
     _pruneUnresolvedKnockoutPickemPreds(notify: false);
   }
@@ -436,6 +464,9 @@ class AppState extends ChangeNotifier {
     // Los nuevos ven el slide de cuenta en el onboarding: no repetir el aviso.
     accountIntroShown = true;
     _prefs?.setBool('accountIntroShown', true);
+    // Los nuevos ya conocen las features: no mostrarles el aviso de "novedades".
+    whatsNewV11Shown = true;
+    _prefs?.setBool('whatsNewV11Shown', true);
     notifyListeners();
   }
 
@@ -452,6 +483,18 @@ class AppState extends ChangeNotifier {
     if (pickemNudgeShown) return;
     pickemNudgeShown = true;
     _prefs?.setBool('pickemNudgeShown', true);
+    notifyListeners();
+  }
+
+  /// ¿Mostrar las novedades de la v11? (una vez, solo para usuarios que ya
+  /// tenían la app; los nuevos lo saltean en completeOnboarding).
+  bool get shouldShowWhatsNew =>
+      loaded && onboardingDone && tourDone && !whatsNewV11Shown;
+
+  void markWhatsNewShown() {
+    if (whatsNewV11Shown) return;
+    whatsNewV11Shown = true;
+    _prefs?.setBool('whatsNewV11Shown', true);
     notifyListeners();
   }
 
@@ -628,12 +671,32 @@ class AppState extends ChangeNotifier {
       await checkMatchReminders();
       await checkPickemReminder();
       if (finalPhaseActive) {
+        // Ya arrancó: aviso "borrón y cuenta nueva" (una sola vez).
         await _notifyOnce(
           key: 'fase_final_nudge',
           id: 500001,
           title: l10n.finalPhaseNudgeTitle,
           body: l10n.finalPhaseNudgeBody,
+          route: 'fase_final',
         );
+      } else {
+        // Recordatorio diario en los días previos al inicio de la fase final
+        // (una vez por día, para recordarle a la gente un par de veces).
+        final firstKo = firstKnockoutKickoff;
+        if (firstKo != null) {
+          final now = (clockOverride ?? DateTime.now()).toUtc();
+          final daysUntil = firstKo.difference(now).inDays;
+          if (daysUntil >= 0 && daysUntil <= 3) {
+            final d = now.toLocal();
+            await _notifyOnce(
+              key: 'fase_final_pre_${d.year}-${d.month}-${d.day}',
+              id: 500100 + d.month * 40 + d.day,
+              title: l10n.finalPhaseSoonTitle,
+              body: l10n.finalPhaseSoonBody,
+              route: 'fase_final',
+            );
+          }
+        }
       }
       lastSync = DateTime.now();
       final p = _prefs;
@@ -790,13 +853,20 @@ class AppState extends ChangeNotifier {
     required int id,
     required String title,
     required String body,
+    String? route,
   }) async {
     if (!_sentNotifications.add(key)) return;
     await _prefs?.setStringList(
       'sentNotifications',
       _sentNotifications.toList(growable: false),
     );
-    await NotificationService.show(key: key, id: id, title: title, body: body);
+    await NotificationService.show(
+      key: key,
+      id: id,
+      title: title,
+      body: body,
+      route: route,
+    );
   }
 
   // ------------------------------------------------------------ pronósticos
@@ -933,12 +1003,15 @@ class AppState extends ChangeNotifier {
     return t;
   }
 
+  /// Kickoff del primer partido de eliminatorias (16avos), o null si no hay.
+  DateTime? get firstKnockoutKickoff => matches
+      .where((m) => m.isKnockout)
+      .map((m) => m.dateUtc)
+      .fold<DateTime?>(null, (a, b) => a == null || b.isBefore(a) ? b : a);
+
   /// La fase final está activa cuando ya empezó el primer partido de knockout.
   bool get finalPhaseActive {
-    final firstKo = matches
-        .where((m) => m.isKnockout)
-        .map((m) => m.dateUtc)
-        .fold<DateTime?>(null, (a, b) => a == null || b.isBefore(a) ? b : a);
+    final firstKo = firstKnockoutKickoff;
     final now = (clockOverride ?? DateTime.now()).toUtc();
     return firstKo != null && !now.isBefore(firstKo);
   }

@@ -669,6 +669,55 @@ class _LeaderboardTabState extends State<_LeaderboardTab> {
     });
   }
 
+  void _showOnline(BuildContext context, AppState state) {
+    final l = state.l10n;
+    final names = state.onlineNicknames;
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Container(
+              width: 9,
+              height: 9,
+              decoration: BoxDecoration(
+                color: Wc.mint,
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(l.onlineNowTitle, style: outfit(16, FontWeight.w900)),
+          ],
+        ),
+        content: names.isEmpty
+            ? Text(
+                l.onlineNow(state.onlineCount),
+                style: outfit(14, FontWeight.w600, color: Wc.textSoft),
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final n in names)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3),
+                      child: Text(
+                        n,
+                        style: outfit(14, FontWeight.w600, color: Wc.text),
+                      ),
+                    ),
+                ],
+              ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(l.whatsNewClose, style: outfit(13, FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
@@ -686,6 +735,41 @@ class _LeaderboardTabState extends State<_LeaderboardTab> {
 
     return Column(
       children: [
+        if (state.onlineCount > 0)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 0, 0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: () => _showOnline(context, state),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: Wc.mint,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        l.onlineNow(state.onlineCount),
+                        style: outfit(12, FontWeight.w700, color: Wc.mint),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         // Encabezado prominente de la fase activa + acceso discreto a la otra.
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
