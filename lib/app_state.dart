@@ -928,19 +928,27 @@ class AppState extends ChangeNotifier {
     final fin = matches.where((m) => m.stage == Stage.finalMatch);
     if (fin.isEmpty) return false;
     final m = fin.first;
-    return realPredFor(m) != null; // realPredFor != null ⇒ partido finalizado
+    return liveFor(m)?.isFinished == true;
   }
 
   /// Puntaje total acumulado del pick'em (fase activa).
   int get pickemTotal => finalPhaseActive ? pickemTotalFinal : pickemTotalGroups;
 
   /// (exactos, resultados) que puntuaron en la fase activa.
+  /// Categoriza por puntaje BASE (antes del multiplicador), no por el total.
   (int, int) get pickemBreakdown {
     var exact = 0, correct = 0;
     for (final m in matches) {
-      final pts =
-          finalPhaseActive ? pickemPointsFinal(m) : pickemPointsGroups(m);
-      switch (pts) {
+      if (finalPhaseActive) {
+        if (!m.isKnockout) continue;
+      } else {
+        if (m.stage != Stage.group || !pickemCounts(m)) continue;
+      }
+      final pred = preds[m.no];
+      final real = realPredFor(m);
+      if (pred == null || real == null) continue;
+      final base = scorePick(pred, real);
+      switch (base) {
         case 6:
           exact++;
         case 3:

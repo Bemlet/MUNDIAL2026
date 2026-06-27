@@ -319,7 +319,41 @@ void main() {
     s.preds[third.no] = Pred(1, 0);
     expect(s.pickemPointsFinal(third), 6);
 
-    // Grupos NO entran en el total final
-    expect(s.pickemTotalFinal >= 12 + 6, isTrue);
+    // Grupos NO entran en el total final; solo r16 (12) y 3er puesto (6).
+    expect(s.pickemTotalFinal, equals(18));
   });
+
+  test(
+    "pick'em breakdown: fase final cuenta por puntaje base (no multiplicado)",
+    () async {
+      SharedPreferences.setMockInitialValues({});
+      final s = AppState();
+      await s.load(initialSync: false);
+
+      // Solo tiene sentido con fase final activa; se omite si aún no arrancó.
+      if (!s.finalPhaseActive) return;
+
+      // Partido r16 con resultado decisivo (2-1) para evitar empate y penales.
+      final r16 = s.matches.firstWhere((m) => m.stage == Stage.r16);
+      s.live[r16.espnId] = LiveInfo(
+        espnId: r16.espnId,
+        status: 'STATUS_FULL_TIME',
+        detail: 'FT',
+        homeScore: 2,
+        awayScore: 1,
+        homeEspn: 'TeamA',
+        awayEspn: 'TeamB',
+      );
+
+      // Pick exacto (2-1): puntaje base = 6 → debe contar como "exacto", no como
+      // el valor multiplicado (6×2=12 en r16, que antes caía fuera del switch).
+      s.preds[r16.no] = Pred(2, 1);
+      expect(s.pickemBreakdown, equals((1, 0)));
+
+      // Pick resultado correcto (3-0, gana de local): puntaje base = 3 → "resultado".
+      // Antes, 3×2=6 lo clasificaba erróneamente como "exacto".
+      s.preds[r16.no] = Pred(3, 0);
+      expect(s.pickemBreakdown, equals((0, 1)));
+    },
+  );
 }
